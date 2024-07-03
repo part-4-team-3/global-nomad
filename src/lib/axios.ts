@@ -23,7 +23,7 @@ apiInstance.interceptors.response.use(
         window.location.href = "/signin";
       } else {
         apiInstance
-          .post("/auth/tokens", null, {
+          .post("auth/tokens", null, {
             headers: { Authorization: `Bearer ${refreshToken}` },
           })
           .then((data) => {
