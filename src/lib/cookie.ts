@@ -4,7 +4,8 @@ const cookies = new Cookies();
 
 export const cookie = {
   getCookie: (key: string) => {
-    cookies.get(key);
+    const result = cookies.get(key);
+    return result;
   },
 
   setCookie: (key: string, value: string) => {
