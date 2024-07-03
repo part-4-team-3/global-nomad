@@ -7,7 +7,8 @@ function makeQueryClient() {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false,
+        retry: 3,
+        retryDelay: 1000,
       },
     },
   });
