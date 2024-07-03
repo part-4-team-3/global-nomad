@@ -1,15 +1,29 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+
+const pxToRem = (px: number, base = 16) => `${px / base}rem`;
+
+const range = (start: number, end: number) => {
+  const length = end - start;
+  return Array.from({ length }, (_, i) => start + i);
+};
 
 const config = {
   darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
+    spacing: {
+      ...range(1, 101).reduce<Record<string, string>>((acc, px) => {
+        acc[`${px}pxr`] = pxToRem(px);
+        return acc;
+      }, {}),
+    },
+    fontSize: {
+      ...range(12, 60).reduce<Record<string, string>>((acc, px) => {
+        acc[`${px}pxr`] = pxToRem(px);
+        return acc;
+      }, {}),
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -75,6 +89,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
