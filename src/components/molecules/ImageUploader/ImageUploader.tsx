@@ -40,6 +40,10 @@ export default function ImageUploader() {
       alert(error);
     }
   };
+  /** 이미지 삭제 처리 */
+  const handleDeleteImage = (index: number) => {
+    setUploadedImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
+  };
 
   return (
     /* 고정값으로 설정한 width는 페이지 레이아웃시 수정 예정입니다. */
@@ -57,7 +61,7 @@ export default function ImageUploader() {
         </div>
       </label>
       {uploadedImages.map((imageUrl, index) => (
-        <GeneratedImage key={index} url={imageUrl} />
+        <GeneratedImage key={index} url={imageUrl} onClose={() => handleDeleteImage(index)} />
       ))}
     </div>
   );
