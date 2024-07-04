@@ -1,6 +1,6 @@
-import Image from "next/image";
+import Image from 'next/image';
 interface Props {
-  url: string;
+  url?: string;
 }
 export default function GeneratedImage({ url }: Props) {
   return (
