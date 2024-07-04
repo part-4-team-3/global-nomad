@@ -1,5 +1,5 @@
 'use client';
-import GeneratedImage from '@/components/atoms/GeneratedImage/GeneratedImage';
+import GeneratedImage from '@/components/molecules/GeneratedImage/GeneratedImage';
 import { apiInstance } from '@/lib/axios';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ export default function ImageUploader() {
       const response: ApiResponse = await apiInstance.post('activities/image', formData, {
         headers: {
           /*임의로 발급한 엑세스토큰입니다. 추후 회원가입 기능 추가시 수정 예정 */
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTQ0LCJ0ZWFtSWQiOiI1LTMiLCJpYXQiOjE3MjAwODUwMDgsImV4cCI6MTcyMDA4NjgwOCwiaXNzIjoic3AtZ2xvYmFsbm9tYWQifQ.QbROXNIc-9plr4Aa35wOJJQkOLVp6954e9X0nI3GTuI`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTQ0LCJ0ZWFtSWQiOiI1LTMiLCJpYXQiOjE3MjAwOTI2ODMsImV4cCI6MTcyMDA5NDQ4MywiaXNzIjoic3AtZ2xvYmFsbm9tYWQifQ.s9euLsvwi3MYQ-ukWA5JOzoT3KR8IySpJGNtFc275KE`,
         },
       });
       setUploadedImage(response.activityImageUrl);
@@ -35,11 +35,10 @@ export default function ImageUploader() {
       alert(error);
     }
   };
-  console.log(uploadedImage);
 
   return (
     <>
-      <label className="inline-block">
+      <label>
         <input
           type="file"
           accept="image/png, image/jpeg"
