@@ -1,4 +1,5 @@
 import Button from '@/components/atoms/button/Button';
+import '@/app/globals.css';
 
 export default {
   title: 'Test/Button',
@@ -7,15 +8,25 @@ export default {
 
 export const Solid = {
   args: {
-    variant: 'solid',
     text: 'Button',
+    color: 'white',
+    size: 's',
+    disabled: false,
   },
 };
 
-export const Outline = {};
+export const Medium = {
+  args: {
+    text: 'Button',
+    color: 'white',
+    size: 'm',
+  },
+};
 
-export const Small = {};
-
-export const Medium = {};
-
-export const Large = {};
+export const Large = {
+  args: {
+    text: 'Button',
+    color: 'white',
+    size: 'l',
+  },
+};
