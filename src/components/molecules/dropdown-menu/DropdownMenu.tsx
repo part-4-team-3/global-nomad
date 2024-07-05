@@ -1,0 +1,47 @@
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
+import { cn } from '@/lib/tailwind-utils';
+
+interface Props {
+  text: string;
+  children: React.ReactNode[];
+}
+
+export default function DropdownMenu({ text, children }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="flex flex-col">
+      <button
+        onClick={handleToggle}
+        className="flex w-full justify-between rounded-[15px] border border-var-green-dark px-20pxr py-16pxr text-18pxr leading-[22px] text-var-green-dark"
+      >
+        {text}
+        <Image src="/arrow-down.svg" width={22} height={22} alt="dropdown" />
+      </button>
+      <div className="relative flex">
+        {isOpen && (
+          <ul className="border-var-gray-6 absolute w-full list-none rounded-[6px] border">
+            {children.map((item: React.ReactNode, index: number) => (
+              <li
+                className={cn(
+                  'flex w-full justify-center py-18pxr',
+                  index < children.length - 1 && 'border-var-gray-6 border-b',
+                )}
+                key={index}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
