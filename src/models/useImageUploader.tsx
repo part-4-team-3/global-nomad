@@ -21,10 +21,11 @@ export const useImageUploader = () => {
     const formData = new FormData();
     formData.append('image', uploadFile);
 
-    /* 임시로 생성한 함수입니다. 회원가입 기능 구현 시 삭제 */
+    /* 임시로 생성한 함수입니다. 회원가입 기능 구현 시 삭제 <- 처음 이미지등록 눌렀을 때 등록 안되는 버그 있음 */
     if (uploadedImages.length < 4) {
       const imageUrl = URL.createObjectURL(uploadFile);
       setUploadedImages((prevImages) => [...prevImages, imageUrl]);
+      console.log(imageUrl);
     }
 
     /* 회원가입 기능 구현 후 사용할 함수입니다. */
