@@ -28,7 +28,7 @@ export default function DropdownMenu({ text, children, className }: Props) {
       </button>
       <div className="relative flex w-full">
         {isOpen && (
-          <ul className="border-var-gray-6 absolute w-full list-none rounded-[6px] border">
+          <ul className="border-var-gray-6 absolute top-[8px] w-full list-none rounded-[6px] border">
             {children.map((item: React.ReactNode, index: number) => (
               <li
                 className={cn(
