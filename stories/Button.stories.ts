@@ -20,6 +20,7 @@ export const Medium = {
     text: 'Button',
     color: 'white',
     size: 'm',
+    disabled: false,
   },
 };
 
@@ -28,5 +29,6 @@ export const Large = {
     text: 'Button',
     color: 'white',
     size: 'l',
+    disabled: false,
   },
 };
