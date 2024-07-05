@@ -17,7 +17,7 @@ export default function ImageUploader() {
           id="imageUpload"
           onChange={handleUploadImage}
         />
-        <div className="relative cursor-pointer max-xl:h-[206px] max-xl:w-[206px] max-sm:h-[167px] max-sm:w-[167px] xl:h-[180px] xl:w-[180px]">
+        <div className="relative cursor-pointer max-xl:size-[206px] max-sm:size-[167px] xl:size-[180px]">
           <Image fill src="/UploadImage.svg" alt="이미지 등록하기" />
         </div>
       </label>

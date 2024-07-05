@@ -11,7 +11,7 @@ export default function GeneratedImage({ key, url, onClose }: Props) {
       <div className="relative">
         <CloseButton id={key} onClose={() => onClose(key)} />
         {url && (
-          <div className="relative overflow-hidden rounded-[24px] max-xl:h-[206px] max-xl:w-[206px] max-sm:h-[167px] max-sm:w-[167px] xl:h-[180px] xl:w-[180px]">
+          <div className="relative overflow-hidden rounded-[24px] max-xl:size-[206px] max-sm:size-[167px] xl:size-[180px]">
             <Image fill src={url} alt="이미지 생성" className="object-cover" />
           </div>
         )}
