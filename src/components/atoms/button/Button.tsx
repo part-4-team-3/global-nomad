@@ -1,12 +1,14 @@
+import Link from 'next/link';
 import { ButtonHTMLAttributes } from 'react';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   size: 's' | 'm' | 'l';
   color: 'white' | 'black';
+  link?: string;
 }
 
-export default function Button({ text, size, color, onClick, disabled }: Props) {
+export default function Button({ text, size, color, onClick, disabled, link }: Props) {
   let sizeStyle;
   switch (size) {
     case 's':
@@ -24,12 +26,17 @@ export default function Button({ text, size, color, onClick, disabled }: Props) 
     ? 'bg-var-gray3 border border-var-gray3 !text-white'
     : 'border border-var-green-dark';
 
+  const style = `rounded-[6px] font-[700] ${sizeStyle} ${colorStyle} ${disabledStyle}`;
+
+  if (link)
+    return (
+      <Link className={style} href={link}>
+        {text}
+      </Link>
+    );
+
   return (
-    <button
-      className={`rounded-[6px] font-[700] ${sizeStyle} ${colorStyle} ${disabledStyle}`}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button className={style} onClick={onClick} disabled={disabled}>
       {text}
     </button>
   );
