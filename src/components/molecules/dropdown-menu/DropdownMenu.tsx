@@ -7,9 +7,10 @@ import { cn } from '@/lib/tailwind-utils';
 interface Props {
   text: string;
   children: React.ReactNode[];
+  className?: string;
 }
 
-export default function DropdownMenu({ text, children }: Props) {
+export default function DropdownMenu({ text, children, className }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -17,7 +18,7 @@ export default function DropdownMenu({ text, children }: Props) {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className={cn('flex w-full flex-col', className)}>
       <button
         onClick={handleToggle}
         className="flex w-full justify-between rounded-[15px] border border-var-green-dark px-20pxr py-16pxr text-18pxr leading-[22px] text-var-green-dark"
@@ -25,7 +26,7 @@ export default function DropdownMenu({ text, children }: Props) {
         {text}
         <Image src="/arrow-down.svg" width={22} height={22} alt="dropdown" />
       </button>
-      <div className="relative flex">
+      <div className="relative flex w-full">
         {isOpen && (
           <ul className="border-var-gray-6 absolute w-full list-none rounded-[6px] border">
             {children.map((item: React.ReactNode, index: number) => (
