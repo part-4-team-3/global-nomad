@@ -25,7 +25,6 @@ export const useImageUploader = () => {
     if (uploadedImages.length < 4) {
       const imageUrl = URL.createObjectURL(uploadFile);
       setUploadedImages((prevImages) => [...prevImages, imageUrl]);
-      console.log(imageUrl);
     }
 
     /* 회원가입 기능 구현 후 사용할 함수입니다. */
