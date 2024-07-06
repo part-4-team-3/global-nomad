@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export interface Props {
+interface Props {
   id: number;
   onClose: (index: number) => void;
 }

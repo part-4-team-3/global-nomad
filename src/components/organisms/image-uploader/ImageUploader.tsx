@@ -1,6 +1,6 @@
 'use client';
-import GeneratedImage from '@/components/molecules/GeneratedImage/GeneratedImage';
-import { useImageUploader } from '@/models/useImageUploader';
+import GeneratedImage from '@/components/molecules/generated-image/GeneratedImage';
+import { useImageUploader } from '@/models/uploader/useImageUploader';
 import Image from 'next/image';
 
 export default function ImageUploader() {

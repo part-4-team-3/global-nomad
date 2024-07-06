@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import CloseButton from '@/components/atoms/closeButton/CloseButton';
+import CloseButton from '@/components/atoms/close-button/CloseButton';
 
-export interface Props {
+interface Props {
   key: number;
   url: string;
   onClose: (index: number) => void;
