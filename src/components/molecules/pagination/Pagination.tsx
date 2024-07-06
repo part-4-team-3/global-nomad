@@ -3,7 +3,7 @@
 import NextButton from '@/components/atoms/pagination-button/NextButton';
 import PrevButton from '@/components/atoms/pagination-button/PrevButton';
 import PageNumbers from '@/models/pagination/renderPageNumbers';
-import { useState } from 'react';
+import { usePageControls } from '@/models/pagination/usePageControls';
 
 interface Props {
   totalCount: number;
@@ -15,33 +15,27 @@ interface Props {
 }
 
 export default function Pagination({
-  totalCount = 60,
-  size = 5,
-  // currentPage = 5,
+  totalCount,
+  size,
+  currentPage,
   onPrev,
   onNext,
   onClick,
 }: Props) {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  /* 추후 상위 컴포넌트에서 사용될 커스텀훅입니다. */
+  const { currentPageNumber, handlePageClick, handleNextButton, handlePrevButton } =
+    usePageControls({ initialPage: currentPage });
   const totalPage = Math.ceil(totalCount / size);
-
-  const handlePageClick = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const handleNextButton = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePrevButton = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
 
   return (
     <div className="flex items-center gap-[10px]">
-      <PrevButton currentPage={currentPage} onPrev={handlePrevButton} />
-      <PageNumbers currentPage={currentPage} totalPage={totalPage} onClick={handlePageClick} />
-      <NextButton currentPage={currentPage} totalPage={totalPage} onNext={handleNextButton} />
+      <PrevButton currentPage={currentPageNumber} onPrev={handlePrevButton} />
+      <PageNumbers
+        currentPage={currentPageNumber}
+        totalPage={totalPage}
+        onClick={handlePageClick}
+      />
+      <NextButton currentPage={currentPageNumber} totalPage={totalPage} onNext={handleNextButton} />
     </div>
   );
 }
