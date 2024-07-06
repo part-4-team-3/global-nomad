@@ -1,13 +1,13 @@
 'use client';
 
-interface PageNumbersProps {
+interface Props {
   currentPage: number;
   totalPage: number;
   onClick: (pageNumber: number) => void;
 }
 
 /**현재 페이지를 기준으로 좌우 2개씩 총 5개의 페이지 번호 계산 */
-const PageNumbers = ({ currentPage, totalPage, onClick }: PageNumbersProps) => {
+const PageNumbers = ({ currentPage, totalPage, onClick }: Props) => {
   let start: number;
   let end: number;
 
