@@ -15,9 +15,9 @@ interface Props {
 }
 
 export default function Pagination({
-  totalCount,
-  size,
-  currentPage,
+  totalCount = 50,
+  size = 5,
+  currentPage = 1,
   onPrev,
   onNext,
   onClick,

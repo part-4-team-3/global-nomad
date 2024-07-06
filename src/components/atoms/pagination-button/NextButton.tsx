@@ -3,10 +3,9 @@
 import Image from 'next/image';
 
 interface Props {
-  totalPage?: number;
-  currentPage?: number;
-  onPrev?: () => void;
-  onNext?: () => void;
+  totalPage: number;
+  currentPage: number;
+  onNext: () => void;
 }
 
 export default function NextButton({ currentPage, totalPage, onNext }: Props) {
