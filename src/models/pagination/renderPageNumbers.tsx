@@ -7,7 +7,7 @@ interface PageNumbersProps {
 }
 
 /**현재 페이지를 기준으로 좌우 2개씩 총 5개의 페이지 번호 계산 */
-const PageNumbers: React.FC<PageNumbersProps> = ({ currentPage, totalPage, onClick }) => {
+const PageNumbers = ({ currentPage, totalPage, onClick }: PageNumbersProps) => {
   let start: number;
   let end: number;
 
