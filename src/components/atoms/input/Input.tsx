@@ -2,12 +2,10 @@
 
 import { forwardRef } from 'react';
 
-type InputSizeType = 'authField' | 'formField';
-
 export type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
-interface InputProps extends InputAttributes {
-  size: InputSizeType;
+interface Props extends InputAttributes {
+  size: 'authField' | 'formField';
   hasError?: boolean;
 }
 
@@ -18,17 +16,15 @@ export const InputStyles = {
   error: 'border-var-red-dark outline-var-red-dark',
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ size, hasError = false, ...rest }, ref) => {
-    return (
-      <input
-        ref={ref}
-        className={`${InputStyles.base} ${InputStyles[size]} ${hasError && InputStyles.error}`}
-        {...rest}
-      />
-    );
-  },
-);
+const Input = forwardRef<HTMLInputElement, Props>(({ size, hasError = false, ...rest }, ref) => {
+  return (
+    <input
+      ref={ref}
+      className={`${InputStyles.base} ${InputStyles[size]} ${hasError && InputStyles.error}`}
+      {...rest}
+    />
+  );
+});
 
 Input.displayName = 'Input';
 
