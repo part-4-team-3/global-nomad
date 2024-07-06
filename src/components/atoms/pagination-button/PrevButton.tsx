@@ -11,7 +11,7 @@ export default function PrevButton({ currentPage, onPrev }: Props) {
   return (
     <button
       onClick={onPrev}
-      className="relative size-[55px] md:size-[40px]"
+      className="relative size-[55px] max-md:size-[40px]"
       disabled={currentPage === 1}
     >
       <Image

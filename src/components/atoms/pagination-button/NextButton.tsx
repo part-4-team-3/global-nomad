@@ -13,7 +13,7 @@ export default function NextButton({ currentPage, totalPage, onNext }: Props) {
   return (
     <button
       onClick={onNext}
-      className="relative size-[55px] md:size-[40px]"
+      className="relative size-[55px] max-md:size-[40px]"
       disabled={currentPage === totalPage}
     >
       <Image
