@@ -14,8 +14,6 @@ interface RegisterData {
   passwordCheck: string;
 }
 
-const errorMsg = 'text-red_D6173A text-[14px]';
-
 export default function RegisterForm() {
   const {
     control,
@@ -59,7 +57,7 @@ export default function RegisterForm() {
               />
             )}
           />
-          {errors.email && <div className={errorMsg}>{errors.email.message}</div>}
+          {errors.email && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.email.message}</div>}
         </div>
         <div>
           <Controller
@@ -77,7 +75,9 @@ export default function RegisterForm() {
               />
             )}
           />
-          {errors.nickName && <div className={errorMsg}>{errors.nickName.message}</div>}
+          {errors.nickName && (
+            <div className={FORM_OPTIONS.errorMsgStyle}>{errors.nickName.message}</div>
+          )}
         </div>
         <div>
           <Controller
@@ -94,7 +94,9 @@ export default function RegisterForm() {
               />
             )}
           />
-          {errors.password && <div className={errorMsg}>{errors.password.message}</div>}
+          {errors.password && (
+            <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
+          )}
         </div>
         <div>
           <Controller
@@ -121,7 +123,9 @@ export default function RegisterForm() {
               />
             )}
           />
-          {errors.passwordCheck && <div className={errorMsg}>{errors.passwordCheck.message}</div>}
+          {errors.passwordCheck && (
+            <div className={FORM_OPTIONS.errorMsgStyle}>{errors.passwordCheck.message}</div>
+          )}
         </div>
         <button className="w-full border" type="submit" disabled={!isValid}>
           회원가입 하기

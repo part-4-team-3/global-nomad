@@ -13,8 +13,6 @@ interface LoginData {
   password: string;
 }
 
-const errorMsg = 'text-red_D6173A text-[14px]';
-
 export default function LoginForm() {
   const router = useRouter();
   const {
@@ -55,7 +53,7 @@ export default function LoginForm() {
               />
             )}
           />
-          {errors.email && <div className={errorMsg}>{errors.email.message}</div>}
+          {errors.email && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.email.message}</div>}
         </div>
         <div>
           <Controller
@@ -72,7 +70,9 @@ export default function LoginForm() {
               />
             )}
           />
-          {errors.password && <div className={errorMsg}>{errors.password.message}</div>}
+          {errors.password && (
+            <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
+          )}
         </div>
         <button className="w-full border" type="submit" disabled={!isValid}>
           로그인 하기
