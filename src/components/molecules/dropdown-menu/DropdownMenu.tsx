@@ -14,7 +14,7 @@ export default function DropdownMenu({ text, children, className }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   return (
