@@ -93,6 +93,13 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+      screens: {
+        md: { min: '450px' },
+        lg: { min: '1024px' },
+      },
+      inset: {
+        unset: 'unset',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
