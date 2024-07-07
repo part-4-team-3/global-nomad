@@ -14,17 +14,17 @@ export default function Header() {
     },
   ];
   return (
-    <header className="flex">
-      <InnerLayout mobilePx="keep">
+    <header>
+      <InnerLayout mobilePx="keep" className="flex items-center justify-between py-19pxr">
         <h1>
           <Link href="/">
             <Image src="/logo.svg" width={165.5} height={28} alt="GlobalNomad logo" />
           </Link>
         </h1>
         <nav>
-          <ul>
+          <ul className="flex gap-25pxr">
             {navList.map((nav) => (
-              <Link href={nav.link} key={nav.text}>
+              <Link href={nav.link} key={nav.text} className="text-14pxr font-[500]">
                 {nav.text}
               </Link>
             ))}
