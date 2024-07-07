@@ -1,11 +1,14 @@
 'use client';
 
 import { Controller, useForm } from 'react-hook-form';
-import { registerMutationOptions } from '@/queries/users/register';
 import AuthInput from '@/components/molecules/input/AuthInput';
 import { useMutation } from '@tanstack/react-query';
 import PasswordInput from '@/components/molecules/input/PasswordInput';
-import FORM_OPTIONS from '@/constant/formOption';
+import FORM_OPTIONS from '@/constant/form-option';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/atoms/button/Button';
+import { registerMutationOptions } from '@/queries/users/register';
+import { onRegisterSuccess } from '@/models/auth/register-models';
 
 interface RegisterData {
   email: string;
@@ -15,14 +18,14 @@ interface RegisterData {
 }
 
 export default function RegisterForm() {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
     watch,
-    setError,
   } = useForm<RegisterData>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       email: '',
       nickName: '',
@@ -33,14 +36,18 @@ export default function RegisterForm() {
 
   const mutation = useMutation(registerMutationOptions);
 
-  const submit = (data: RegisterData) => {
-    console.log(data);
-    mutation.mutate({ email: data.email, nickname: data.nickName, password: data.password });
+  const submit = ({ email, nickName: nickname, password }: RegisterData) => {
+    mutation.mutate(
+      { email, nickname, password },
+      {
+        onSuccess: () => onRegisterSuccess(router),
+      },
+    );
   };
 
   return (
-    <form onSubmit={handleSubmit(submit)}>
-      <div className="flex flex-col gap-[16px]">
+    <form className="w-full" onSubmit={handleSubmit(submit)}>
+      <div className="flex w-full flex-col gap-[16px]">
         <div>
           <Controller
             control={control}
@@ -127,10 +134,7 @@ export default function RegisterForm() {
             <div className={FORM_OPTIONS.errorMsgStyle}>{errors.passwordCheck.message}</div>
           )}
         </div>
-        <button className="w-full border" type="submit" disabled={!isValid}>
-          회원가입 하기
-        </button>
-        {/* 공용 컴포넌트 button으로 교체할 예정 */}
+        <Button type="submit" text="회원가입 하기" size="l" color="black" disabled={!isValid} />
       </div>
     </form>
   );
