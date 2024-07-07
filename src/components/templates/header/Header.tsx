@@ -1,8 +1,17 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
+import Profile from '@/components/atoms/profile/Profile';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Header() {
+interface Props {
+  // 임시로 타입 지정
+  user: {
+    nickname: string;
+    profileImageUrl: string | null;
+  };
+}
+
+export default function Header({ user }: Props) {
   const navList = [
     {
       text: '로그인',
@@ -22,13 +31,21 @@ export default function Header() {
           </Link>
         </h1>
         <nav>
-          <ul className="flex gap-25pxr">
-            {navList.map((nav) => (
-              <Link href={nav.link} key={nav.text} className="text-14pxr font-[500]">
-                {nav.text}
-              </Link>
-            ))}
-          </ul>
+          {user ? (
+            <ul>
+              <button>종</button>
+              <hr />
+              <Profile name={user.nickname} src={user.profileImageUrl} />
+            </ul>
+          ) : (
+            <ul className="flex gap-25pxr">
+              {navList.map((nav) => (
+                <Link href={nav.link} key={nav.text} className="text-14pxr font-[500]">
+                  {nav.text}
+                </Link>
+              ))}
+            </ul>
+          )}
         </nav>
       </InnerLayout>
     </header>
