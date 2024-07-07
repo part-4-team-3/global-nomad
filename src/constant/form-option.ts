@@ -45,7 +45,7 @@ const FORM_OPTIONS = {
       required: '닉네임을 입력해 주세요.',
     },
   },
-  errorMsgStyle: 'text-red-500 text-14pxr',
+  errorMsgStyle: 'text-red-500 text-14pxr mt-8pxr',
 };
 
 export default FORM_OPTIONS;

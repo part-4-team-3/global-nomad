@@ -5,14 +5,15 @@ import { forwardRef } from 'react';
 export type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
 interface Props extends InputAttributes {
-  size: 'authField' | 'formField';
+  size: 'authField' | 'formField' | 'full';
   hasError?: boolean;
 }
 
 export const InputStyles = {
   base: 'px-20pxr py-16pxr border border-var-gray2 rounded-md',
-  authField: 'w-350pxr h-58pxr sm:w-full sm:max-w-[640px]',
-  formField: 'w-343pxr h-56pxr sm:w-full sm:max-w-[792px]',
+  authField: 'w-full max-w-350pxr h-58pxr md:max-w-640pxr',
+  formField: 'w-full max-w-343pxr h-56pxr md:max-w-429pxr lg:max-w-792pxr',
+  full: 'w-full h-full',
   error: 'border-var-red-dark outline-var-red-dark',
 };
 
