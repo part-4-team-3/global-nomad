@@ -3,12 +3,13 @@ import Profile from '@/components/atoms/profile/Profile';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// 임시로 타입 지정
+interface User {
+  nickname: string;
+  profileImageUrl: string | null;
+}
 interface Props {
-  // 임시로 타입 지정
-  user: {
-    nickname: string;
-    profileImageUrl: string | null;
-  };
+  user: User | undefined;
 }
 
 export default function Header({ user }: Props) {
@@ -35,7 +36,7 @@ export default function Header({ user }: Props) {
             <ul>
               <button>종</button>
               <hr />
-              <Profile name={user.nickname} src={user.profileImageUrl} />
+              <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
             </ul>
           ) : (
             <ul className="flex gap-25pxr">
