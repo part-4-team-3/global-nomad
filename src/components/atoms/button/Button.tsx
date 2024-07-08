@@ -5,19 +5,19 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   color: 'white' | 'black';
   size?: 's' | 'm' | 'l';
-  addStyle?: string;
   link?: string;
+  className?: string;
 }
 
 export default function Button({
   text,
   color,
   size,
-  addStyle = '',
   type,
   onClick,
   disabled,
   link,
+  className = '',
 }: Props) {
   let sizeStyle;
   switch (size) {
@@ -39,7 +39,7 @@ export default function Button({
     ? 'bg-var-gray3 border border-var-gray3 !text-white'
     : 'border border-var-green-dark2';
 
-  const style = `rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${addStyle} ${disabledStyle}`;
+  const style = `rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${className} ${disabledStyle}`;
 
   if (link)
     return (
