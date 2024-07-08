@@ -50,6 +50,7 @@ const config = {
         'var-gray8': '#FAFAFA',
         'var-green': '#00AC07',
         'var-green-dark': '#0B3B2D',
+        'var-green-dark2': '#112211',
         'var-green-light': '#F1EFFD',
         'var-red-dark': '#FF472E',
         'var-red-light': '#FFE4E0',

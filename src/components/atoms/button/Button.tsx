@@ -3,12 +3,22 @@ import { ButtonHTMLAttributes } from 'react';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  size: 's' | 'm' | 'l';
   color: 'white' | 'black';
+  size?: 's' | 'm' | 'l';
+  addStyle?: string;
   link?: string;
 }
 
-export default function Button({ text, size, color, onClick, disabled, link }: Props) {
+export default function Button({
+  text,
+  color,
+  size,
+  addStyle = '',
+  type,
+  onClick,
+  disabled,
+  link,
+}: Props) {
   let sizeStyle;
   switch (size) {
     case 's':
@@ -18,15 +28,18 @@ export default function Button({ text, size, color, onClick, disabled, link }: P
       sizeStyle = 'px-33pxr py-16pxr text-16pxr';
       break;
     case 'l':
-      sizeStyle = 'py-14pxr w-full text-16pxr';
+      sizeStyle = 'w-full py-14pxr text-16pxr';
+      break;
+    default:
+      sizeStyle = '';
   }
   const colorStyle =
-    color === 'white' ? 'bg-white text-var-green-dark' : 'bg-var-green-dark text-white';
+    color === 'white' ? 'bg-white text-var-green-dark2' : 'bg-var-green-dark2 text-white';
   const disabledStyle = disabled
     ? 'bg-var-gray3 border border-var-gray3 !text-white'
-    : 'border border-var-green-dark';
+    : 'border border-var-green-dark2';
 
-  const style = `rounded-[6px] font-[700] ${sizeStyle} ${colorStyle} ${disabledStyle}`;
+  const style = `rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${addStyle} ${disabledStyle}`;
 
   if (link)
     return (
@@ -36,7 +49,7 @@ export default function Button({ text, size, color, onClick, disabled, link }: P
     );
 
   return (
-    <button className={style} onClick={onClick} disabled={disabled}>
+    <button className={style} onClick={onClick} type={type} disabled={disabled}>
       {text}
     </button>
   );
