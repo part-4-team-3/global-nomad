@@ -12,12 +12,12 @@ export default function NextButton({ currentPage, totalPage, onNext }: Props) {
   return (
     <button
       onClick={onNext}
-      className="relative size-[55px] max-md:size-[40px]"
+      className="max-md:size-[40px] relative size-[55px]"
       disabled={currentPage === totalPage}
     >
       <Image
         fill
-        src={currentPage === totalPage ? '/paginationRight_invalid.svg' : '/paginationRight.svg'}
+        src={currentPage === totalPage ? '/pagination-right-invalid.svg' : '/pagination-right.svg'}
         alt="이전 페이지"
       />
     </button>
