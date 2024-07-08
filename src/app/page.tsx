@@ -1,4 +1,5 @@
 import Header from '@/components/templates/header/Header';
+import Banner from '@/components/templates/main/Banner';
 import Image from 'next/image';
 
 const USER = {
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Header user={USER} />
+      <Banner imageUrl="/star-icon.svg" />
     </>
   );
 }
