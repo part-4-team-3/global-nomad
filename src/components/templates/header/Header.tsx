@@ -24,7 +24,7 @@ export default function Header({ user }: Props) {
     },
   ];
   return (
-    <header>
+    <header className="border-b border-var-gray6 bg-white">
       <InnerLayout mobilePx="keep" className="flex items-center justify-between py-19pxr">
         <h1>
           <Link href="/">
@@ -33,9 +33,11 @@ export default function Header({ user }: Props) {
         </h1>
         <nav>
           {user ? (
-            <ul>
-              <button>종</button>
-              <hr />
+            <ul className="flex items-center gap-12pxr md:gap-25pxr">
+              <button>
+                <Image src="/bell.svg" alt="알림" width={20} height={20} />
+              </button>
+              <div className="h-22pxr w-1pxr bg-var-gray6" />
               <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
             </ul>
           ) : (
