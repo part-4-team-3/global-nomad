@@ -144,6 +144,6 @@
     @apply border-border font-[pretendard];
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-var-black;
   }
 }

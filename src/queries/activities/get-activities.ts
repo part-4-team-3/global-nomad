@@ -1,6 +1,5 @@
 import { apiInstance } from '@/lib/axios';
 import { UseQueryOptions } from '@tanstack/react-query';
-import { onLoginError } from '@/models/auth/login-models';
 import { Activity } from '@/types/activity';
 
 interface GetActivitiesResponse {
