@@ -1,5 +1,4 @@
 import { TOAST_DEFAULT } from '@/constant/toast-option';
-import { AxiosError } from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { toast } from 'react-toastify';
 
@@ -16,11 +15,6 @@ export const onRegisterSuccess = (router: AppRouterInstance) => {
 };
 
 export const onRegisterError = (error: Error) => {
-  if (error instanceof AxiosError) {
-    toast(error.response?.data.message, TOAST_DEFAULT);
-    return;
-  }
-
   const status = Number(error.message);
 
   if (status === 409) {
