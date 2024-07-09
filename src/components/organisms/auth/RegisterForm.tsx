@@ -7,8 +7,8 @@ import PasswordInput from '@/components/molecules/input/PasswordInput';
 import FORM_OPTIONS from '@/constant/form-option';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/atoms/button/Button';
-import { registerMutationOptions } from '@/queries/users/register';
-import { onRegisterSuccess } from '@/models/auth/register-models';
+import { registerMutationOptions } from '@/mutations/users/register';
+import { toast } from 'react-toastify';
 
 interface RegisterData {
   email: string;
@@ -34,15 +34,22 @@ export default function RegisterForm() {
     },
   });
 
-  const mutation = useMutation(registerMutationOptions);
+  const mutation = useMutation({
+    ...registerMutationOptions,
+    onSuccess: () => {
+      toast('회원가입 되었습니다.', {
+        onClose: () => {
+          router.push('/signin');
+        },
+        onClick: () => {
+          router.push('/signin');
+        },
+      });
+    },
+  });
 
   const submit = ({ email, nickName: nickname, password }: RegisterData) => {
-    mutation.mutate(
-      { email, nickname, password },
-      {
-        onSuccess: () => onRegisterSuccess(router),
-      },
-    );
+    mutation.mutate({ email, nickname, password });
   };
 
   return (

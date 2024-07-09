@@ -10,7 +10,13 @@ export default function ToastProvider({ children }: Props) {
   return (
     <>
       {children}
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        draggable
+        theme="dark"
+        progressStyle={{ background: 'green' }}
+      />
     </>
   );
 }
