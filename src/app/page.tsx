@@ -2,6 +2,7 @@
 
 import Header from '@/components/templates/header/Header';
 import Banner from '@/components/templates/main/Banner';
+import Main from '@/components/templates/main/Main';
 import { getActivitiesQueryOptions } from '@/queries/activities/get-activities';
 import { useQuery } from '@tanstack/react-query';
 
@@ -21,6 +22,7 @@ export default function Home() {
     <>
       <Header user={USER} />
       {data && <Banner activity={data?.activities[0]} />}
+      <Main />
     </>
   );
 }
