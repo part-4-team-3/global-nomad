@@ -1,15 +1,7 @@
 import { apiInstance } from '@/lib/axios';
 import { onRegisterError } from '@/models/auth/register-models';
+import { User } from '@/types/user';
 import { UseMutationOptions } from '@tanstack/react-query';
-
-export interface User {
-  id: string;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 interface RegisterBody {
   email: string;

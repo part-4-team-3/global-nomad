@@ -9,6 +9,7 @@ import FORM_OPTIONS from '@/constant/form-option';
 import Button from '@/components/atoms/button/Button';
 import { loginMutationOptions } from '@/queries/auth/login';
 import { onLoginSuccess } from '@/models/auth/login-models';
+import useUser from '@/store/useUser';
 
 interface LoginData {
   email: string;
@@ -29,11 +30,13 @@ export default function LoginForm() {
     },
   });
 
+  const { setUser } = useUser();
+
   const mutation = useMutation(loginMutationOptions);
 
   const submit = (data: LoginData) => {
     mutation.mutate(data, {
-      onSuccess: (data) => onLoginSuccess(data, router),
+      onSuccess: (data) => onLoginSuccess(data, router, setUser),
     });
   };
 
