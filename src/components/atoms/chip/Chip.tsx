@@ -24,7 +24,7 @@ export default function Chip({ status, count }: Props) {
   };
   return (
     <div
-      className={`w-full rounded-[4px] px-4pxr py-3pxr text-12pxr md:text-14pxr ${statusStyle[status].style}`}
+      className={`w-full rounded-[4px] px-4pxr py-3pxr text-left text-12pxr md:text-14pxr ${statusStyle[status].style}`}
     >
       {statusStyle[status].text} {count}
     </div>
