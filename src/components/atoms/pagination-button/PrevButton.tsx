@@ -11,12 +11,12 @@ export default function PrevButton({ currentPage, onPrev }: Props) {
   return (
     <button
       onClick={onPrev}
-      className="relative size-[55px] max-md:size-[40px]"
+      className="max-md:size-[40px] relative size-[55px]"
       disabled={currentPage === 1}
     >
       <Image
         fill
-        src={currentPage === 1 ? '/paginationLeft_invalid.svg' : '/paginationLeft.svg'}
+        src={currentPage === 1 ? '/pagination-left-invalid.svg' : '/pagination-left.svg'}
         alt="이전 페이지"
       />
     </button>
