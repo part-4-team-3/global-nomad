@@ -1,13 +1,5 @@
-import Footer from '@/components/templates/auth/Footer';
-import Header from '@/components/templates/auth/Header';
-import Main from '@/components/templates/auth/Main';
+import RegisterForm from '@/components/organisms/auth/RegisterForm';
 
 export default function SignUp() {
-  return (
-    <>
-      <Header />
-      <Main variant="signUp" />
-      <Footer variant="signUp" />
-    </>
-  );
+  return <RegisterForm />;
 }

@@ -1,11 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-interface Props {
-  variant: 'signIn' | 'signUp';
-}
-
-export default function Footer({ variant }: Props) {
-  const isSignIn = variant === 'signIn';
+export default function Footer() {
+  const pathname = usePathname();
+  const isSignIn = pathname === '/signin';
   const spanText = isSignIn ? '회원이 아니신가요? ' : '회원이신가요? ';
   const linkText = isSignIn ? '회원가입하기' : '로그인하기';
   const linkSrc = isSignIn ? 'signup' : 'signin';
