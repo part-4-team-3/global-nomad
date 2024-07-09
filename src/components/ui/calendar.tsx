@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, DateFormatter } from 'react-day-picker';
+import { format } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 
 import { cn } from '@/lib/tailwind-utils';
 import { buttonVariants } from '@/components/ui/button';
@@ -10,9 +12,12 @@ import { buttonVariants } from '@/components/ui/button';
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+  const dayFormatter: DateFormatter = (date, options) => format(date, 'eee', { locale: enUS });
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      formatters={{ formatWeekdayName: dayFormatter }}
       className={cn('p-[12px]', className)}
       classNames={{
         months: 'flex flex-col sm:flex-row space-y-[16px] sm:space-x-[16px] sm:space-y-0',
