@@ -2,15 +2,15 @@ import React from 'react';
 import ProfileImage from './ProfileImage';
 
 interface Props {
-  name: string;
-  src: string;
+  nickname: string;
+  imageUrl: string | null;
 }
 
-export default function Profile({ name, src }: Props) {
+export default function Profile({ nickname, imageUrl }: Props) {
   return (
     <div className="flex items-center gap-10pxr">
-      <ProfileImage src={src} />
-      <p className="text-14pxr font-[500] text-var-black">{name}</p>
+      <ProfileImage nickname={nickname} imageUrl={imageUrl} />
+      <p className="text-14pxr font-[500] text-var-black">{nickname}</p>
     </div>
   );
 }

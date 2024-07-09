@@ -20,16 +20,21 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
         <label htmlFor={rest.id}>{isCheck ? '비밀번호 확인' : '비밀번호'}</label>
         <div className={`relative ${InputStyles.authField}`}>
           <Input size="authField" hasError={hasError} type={type} ref={ref} {...rest} />
-          <Image
-            className="absolute right-8pxr top-1/2 -translate-y-1/2 transform"
-            src={type === 'password' ? '/visibility-on.png' : '/visibility-off.png'}
-            width={24}
-            height={24}
-            alt="visibile"
+          <button
+            type="button"
             onClick={() => {
               setType((prevType) => (prevType === 'password' ? 'text' : 'password'));
             }}
-          />
+            tabIndex={-1}
+          >
+            <Image
+              className="absolute right-8pxr top-1/2 -translate-y-1/2 transform"
+              src={type === 'password' ? '/visibility-on.png' : '/visibility-off.png'}
+              width={24}
+              height={24}
+              alt="visibile"
+            />
+          </button>
         </div>
       </div>
     );

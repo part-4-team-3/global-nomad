@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/molecules/input/AuthInput';
 import { useMutation } from '@tanstack/react-query';
 import PasswordInput from '@/components/molecules/input/PasswordInput';
-import FORM_OPTIONS from '@/constant/formOption';
+import FORM_OPTIONS from '@/constant/form-option';
+import Button from '@/components/atoms/button/Button';
 import { loginMutationOptions } from '@/queries/auth/login';
+import { onLoginSuccess } from '@/models/auth/login-models';
 
 interface LoginData {
   email: string;
@@ -19,9 +21,8 @@ export default function LoginForm() {
     control,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
   } = useForm<LoginData>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
@@ -30,13 +31,15 @@ export default function LoginForm() {
 
   const mutation = useMutation(loginMutationOptions);
 
+  const submit = (data: LoginData) => {
+    mutation.mutate(data, {
+      onSuccess: (data) => onLoginSuccess(data, router),
+    });
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        mutation.mutate({ email: data.email, password: data.password });
-      })}
-    >
-      <div className="flex flex-col gap-[16px]">
+    <form className="w-full" onSubmit={handleSubmit(submit)}>
+      <div className="flex w-full flex-col gap-28pxr">
         <div>
           <Controller
             control={control}
@@ -74,10 +77,7 @@ export default function LoginForm() {
             <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
           )}
         </div>
-        <button className="w-full border" type="submit" disabled={!isValid}>
-          로그인 하기
-        </button>
-        {/* 공용 컴포넌트 button으로 교체할 예정 */}
+        <Button type="submit" text="로그인 하기" size="l" color="black" disabled={!isValid} />
       </div>
     </form>
   );
