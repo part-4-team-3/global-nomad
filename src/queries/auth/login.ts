@@ -1,7 +1,7 @@
 import { apiInstance } from '@/lib/axios';
 import { UseMutationOptions } from '@tanstack/react-query';
-import { User } from '../users/register';
 import { onLoginError } from '@/models/auth/login-models';
+import { User } from '@/types/user';
 
 interface LoginBody {
   email: string;

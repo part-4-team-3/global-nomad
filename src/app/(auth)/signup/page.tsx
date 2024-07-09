@@ -1,12 +1,12 @@
-import Logo from '@/components/atoms/logo/Logo';
-import RegisterForm from '@/components/organisms/auth/RegisterForm';
 import Footer from '@/components/templates/auth/Footer';
+import Header from '@/components/templates/auth/Header';
+import Main from '@/components/templates/auth/Main';
 
 export default function SignUp() {
   return (
     <>
-      <Logo />
-      <RegisterForm />
+      <Header />
+      <Main variant="signUp" />
       <Footer variant="signUp" />
     </>
   );

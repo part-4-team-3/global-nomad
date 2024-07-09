@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Logo() {
+export default function Header() {
   return (
     <Image
       className="mb-0 h-154pxr w-270pxr md:mb-8pxr md:h-192pxr md:w-340pxr"
