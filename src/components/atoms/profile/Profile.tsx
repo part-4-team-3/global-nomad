@@ -10,7 +10,7 @@ export default function Profile({ nickname, imageUrl }: Props) {
   return (
     <div className="flex items-center gap-10pxr">
       <ProfileImage nickname={nickname} imageUrl={imageUrl} />
-      <p className="text-14pxr font-[500] text-var-black">{nickname}</p>
+      <p className="text-14pxr font-[500]">{nickname}</p>
     </div>
   );
 }
