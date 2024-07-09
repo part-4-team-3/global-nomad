@@ -6,6 +6,7 @@ import Main from '@/components/templates/main/Main';
 import { getActivitiesQueryOptions } from '@/queries/activities/get-activities';
 import { useQuery } from '@tanstack/react-query';
 
+
 const USER = {
   id: 593,
   email: 'daeun@codeit.com',
