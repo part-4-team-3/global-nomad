@@ -36,7 +36,7 @@ export default function Button({
   const colorStyle =
     color === 'white' ? 'bg-white text-var-green-dark2' : 'bg-var-green-dark2 text-white';
   const disabledStyle = disabled
-    ? 'bg-var-gray3 border border-var-gray3 !text-white'
+    ? '!bg-var-gray3 border border-var-gray3 !text-white'
     : 'border border-var-green-dark2';
 
   const style = `rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${className} ${disabledStyle}`;
