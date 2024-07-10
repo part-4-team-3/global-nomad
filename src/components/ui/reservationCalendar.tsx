@@ -9,7 +9,6 @@ import Image from 'next/image';
 import { formatDateYYYYMMDD } from '@/lib/formatDate';
 import Chip from '../atoms/chip/Chip';
 import { ReservationByMonth } from '@/types/reservation';
-import { MyActivitiesOfMonth } from '@/types/activity';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -36,9 +35,8 @@ function ReservationCalendar({
   className,
   classNames,
   showOutsideDays = true,
-  myActivities,
   ...props
-}: CalendarProps & { myActivities?: MyActivitiesOfMonth[] }) {
+}: CalendarProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -102,7 +100,7 @@ function ReservationCalendar({
               className={cn(buttonVariants({ variant: 'ghost' }), day_today)}
             >
               {date.getDate()}
-              {myActivities?.map((item: ReservationByMonth) =>
+              {mockData.map((item: ReservationByMonth) =>
                 item.date === formatDateYYYYMMDD(date) ? (
                   <div key={item.date} className={status}>
                     {item.reservations.pending > 0 && (
