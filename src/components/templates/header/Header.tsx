@@ -1,18 +1,14 @@
+'use client';
+
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import Profile from '@/components/atoms/profile/Profile';
+import useUser from '@/store/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// 임시로 타입 지정
-interface User {
-  nickname: string;
-  profileImageUrl: string | null;
-}
-interface Props {
-  user: User | undefined;
-}
+export default function Header() {
+  const { user } = useUser();
 
-export default function Header({ user }: Props) {
   const navList = [
     {
       text: '로그인',
