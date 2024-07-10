@@ -48,6 +48,7 @@ const config = {
         'var-gray6': '#DDDDDD',
         'var-gray7': '#EEEEEE',
         'var-gray8': '#FAFAFA',
+        'var-gray9': '#A1A1A1',
         'var-green': '#00AC07',
         'var-green2': '#CED8D5',
         'var-green-dark': '#0B3B2D',
