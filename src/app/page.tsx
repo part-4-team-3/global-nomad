@@ -1,29 +1,19 @@
-'use client';
-
+import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
+import SearchActivity from '@/components/molecules/search/SearchActivity';
 import Header from '@/components/templates/header/Header';
 import Banner from '@/components/templates/main/Banner';
-import Main from '@/components/templates/main/Main';
-import { getActivitiesQueryOptions } from '@/queries/activities/get-activities';
-import { useQuery } from '@tanstack/react-query';
+import { getActivities } from '@/queries/activities/get-activities';
 
-
-const USER = {
-  id: 593,
-  email: 'daeun@codeit.com',
-  nickname: '오다은',
-  profileImageUrl: null,
-  createdAt: '2024-07-08T19:06:23.037Z',
-  updatedAt: '2024-07-08T19:06:23.037Z',
-};
-
-export default function Home() {
-  const { data } = useQuery(getActivitiesQueryOptions);
+export default async function Home() {
+  const data = await getActivities();
 
   return (
     <>
-      <Header user={USER} />
-      {data && <Banner activity={data?.activities[0]} />}
-      <Main />
+      <Header />
+      <Banner activity={data?.activities[0]} />
+      <InnerLayout>
+        <SearchActivity />
+      </InnerLayout>
     </>
   );
 }

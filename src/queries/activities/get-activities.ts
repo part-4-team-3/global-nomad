@@ -7,7 +7,7 @@ interface GetActivitiesResponse {
   totalCount: number;
 }
 
-const getActivities = async () => {
+export const getActivities = async () => {
   const data = await apiInstance.get<any, GetActivitiesResponse>('/activities?method=offset');
   return data;
 };
