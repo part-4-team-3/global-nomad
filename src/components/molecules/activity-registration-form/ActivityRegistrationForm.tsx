@@ -4,6 +4,7 @@ import ActivitieSettingInput from '../input/ActivitieSettingInput';
 import { Controller, useForm } from 'react-hook-form';
 import DropdownMenu from '../dropdown-menu/DropdownMenu';
 import { useState } from 'react';
+import Select from '../select/Select';
 
 interface ActivitySettingData {
   title: string;
@@ -17,6 +18,8 @@ interface ActivitySettingData {
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
   const [category, setCategory] = useState<string>('');
+
+  const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
   const onSubmit = (data: ActivitySettingData) => {
     {
@@ -32,32 +35,7 @@ export default function ActivityRegistrationForm() {
         <Controller
           name="category"
           control={control}
-          render={({ field }) => (
-            <DropdownMenu text="카테고리">
-              <button
-                className="p bg-white"
-                type="button"
-                onClick={() => field.onChange('문화 · 예술')}
-              >
-                문화 · 예술
-              </button>
-              <button type="button" onClick={() => field.onChange('식음료')}>
-                식음료
-              </button>
-              <button type="button" onClick={() => field.onChange('스포츠')}>
-                스포츠
-              </button>
-              <button type="button" onClick={() => field.onChange('투어')}>
-                투어
-              </button>
-              <button type="button" onClick={() => field.onChange('관광')}>
-                관광
-              </button>
-              <button type="button" onClick={() => field.onChange('웰빙')}>
-                웰빙
-              </button>
-            </DropdownMenu>
-          )}
+          render={({ field }) => <Select options={options} placeholder="카테고리" />}
         />
         <ActivitieSettingInput text="설명" />
 
