@@ -21,7 +21,7 @@ export default function Banner({ activity }: Props) {
           <h2 className="max-w-[60vw] break-keep text-24pxr leading-[120%] md:max-w-[90%] md:text-54pxr lg:max-w-550pxr lg:text-68pxr">
             {activity.title}
           </h2>
-          <p className="text-14pxr md:text-20pxr lg:text-24pxr">{activity.description}</p>
+          <p className="text-14pxr md:text-20pxr lg:text-24pxr">인기 경험 BEST 🔥</p>
         </InnerLayout>
       </div>
     </div>
