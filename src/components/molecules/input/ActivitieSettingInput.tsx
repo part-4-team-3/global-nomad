@@ -17,7 +17,7 @@ interface Props {
 const ActivitieSettingInput = ({ text }: Props) => {
   return (
     <div className="flex w-full flex-col gap-8pxr">
-      <Input size="authField" placeholder={text} />
+      <Input size="full" placeholder={text} />
     </div>
   );
 };
