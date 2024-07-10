@@ -3,7 +3,11 @@ import GeneratedImage from '@/components/molecules/generated-image/GeneratedImag
 import { useImageUploader } from '@/models/uploader/useImageUploader';
 import Image from 'next/image';
 
-export default function ImageUploader() {
+interface Props {
+  title: 'banner' | 'intro';
+}
+
+export default function ImageUploader({ title }: Props) {
   const { uploadedImages, handleUploadImage, handleDeleteImage } = useImageUploader();
 
   return (
@@ -15,7 +19,7 @@ export default function ImageUploader() {
           accept="image/png, image/jpeg"
           className="hidden"
           id="imageUpload"
-          onChange={handleUploadImage}
+          onChange={(e) => handleUploadImage(e, title)}
         />
         <div className="relative size-[167px] cursor-pointer md:size-[206px] lg:size-[180px]">
           <Image fill src="/upload-image.svg" alt="이미지 등록하기" />

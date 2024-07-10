@@ -45,11 +45,10 @@ export default function ActivityRegistrationForm() {
         <ActivitieSettingInput text="주소를 입력해주세요" />
 
         {/* 예약가능 시간대 */}
-        {/* 이미지업로더 훅 수정 예정 */}
         <label>배너 이미지</label>
-        <ImageUploader />
+        <ImageUploader title="banner" />
         <label>소개 이미지</label>
-        <ImageUploader />
+        <ImageUploader title="intro" />
       </div>
     </form>
   );

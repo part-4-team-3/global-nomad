@@ -21,7 +21,10 @@ export const useImageUploader = () => {
   };
 
   /** 등록한 이미지를 url로 바꾸는 비동기 함수 */
-  const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImage = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    title: 'banner' | 'intro',
+  ) => {
     /* input 요소에서 선택된 파일 추출 */
     const { files } = e.target;
 
@@ -31,14 +34,17 @@ export const useImageUploader = () => {
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
-
     try {
       const response: ApiResponse = await apiInstance.post('activities/image', formData);
-      // 업로드된 이미지 배열이 4개 이하인 경우에만 추가
-      if (uploadedImages.length < 4) {
-        setUploadedImages((prevImages) => [...prevImages, response.activityImageUrl]);
-      } else {
-        alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
+
+      if (title === 'banner') {
+        setUploadedImages([response.activityImageUrl]);
+      } else if (title === 'intro') {
+        if (uploadedImages.length < 4) {
+          setUploadedImages((prevImages) => [...prevImages, response.activityImageUrl]);
+        } else {
+          alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
+        }
       }
     } catch (error) {
       alert(error);
