@@ -3,11 +3,10 @@
 interface Props {
   currentPage: number;
   totalPage: number;
-  onClick: (pageNumber: number) => void;
 }
 
 /**현재 페이지를 기준으로 좌우 2개씩 총 5개의 페이지 번호 계산 */
-const PageNumbers = ({ currentPage, totalPage, onClick }: Props) => {
+const RentderPageNumbers = ({ currentPage, totalPage }: Props) => {
   let start: number;
   let end: number;
 
@@ -32,15 +31,7 @@ const PageNumbers = ({ currentPage, totalPage, onClick }: Props) => {
   }
 
   const numbers = Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  return numbers.map((number) => (
-    <button
-      key={number}
-      className={`py-17 text-base size-[55px] items-center justify-center rounded-2xl border-[1px] border-var-green-dark text-[18pxr] text-var-green-dark max-md:size-[40px] ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
-      onClick={() => onClick(number)}
-    >
-      {number}
-    </button>
-  ));
+  return numbers;
 };
 
-export default PageNumbers;
+export default RentderPageNumbers;
