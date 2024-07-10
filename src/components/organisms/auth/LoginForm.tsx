@@ -7,9 +7,9 @@ import { useMutation } from '@tanstack/react-query';
 import PasswordInput from '@/components/molecules/input/PasswordInput';
 import FORM_OPTIONS from '@/constant/form-option';
 import Button from '@/components/atoms/button/Button';
-import { loginMutationOptions } from '@/queries/auth/login';
-import { onLoginSuccess } from '@/models/auth/login-models';
+import { loginMutationOptions } from '@/mutations/auth/login';
 import useUser from '@/store/useUser';
+import { cookie } from '@/lib/cookie';
 
 interface LoginData {
   email: string;
@@ -32,12 +32,19 @@ export default function LoginForm() {
 
   const { setUser } = useUser();
 
-  const mutation = useMutation(loginMutationOptions);
+  const mutation = useMutation({
+    ...loginMutationOptions,
+    onSuccess: (data) => {
+      cookie.setCookie('accessToken', data.accessToken);
+      cookie.setCookie('refreshToken', data.refreshToken);
+      setUser(data.user);
+
+      router.push('/');
+    },
+  });
 
   const submit = (data: LoginData) => {
-    mutation.mutate(data, {
-      onSuccess: (data) => onLoginSuccess(data, router, setUser),
-    });
+    mutation.mutate(data);
   };
 
   return (

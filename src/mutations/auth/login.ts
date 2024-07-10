@@ -1,7 +1,7 @@
 import { apiInstance } from '@/lib/axios';
 import { UseMutationOptions } from '@tanstack/react-query';
-import { onLoginError } from '@/models/auth/login-models';
 import { User } from '@/types/user';
+import { toast } from 'react-toastify';
 
 interface LoginBody {
   email: string;
@@ -14,12 +14,9 @@ export interface LoginResponse {
   user: User;
 }
 
-const login = async (body: LoginBody) => {
-  const data = await apiInstance.post<LoginBody, LoginResponse>('/auth/login', body);
-  return data;
-};
-
 export const loginMutationOptions: UseMutationOptions<LoginResponse, Error, LoginBody> = {
-  mutationFn: login,
-  onError: onLoginError,
+  mutationFn: (data) => apiInstance.post<LoginBody, LoginResponse>('/auth/login', data),
+  onError: () => {
+    toast('이메일, 비밀번호가 일치하지 않습니다.');
+  },
 };

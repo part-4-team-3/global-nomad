@@ -1,7 +1,7 @@
 import { apiInstance } from '@/lib/axios';
-import { onRegisterError } from '@/models/auth/register-models';
 import { User } from '@/types/user';
 import { UseMutationOptions } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 interface RegisterBody {
   email: string;
@@ -16,5 +16,11 @@ const register = async (body: RegisterBody) => {
 
 export const registerMutationOptions: UseMutationOptions<User, Error, RegisterBody> = {
   mutationFn: register,
-  onError: onRegisterError,
+  onError: (error: Error) => {
+    const status = Number(error.message);
+
+    if (status === 409) {
+      toast('중복된 이메일입니다.');
+    }
+  },
 };
