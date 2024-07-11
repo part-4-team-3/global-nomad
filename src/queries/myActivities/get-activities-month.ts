@@ -8,7 +8,7 @@ export const getMyActivitiesByMonth = {
     data: { activityId: number; year: string; month: string },
     enabled?: boolean,
   ): UseQueryOptions<MyActivitiesOfMonth, Error> => ({
-    queryKey: myActivitiesKeys.getMyActivities(data.activityId),
+    queryKey: myActivitiesKeys.getMyActivitiesByMonth(data.activityId),
     queryFn: (): Promise<MyActivitiesOfMonth> =>
       apiInstance.get<any, MyActivitiesOfMonth>(
         `my-activities/${data.activityId}/reservation-dashboard?year=${data.year}&month=${data.month}`,

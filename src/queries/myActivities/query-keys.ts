@@ -1,3 +1,8 @@
 export const myActivitiesKeys = {
-  getMyActivities: (activityId: number) => ['my-activities', activityId, 'reservation-dashboard'],
+  getMyActivitiesByMonth: (activityId: number) => [
+    'my-activities',
+    activityId,
+    'reservation-dashboard',
+  ],
+  getMyActivities: (cursorId: number | null, size: number) => ['my-activities', cursorId, size],
 };

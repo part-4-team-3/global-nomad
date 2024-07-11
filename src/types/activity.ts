@@ -21,3 +21,9 @@ export interface MyActivitiesOfMonth {
     pending: number;
   };
 }
+
+export interface MyActivityList {
+  cursorId: number;
+  totalCount: number;
+  activities: Activity[];
+}
