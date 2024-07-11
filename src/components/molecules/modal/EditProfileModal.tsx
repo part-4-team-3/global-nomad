@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Modal from './Modal';
 import Button from '@/components/atoms/button/Button';
 import { useModal } from '@/store/useModal';
-import { useImageUploader } from '@/models/uploader/useImageUploader';
+import { useImageUploader } from '@/models/uploader/use-image-uploader';
 
 export default function EditProfileModal() {
   const { profileImage, handleEditProfileImage, submitProfileImage } = useImageUploader();

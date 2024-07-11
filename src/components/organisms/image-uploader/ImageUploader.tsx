@@ -1,6 +1,6 @@
 'use client';
 import GeneratedImage from '@/components/molecules/generated-image/GeneratedImage';
-import { useImageUploader } from '@/models/uploader/useImageUploader';
+import { useImageUploader } from '@/models/uploader/use-image-uploader';
 import Image from 'next/image';
 
 interface Props {
