@@ -3,7 +3,7 @@
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { Schedule } from '@/types/schedule';
-import { parseISO } from 'date-fns';
+import Image from 'next/image';
 import {
   createScheduleHashMap,
   ScheduleHashMap,
@@ -30,31 +30,41 @@ export function ActivityReservationSelector({
   const message = date ? '해당 날짜에 가능한 스케줄이 없습니다' : '날짜를 선택해주세요';
 
   return (
-    <div className="flex w-fit flex-col gap-24pxr px-24pxr py-32pxr">
-      <h2 className="text-28pxr font-[700]">날짜</h2>
-      <Calendar
-        mode="single"
-        scheduled={scheduledDates}
-        selected={date}
-        onSelect={setDate}
-        className="w-fit rounded-md border shadow"
-      />
-
-      <p className="text-18pxr font-[700]">예약 가능한 시간</p>
-      {formattedDate != '' && scheduleHash[formattedDate] ? (
-        <div className="flex gap-12pxr">
-          {scheduleHash[formattedDate].map((schedule) => (
-            <ScheduleButton
-              key={schedule.id}
-              onClick={() => setSelectedSchedule({ ...schedule, date: formattedDate })}
-            >
-              {schedule.startTime}~{schedule.endTime}
-            </ScheduleButton>
-          ))}
+    <div className="fixed left-[0px] right-[0px] top-[0px] z-10 h-screen w-screen bg-white px-24pxr py-32pxr">
+      <div className="flex w-full flex-col gap-24pxr">
+        <div className="flex w-full items-center justify-between">
+          {' '}
+          <h2 className="text-28pxr font-[700]">날짜</h2>
+          <button className="rounded-full hover:bg-var-gray6">
+            <Image src="/x-icon.svg" width={40} height={40} alt="close" />
+          </button>
         </div>
-      ) : (
-        <p className="w-full text-center">{message}</p>
-      )}
+        <div className="flex justify-center">
+          <Calendar
+            mode="single"
+            scheduled={scheduledDates}
+            selected={date}
+            onSelect={setDate}
+            className="w-fit rounded-md border shadow"
+          />
+        </div>
+
+        <p className="text-18pxr font-[700]">예약 가능한 시간</p>
+        {formattedDate != '' && scheduleHash[formattedDate] ? (
+          <div className="flex gap-12pxr">
+            {scheduleHash[formattedDate].map((schedule) => (
+              <ScheduleButton
+                key={schedule.id}
+                onClick={() => setSelectedSchedule({ ...schedule, date: formattedDate })}
+              >
+                {schedule.startTime}~{schedule.endTime}
+              </ScheduleButton>
+            ))}
+          </div>
+        ) : (
+          <p className="w-full text-center">{message}</p>
+        )}
+      </div>
     </div>
   );
 }
