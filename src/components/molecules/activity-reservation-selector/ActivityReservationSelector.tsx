@@ -15,12 +15,14 @@ interface Props {
   schedules?: Schedule[];
   scheduledDates: Date[];
   scheduleHash: ScheduleHashMap;
+  onClose: () => void;
 }
 
 export function ActivityReservationSelector({
   schedules = [],
   scheduledDates,
   scheduleHash,
+  onClose,
 }: Props) {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | undefined>();
@@ -35,7 +37,7 @@ export function ActivityReservationSelector({
         <div className="flex w-full items-center justify-between">
           {' '}
           <h2 className="text-28pxr font-[700]">날짜</h2>
-          <button className="rounded-full hover:bg-var-gray6">
+          <button className="rounded-full hover:bg-var-gray6" onClick={onClose}>
             <Image src="/x-icon.svg" width={40} height={40} alt="close" />
           </button>
         </div>

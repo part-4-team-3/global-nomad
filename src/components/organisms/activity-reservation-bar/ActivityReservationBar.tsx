@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Button from '@/components/atoms/button/Button';
 import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
+import { ActivityReservationSelector } from '@/components/molecules/activity-reservation-selector/ActivityReservationSelector';
 
 interface Props {
   price: number;
@@ -10,7 +11,7 @@ interface Props {
   scheduleHash: ScheduleHashMap;
 }
 
-export default function ActivityReservationBar({ price }: Props) {
+export default function ActivityReservationBar({ price, scheduleHash, scheduledDates }: Props) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpon] = useState<boolean>(false);
   const [isNumberSelectorOpen, setIsNumberSelectorOpon] = useState<boolean>(false);
 
@@ -22,7 +23,10 @@ export default function ActivityReservationBar({ price }: Props) {
           <span>/</span>
           <button className="text-18pxr text-var-green-dark underline">1명</button>
         </div>
-        <button className="w-fit text-14pxr font-[600] text-var-green-dark underline">
+        <button
+          className="w-fit text-14pxr font-[600] text-var-green-dark underline"
+          onClick={() => setIsScheduleSelectorOpon(true)}
+        >
           날짜 선택하기
         </button>
       </div>
@@ -33,6 +37,14 @@ export default function ActivityReservationBar({ price }: Props) {
         className="px-24pxr py-14pxr disabled:bg-var-gray3"
         disabled={true}
       ></Button>
+
+      {isScheduleSelectorOpen && (
+        <ActivityReservationSelector
+          scheduleHash={scheduleHash}
+          scheduledDates={scheduledDates}
+          onClose={() => setIsScheduleSelectorOpon(false)}
+        />
+      )}
     </div>
   );
 }
