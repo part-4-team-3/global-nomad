@@ -1,5 +1,10 @@
+'use client';
+
 import ImageCarousel from '@/components/molecules/image-carousel/ImageCarousel';
 import ActivityHeader from '@/components/organisms/activity-header/ActivityHeader';
+import ActivityReservationBar from '@/components/organisms/activity-reservation-bar/ActivityReservationBar';
+import { parseISO } from 'date-fns';
+import { createScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
 
 interface Props {
   params: { id: number };
@@ -35,15 +40,21 @@ const mockData = {
   schedules: [
     {
       id: 1,
-      date: '2023-12-01',
+      date: '2024-07-07',
       startTime: '12:00',
       endTime: '13:00',
     },
     {
       id: 2,
-      date: '2023-12-05',
+      date: '2024-07-25',
       startTime: '12:00',
       endTime: '13:00',
+    },
+    {
+      id: 3,
+      date: '2024-07-25',
+      startTime: '14:00',
+      endTime: '15:00',
     },
   ],
   reviewCount: 5,
@@ -53,9 +64,12 @@ const mockData = {
 };
 
 export default function Page({ params }: Props) {
+  const scheduleHash = createScheduleHashMap(mockData.schedules);
+
+  const scheduledDates = mockData.schedules?.map((schedule) => parseISO(schedule.date));
+
   return (
     <main>
-      <div>{params.id}</div>
       <ActivityHeader
         category={mockData.category}
         title={mockData.title}
@@ -64,6 +78,12 @@ export default function Page({ params }: Props) {
         reviewCount={mockData.reviewCount}
       />
       <ImageCarousel bannerImg={mockData.bannerImageUrl} subImg={mockData.subImageUrls} />
+
+      <ActivityReservationBar
+        price={mockData.price}
+        scheduleHash={scheduleHash}
+        scheduledDates={scheduledDates}
+      />
     </main>
   );
 }
