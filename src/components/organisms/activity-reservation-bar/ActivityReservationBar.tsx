@@ -6,6 +6,7 @@ import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-h
 import { ActivityReservationSelector } from '@/components/molecules/activity-reservation-selector/ActivityReservationSelector';
 import { Schedule } from '@/types/schedule';
 import { format } from 'date-fns';
+import { ActivityParticipantSelector } from '@/components/molecules/activity-participant-selector/ActivityParticipantSelector';
 
 interface Props {
   price: number;
@@ -15,8 +16,9 @@ interface Props {
 
 export default function ActivityReservationBar({ price, scheduleHash, scheduledDates }: Props) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
-  const [isNumberSelectorOpen, setIsNumberSelectorOpen] = useState<boolean>(false);
+  const [isParticipantSelectorOpen, setIsParticipantSelectorOpen] = useState<boolean>(false);
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | undefined>();
+  const [participants, setParticipants] = useState<number>(1);
 
   const dateButtonText = selectedSchedule
     ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
@@ -26,9 +28,14 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
     <div className="fixed bottom-[0px] left-[0px] right-[0px] flex w-full justify-between border-t border-[#a1a1a1] p-[16px]">
       <div className="flex flex-col gap-8pxr">
         <div className="flex gap-6pxr text-20pxr font-[700] leading-[26px]">
-          <span>₩{price}</span>
+          <span>₩{price * participants}</span>
           <span>/</span>
-          <button className="text-18pxr text-var-green-dark underline">1명</button>
+          <button
+            className="text-18pxr text-var-green-dark underline"
+            onClick={() => setIsParticipantSelectorOpen(true)}
+          >
+            {participants}명
+          </button>
         </div>
         <button
           className="w-fit text-14pxr font-[600] text-var-green-dark underline"
@@ -51,6 +58,14 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
           scheduledDates={scheduledDates}
           onClose={() => setIsScheduleSelectorOpen(false)}
           onSelect={(schedule: Schedule | undefined) => setSelectedSchedule(schedule)}
+        />
+      )}
+
+      {isParticipantSelectorOpen && (
+        <ActivityParticipantSelector
+          initialValue={participants}
+          onClose={() => setIsParticipantSelectorOpen(false)}
+          onSelect={(value) => setParticipants(value)}
         />
       )}
     </div>
