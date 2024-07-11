@@ -1,6 +1,6 @@
 import { Schedule } from '@/types/schedule';
 
-type ScheduleHashMap = {
+export type ScheduleHashMap = {
   [key: string]: { startTime: string; endTime: string; id: number }[];
 };
 
