@@ -12,3 +12,18 @@ export interface Activity {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface MyActivitiesOfMonth {
+  date: string;
+  reservations: {
+    completed: number;
+    confirmed: number;
+    pending: number;
+  };
+}
+
+export interface MyActivityList {
+  cursorId: number;
+  totalCount: number;
+  activities: Activity[];
+}
