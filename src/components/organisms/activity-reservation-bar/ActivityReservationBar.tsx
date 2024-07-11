@@ -14,8 +14,8 @@ interface Props {
 }
 
 export default function ActivityReservationBar({ price, scheduleHash, scheduledDates }: Props) {
-  const [isScheduleSelectorOpen, setIsScheduleSelectorOpon] = useState<boolean>(false);
-  const [isNumberSelectorOpen, setIsNumberSelectorOpon] = useState<boolean>(false);
+  const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
+  const [isNumberSelectorOpen, setIsNumberSelectorOpen] = useState<boolean>(false);
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | undefined>();
 
   const dateButtonText = selectedSchedule
@@ -32,7 +32,7 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
         </div>
         <button
           className="w-fit text-14pxr font-[600] text-var-green-dark underline"
-          onClick={() => setIsScheduleSelectorOpon(true)}
+          onClick={() => setIsScheduleSelectorOpen(true)}
         >
           {dateButtonText}
         </button>
@@ -49,7 +49,7 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
         <ActivityReservationSelector
           scheduleHash={scheduleHash}
           scheduledDates={scheduledDates}
-          onClose={() => setIsScheduleSelectorOpon(false)}
+          onClose={() => setIsScheduleSelectorOpen(false)}
           onSelect={(schedule: Schedule | undefined) => setSelectedSchedule(schedule)}
         />
       )}
