@@ -1,13 +1,14 @@
 import Image from 'next/image';
 
 interface Props {
-  color?: 'white' | 'gray'; // 기본값 : black
+  color?: 'white' | 'gray';
 }
 
 export default function ReviewRating({ color }: Props) {
+  const imageSrc = !color ? '/star-icon.svg' : '/star-bold.svg';
   return (
     <div className="flex items-center gap-5pxr">
-      <Image src="/star-bold.svg" width={18} height={18} alt="별" />
+      <Image src={imageSrc} width={18} height={18} alt="별" />
       <span
         className={`text-14pxr sm:text-16pxr ${color === 'white' ? 'text-14pxr font-[600] text-white' : color === 'gray' ? 'font-[500]' : 'font-[400]'}`}
       >
