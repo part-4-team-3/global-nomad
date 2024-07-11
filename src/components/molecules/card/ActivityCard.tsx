@@ -14,7 +14,7 @@ export default function ActivityCard() {
       />
       <div className="">
         <ReviewRating color="gray" />
-        <h3 className="mt-10pxr break-keep text-18pxr font-[600] leading-[120%] sm:text-24pxr">
+        <h3 className="mt-10pxr break-keep text-18pxr font-[600] leading-[120%] md:text-24pxr">
           함께 배우면 즐거운 스트릿 댄스
         </h3>
         <div className="mt-8pxr flex items-center gap-5pxr">
