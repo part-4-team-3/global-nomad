@@ -12,6 +12,7 @@ interface ApiResponse {
 
 /** 이미지 Url 받아오는 함수 */
 export const useImageUploader = () => {
+  const [bannerImage, setBannerImage] = useState<string>('');
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>('/close-button-icon.svg'); //초기값 수정 예정
   const { setIsClose } = useModal();
@@ -36,9 +37,8 @@ export const useImageUploader = () => {
     formData.append('image', uploadFile);
     try {
       const response: ApiResponse = await apiInstance.post('activities/image', formData);
-
       if (title === 'banner') {
-        setUploadedImages([response.activityImageUrl]);
+        setBannerImage(response.activityImageUrl);
       } else if (title === 'intro') {
         if (uploadedImages.length < 4) {
           setUploadedImages((prevImages) => [...prevImages, response.activityImageUrl]);
@@ -72,8 +72,12 @@ export const useImageUploader = () => {
   };
 
   /** 이미지 삭제 처리 */
-  const handleDeleteImage = (index: number) => {
-    setUploadedImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
+  const handleDeleteImage = (title: 'banner' | 'intro', index: number) => {
+    if (title === 'banner') {
+      setBannerImage('');
+    } else {
+      setUploadedImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
+    }
   };
 
   /** 프로필 이미지 서버에 전송하는 함수 */
@@ -101,6 +105,7 @@ export const useImageUploader = () => {
 
   return {
     profileImage,
+    bannerImage,
     uploadedImages,
     handleUploadImage,
     handleEditProfileImage,

@@ -3,7 +3,7 @@ import CloseButton from '@/components/atoms/button/CloseButton';
 
 interface Props {
   key: number;
-  url: string;
+  url?: string;
   onClose: (index: number) => void;
 }
 export default function GeneratedImage({ key, url, onClose }: Props) {
