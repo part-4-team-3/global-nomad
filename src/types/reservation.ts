@@ -6,3 +6,26 @@ export interface ReservationByMonth {
     pending: number;
   };
 }
+
+export type ReservationStatus = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
+
+export interface Reservation {
+  activity: {
+    id: number;
+    title: string;
+    bannerImageUrl: string;
+  };
+  scheduleId: number;
+  id: number;
+  teamId: string;
+  userId: number;
+  status: ReservationStatus;
+  reviewSubmitted: boolean;
+  totalPrice: number;
+  headCount: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+}
