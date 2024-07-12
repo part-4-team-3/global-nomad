@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { cookie } from './cookie';
 import { redirect } from 'next/navigation';
-import { getCookie } from '@/app/(actions)/cookie';
 
 const BASE_URL = 'https://sp-globalnomad-api.vercel.app/5-3/';
 export const apiInstance = axios.create({
