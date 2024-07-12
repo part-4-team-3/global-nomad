@@ -4,21 +4,38 @@ import Image from 'next/image';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import TimeSlotList from '../activity-registration-form/TimeSlotList';
 
-export default function ReservationTimePicker() {
-  const {
-    selectedDay,
-    startTime,
-    setStartTime,
-    endTime,
-    setEndTime,
-    timeSlots,
-    isCalendarOpen,
-    handleCalendarOpen,
-    handleFormatDayClick,
-    handleAddTimeSlot,
-    handleDeleteTimeSlot,
-  } = useTimeSlot();
+interface TimeSlotData {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+interface Props {
+  selectedDay: string;
+  startTime: string;
+  endTime: string;
+  timeSlots: TimeSlotData[];
+  isCalendarOpen: boolean;
+  handleFormatDayClick: (day: Date) => void;
+  setStartTime: React.Dispatch<React.SetStateAction<string>>;
+  setEndTime: React.Dispatch<React.SetStateAction<string>>;
+  handleCalendarOpen: () => void;
+  handleAddTimeSlot: () => void;
+  handleDeleteTimeSlot: (index: number) => void;
+}
 
+export default function ReservationTimePicker({
+  selectedDay,
+  startTime,
+  endTime,
+  timeSlots,
+  isCalendarOpen,
+  handleFormatDayClick,
+  setStartTime,
+  setEndTime,
+  handleCalendarOpen,
+  handleAddTimeSlot,
+  handleDeleteTimeSlot,
+}: Props) {
   return (
     <div>
       <div className="relative flex place-items-end gap-[5px] border-b pb-[16px] md:h-[92px] lg:gap-[20px] lg:pb-[20px]">

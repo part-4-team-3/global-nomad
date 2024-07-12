@@ -1,11 +1,13 @@
 'use client';
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
-import ActivitieSettingInput from '../input/ActivitieSettingInput';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Select from '../select/Select';
 import Button from '@/components/atoms/button/Button';
 import ReservationTimePicker from '../reservation-time-picker/ReservationTimePicker';
+import Input from '@/components/atoms/input/Input';
+import useTimeSlot from '@/models/activity/use-time-slot';
+import { useImageUploader } from '@/models/uploader/use-image-uploader';
 
 interface ActivitySettingData {
   title: string;
@@ -18,15 +20,28 @@ interface ActivitySettingData {
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
+  const [title, setTitle] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-
+  const [description, setDescription] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
+  const {
+    selectedDay,
+    startTime,
+    endTime,
+    timeSlots,
+    isCalendarOpen,
+    handleFormatDayClick,
+    setStartTime,
+    setEndTime,
+    handleAddTimeSlot,
+    handleDeleteTimeSlot,
+    handleCalendarOpen,
+  } = useTimeSlot();
+  const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-  const onSubmit = (data: ActivitySettingData) => {
-    {
-      /* api 함수 추가 예정  */
-    }
-  };
+  const onSubmit = (data: ActivitySettingData) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -35,24 +50,64 @@ export default function ActivityRegistrationForm() {
         <Button text="등록하기" color="black" size="s" type="submit" />
       </div>
       <div className="flex flex-col gap-24pxr">
-        <ActivitieSettingInput text="제목" />
-        {/* 수정 예정입니다 */}
+        <Input size="full" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
         <Controller
           name="category"
           control={control}
-          render={({ field }) => <Select options={options} placeholder="카테고리" />}
+          render={({ field }) => (
+            <Select
+              options={options}
+              placeholder="카테고리"
+              value={field.value}
+              onChange={(value) => {
+                field.onChange(value);
+                setCategory(value);
+              }}
+            />
+          )}
         />
-        <ActivitieSettingInput text="설명" />
+        <Input size="full" placeholder="설명" onChange={(e) => setDescription(e.target.value)} />
         <label>가격</label>
-        <ActivitieSettingInput text="가격" />
+        <Input
+          size="full"
+          type="number"
+          placeholder="가격"
+          onChange={(e) => setPrice(parseFloat(e.target.value))}
+        />
         <label>주소</label>
-        <ActivitieSettingInput text="주소를 입력해주세요" />
+        <Input
+          size="full"
+          placeholder="주소를 입력해주세요"
+          onChange={(e) => setAddress(e.target.value)}
+        />
         <label>예약 가능한 시간대</label>
-        <ReservationTimePicker />
+        <ReservationTimePicker
+          selectedDay={selectedDay}
+          startTime={startTime}
+          endTime={endTime}
+          timeSlots={timeSlots}
+          isCalendarOpen={isCalendarOpen}
+          handleFormatDayClick={handleFormatDayClick}
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          handleAddTimeSlot={handleAddTimeSlot}
+          handleDeleteTimeSlot={handleDeleteTimeSlot}
+          handleCalendarOpen={handleCalendarOpen}
+        />
         <label>배너 이미지</label>
-        <ImageUploader title="banner" />
+        <ImageUploader
+          title="banner"
+          images={bannerImage}
+          handleUploadImage={handleUploadImage}
+          handleDeleteImage={handleDeleteImage}
+        />
         <label>소개 이미지</label>
-        <ImageUploader title="intro" />
+        <ImageUploader
+          title="intro"
+          images={uploadedImages}
+          handleUploadImage={handleUploadImage}
+          handleDeleteImage={handleDeleteImage}
+        />
       </div>
     </form>
   );

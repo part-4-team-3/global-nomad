@@ -10,11 +10,11 @@ interface TimeSlotData {
 
 const useTimeSlot = () => {
   const [date, setDate] = useState<string>();
-  const [selectedDay, setSelectedDay] = useState<string>();
+  const [selectedDay, setSelectedDay] = useState<string>('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [timeSlots, setTimeSlots] = useState<TimeSlotData[]>([]);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   /** Calender 열기 */
   const handleCalendarOpen = () => {
