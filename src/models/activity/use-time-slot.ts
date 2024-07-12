@@ -34,7 +34,7 @@ const useTimeSlot = () => {
       const newTimeSlot = { date, startTime, endTime };
       setTimeSlots((prevSlots) => [...prevSlots, newTimeSlot]);
       setDate('');
-      setSelectedDay(undefined);
+      setSelectedDay('');
       setStartTime('');
       setEndTime('');
       setIsCalendarOpen(false);
