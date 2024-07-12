@@ -1,7 +1,10 @@
+'use client';
+
 import ReviewRating from '@/components/atoms/review-rating/ReviewRating';
 import { Activity } from '@/types/activity';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface Props {
   activity: Activity;
@@ -9,17 +12,19 @@ interface Props {
 }
 
 export default function ActivityCard({ activity, isBest }: Props) {
+  const [isImageError, setIsImageError] = useState(false);
   return (
     <Link
       href=""
       className={`flex ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'w-168pxr flex-col gap-16pxr md:w-221pxr lg:w-283pxr'} `}
     >
       <Image
-        src={activity.bannerImageUrl ? activity.bannerImageUrl : '/card_default_bg.svg'}
+        src={isImageError ? '/card_default_bg.svg' : activity.bannerImageUrl}
         width={isBest ? 384 : 283}
         height={isBest ? 384 : 283}
         alt=""
         className={`object-cover ${isBest ? 'absolute size-full' : 'h-168pxr w-full rounded-[20px] md:h-221pxr lg:h-283pxr'}`}
+        onError={() => setIsImageError(true)}
       />
       <div
         className={`w-full ${isBest ? 'relative flex flex-col justify-end gap-6pxr px-20pxr py-24pxr md:gap-20pxr md:py-30pxr' : 'file:'}`}
