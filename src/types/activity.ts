@@ -13,6 +13,11 @@ export interface Activity {
   updatedAt: string;
 }
 
+export interface ActivityResponse {
+  activities: Activity[];
+  totalCount: number;
+}
+
 export interface MyActivitiesOfMonth {
   date: string;
   reservations: {

@@ -1,5 +1,4 @@
 import { apiInstance } from '@/lib/axios';
-import { UseQueryOptions } from '@tanstack/react-query';
 import { Activity } from '@/types/activity';
 
 interface GetActivitiesResponse {
@@ -7,12 +6,23 @@ interface GetActivitiesResponse {
   totalCount: number;
 }
 
-export const getActivities = async () => {
-  const data = await apiInstance.get<any, GetActivitiesResponse>('/activities?method=offset');
-  return data;
-};
+interface GetActivitiesParams {
+  method: 'offset' | 'cursor';
+  cursorId?: number;
+  category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+  keyword?: string;
+  sort?: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+  page?: number;
+  size?: number;
+}
 
-export const getActivitiesQueryOptions: UseQueryOptions<GetActivitiesResponse, Error> = {
-  queryKey: ['activities'],
-  queryFn: getActivities,
+export const getActivities = async (params: GetActivitiesParams) => {
+  const queryParams = Object.entries(params)
+    .map(([key, value]) => {
+      return `${key}=${value}`;
+    })
+    .join('&');
+
+  const data = await apiInstance.get<any, GetActivitiesResponse>(`/activities?${queryParams}`);
+  return data;
 };

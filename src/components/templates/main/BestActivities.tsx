@@ -1,8 +1,13 @@
 import BestActivityCardList from '@/components/organisms/card-list/BestActivityCardList';
+import { ActivityResponse } from '@/types/activity';
 import Image from 'next/image';
 import React from 'react';
 
-export default function BestActivities() {
+interface Props {
+  activitiesData: ActivityResponse;
+}
+
+export default function BestActivities({ activitiesData }: Props) {
   const arrowList = [
     {
       name: 'prev',
@@ -33,7 +38,7 @@ export default function BestActivities() {
           ))}
         </div>
       </div>
-      <BestActivityCardList />
+      <BestActivityCardList activitiesData={activitiesData} />
     </div>
   );
 }
