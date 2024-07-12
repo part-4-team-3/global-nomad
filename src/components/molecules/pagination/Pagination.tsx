@@ -1,9 +1,10 @@
 'use client';
 
+import PageNumberButton from '@/components/atoms/button/PageNumberButton';
 import NextButton from '@/components/atoms/pagination-button/NextButton';
 import PrevButton from '@/components/atoms/pagination-button/PrevButton';
-import PageNumbers from '@/models/pagination/renderPageNumbers';
-import { usePageControls } from '@/models/pagination/usePageControls';
+import RentderPageNumbers from '@/models/pagination/render-page-numbers';
+import { usePageControls } from '@/models/pagination/use-page-controls';
 
 interface Props {
   totalCount: number;
@@ -26,13 +27,14 @@ export default function Pagination({
   const { currentPageNumber, handlePageClick, handleNextButton, handlePrevButton } =
     usePageControls({ initialPage: currentPage });
   const totalPage = Math.ceil(totalCount / size);
+  const numbers = RentderPageNumbers({ currentPage: currentPageNumber, totalPage: totalPage });
 
   return (
     <div className="flex items-center gap-[10px]">
       <PrevButton currentPage={currentPageNumber} onPrev={handlePrevButton} />
-      <PageNumbers
+      <PageNumberButton
         currentPage={currentPageNumber}
-        totalPage={totalPage}
+        numbers={numbers}
         onClick={handlePageClick}
       />
       <NextButton currentPage={currentPageNumber} totalPage={totalPage} onNext={handleNextButton} />
