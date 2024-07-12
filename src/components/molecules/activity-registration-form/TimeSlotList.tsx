@@ -19,14 +19,12 @@ export default function TimeSlotList({ timeSlots, handleDeleteTimeSlot }: Props)
       {timeSlots &&
         timeSlots.map((slot, index) => (
           <div key={index} className="relative flex place-items-start gap-[5px] lg:gap-[20px]">
-            <div className="h-40pxr md:h-56pxr">
+            <div className="relative flex h-40pxr flex-1 flex-col gap-[10px] md:h-56pxr">
               <Input size="full" type="text" value={slot.date} readOnly />
             </div>
-            <div>
-              <div className="flex gap-[5px] lg:gap-[20px]">
-                <Input size="full" type="time" value={slot.startTime} readOnly />
-                <Input size="full" type="time" value={slot.endTime} readOnly />
-              </div>
+            <div className="relative flex flex-1 items-center justify-center gap-[5px] lg:gap-[12px]">
+              <Input size="full" type="time" value={slot.startTime} readOnly />
+              <Input size="full" type="time" value={slot.endTime} readOnly />
             </div>
             <button
               className="relative size-[44px] md:size-[56px]"

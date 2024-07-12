@@ -1,3 +1,4 @@
+'use client';
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import ActivitieSettingInput from '../input/ActivitieSettingInput';
 import { Controller, useForm } from 'react-hook-form';
@@ -28,7 +29,7 @@ export default function ActivityRegistrationForm() {
   };
 
   return (
-    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center justify-between">
         <h1>내 체험 등록</h1>
         <Button text="등록하기" color="black" size="s" type="submit" />
@@ -42,7 +43,6 @@ export default function ActivityRegistrationForm() {
           render={({ field }) => <Select options={options} placeholder="카테고리" />}
         />
         <ActivitieSettingInput text="설명" />
-
         <label>가격</label>
         <ActivitieSettingInput text="가격" />
         <label>주소</label>
