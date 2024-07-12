@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { cookie } from './cookie';
 import { redirect } from 'next/navigation';
+import { getCookie, setCookie } from '@/app/(action)/(cookie)/cookie';
 
 const BASE_URL = 'https://sp-globalnomad-api.vercel.app/5-3/';
 export const apiInstance = axios.create({
@@ -21,7 +22,7 @@ apiInstance.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       const refreshToken = cookie.getCookie('refreshToken');
-      console.log(refreshToken);
+
       if (!refreshToken) {
         window.location.href = '/signin';
       } else {
@@ -52,8 +53,8 @@ export const apiInstanceByServer = axios.create({
 });
 
 // Request 인터셉터
-apiInstanceByServer.interceptors.request.use((config) => {
-  const accessToken = cookie.getCookie('accessToken');
+apiInstanceByServer.interceptors.request.use(async (config) => {
+  const accessToken = await getCookie('accessToken');
   if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });
@@ -61,7 +62,7 @@ apiInstanceByServer.interceptors.request.use((config) => {
 // Response 인터셉터
 apiInstanceByServer.interceptors.response.use(
   // 응답 성공 시
-  (config) => {
+  (config: AxiosResponse) => {
     return config.data;
   },
 
@@ -73,7 +74,7 @@ apiInstanceByServer.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = await cookie.getCookie('refreshToken');
+      const refreshToken = await getCookie('refreshToken');
 
       // server의 cookies에 refreshToken이 없는 경우 바로 redirect
       if (!refreshToken) {
@@ -93,8 +94,8 @@ apiInstanceByServer.interceptors.response.use(
         );
 
         // 새로운 accessToken과 refreshToken을 cookies에 저장
-        cookie.setCookie('accessToken', data.accessToken);
-        cookie.setCookie('refreshToken', data.refreshToken);
+        await setCookie('accessToken', data.accessToken);
+        await setCookie('refreshToken', data.refreshToken);
 
         // 기존의 요청을 재요청
         originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
