@@ -8,14 +8,22 @@ import ReservationTimePicker from '../reservation-time-picker/ReservationTimePic
 import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
+import { apiInstance } from '@/lib/axios';
 
+interface TimeSlotData {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
 interface ActivitySettingData {
   title: string;
   category: string;
   description: string;
   address: string;
   price: number;
-  schedules: string[];
+  schedules: TimeSlotData[];
+  subImageUrls: string[];
+  bannerImageUrl: string;
 }
 
 export default function ActivityRegistrationForm() {
@@ -41,7 +49,25 @@ export default function ActivityRegistrationForm() {
   const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
-  const onSubmit = (data: ActivitySettingData) => {};
+  const onSubmit = async () => {
+    // const data: ActivitySettingData =
+    // console.log(data);
+    try {
+      const response = await apiInstance.post<ActivitySettingData>('activities', {
+        title: title,
+        category: category,
+        description: description,
+        address: address,
+        price: price,
+        schedules: timeSlots,
+        bannerImageUrl: bannerImage,
+        subImageUrls: uploadedImages,
+      });
+      console.log(response);
+    } catch (error) {
+      alert('이미지 업로드에 실패했습니다. 다시 시도해 주세요.');
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

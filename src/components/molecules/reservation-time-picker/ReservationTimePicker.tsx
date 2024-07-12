@@ -46,6 +46,7 @@ export default function ReservationTimePicker({
             <button
               className="top absolute bottom-[16px] right-[12px] size-[27px] md:right-[16px]"
               onClick={handleCalendarOpen}
+              type="button"
             >
               <Image fill src="/calendar.png" alt="날짜 설정" />
             </button>
@@ -84,6 +85,7 @@ export default function ReservationTimePicker({
         <button
           className="relative bottom-[0px] size-[44px] md:size-[56px]"
           onClick={handleAddTimeSlot}
+          type="button"
         >
           <Image fill src="/add-activity-button.svg" alt="체험시간 추가하기" />
         </button>

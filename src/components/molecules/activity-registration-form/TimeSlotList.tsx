@@ -29,6 +29,7 @@ export default function TimeSlotList({ timeSlots, handleDeleteTimeSlot }: Props)
             <button
               className="relative size-[44px] md:size-[56px]"
               onClick={() => handleDeleteTimeSlot(index)}
+              type="button"
             >
               <Image fill src="/delete-activity-button.svg" alt="체험시간 삭제하기" />
             </button>
