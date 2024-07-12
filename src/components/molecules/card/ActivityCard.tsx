@@ -13,13 +13,14 @@ interface Props {
 
 export default function ActivityCard({ activity, isBest }: Props) {
   const [isImageError, setIsImageError] = useState(false);
+  const defaultImage = isBest ? '/card_default_bg_top.svg' : '/card_default_bg.svg';
   return (
     <Link
       href=""
       className={`flex ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'w-168pxr flex-col gap-16pxr md:w-221pxr lg:w-283pxr'} `}
     >
       <Image
-        src={isImageError ? '/card_default_bg.svg' : activity.bannerImageUrl}
+        src={isImageError ? defaultImage : activity.bannerImageUrl}
         width={isBest ? 384 : 283}
         height={isBest ? 384 : 283}
         alt=""
