@@ -1,51 +1,22 @@
 import { Calendar } from '@/components/ui/calendar';
-import { useState } from 'react';
-import { format } from 'date-fns';
 import Input from '@/components/atoms/input/Input';
 import Image from 'next/image';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import useTimeSlot from '@/models/activity/use-time-slot';
 
 export default function ReservationTimePicker() {
-  const [date, setDate] = useState<string>();
-  const [selectedDay, setSelectedDay] = useState<Date>();
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [timeSlots, setTimeSlots] = useState<TimeSlotData[]>([]);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
-  const handleCalendarOpen = () => {
-    setIsCalendarOpen((prev) => !prev);
-  };
-
-  const handleFormatDayClick = (day: Date) => {
-    setSelectedDay(day);
-    setDate(format(day, 'yy/MM/dd'));
-  };
-
-  const handleAddTimeSlot = () => {
-    if (date && startTime && endTime) {
-      const newTimeSlot = { date, startTime, endTime };
-      setTimeSlots((prevSlots) => [...prevSlots, newTimeSlot]);
-      setDate('');
-      setSelectedDay(undefined);
-      setStartTime('');
-      setEndTime('');
-      setIsCalendarOpen(false);
-    } else {
-      alert('모든 필드를 채워주세요.');
-    }
-  };
-
-  /** 이미지 삭제 처리 */
-  const handleDeleteTimeSlot = (index: number) => {
-    setTimeSlots((prev) => prev.filter((_, idx) => idx !== index));
-  };
-  console.log(timeSlots);
+  const {
+    selectedDay,
+    startTime,
+    setStartTime,
+    endTime,
+    setEndTime,
+    timeSlots,
+    isCalendarOpen,
+    handleCalendarOpen,
+    handleFormatDayClick,
+    handleAddTimeSlot,
+    handleDeleteTimeSlot,
+  } = useTimeSlot();
 
   return (
     <div>
@@ -53,7 +24,7 @@ export default function ReservationTimePicker() {
         <div className="relative flex flex-col gap-[10px]">
           <label>날짜</label>
           <div className="relative h-40pxr md:h-56pxr">
-            <Input size="full" type="text" value={date} readOnly placeholder="YY/MM/DD" />
+            <Input size="full" type="text" value={selectedDay} readOnly placeholder="YY/MM/DD" />
             <button
               className="top absolute bottom-[16px] right-[12px] size-[27px] md:right-[16px]"
               onClick={handleCalendarOpen}
@@ -63,7 +34,7 @@ export default function ReservationTimePicker() {
           </div>
           {isCalendarOpen && (
             <div className="absolute top-[0px] top-full z-10 bg-white">
-              <Calendar selected={selectedDay} onDayClick={(day) => handleFormatDayClick(day)} />
+              <Calendar onDayClick={(day) => handleFormatDayClick(day)} />
             </div>
           )}
         </div>
