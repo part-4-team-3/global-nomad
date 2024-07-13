@@ -35,9 +35,6 @@ export default function LoginForm() {
   const mutation = useMutation({
     ...loginMutationOptions,
     onSuccess: (data) => {
-      cookie.setCookie('accessToken', data.accessToken);
-      cookie.setCookie('refreshToken', data.refreshToken);
-      cookie.setCookie('userId', data.user.id.toString());
       setUser(data.user);
 
       router.push('/');
