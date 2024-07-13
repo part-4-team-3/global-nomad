@@ -11,6 +11,7 @@ import { useImageUploader } from '@/models/uploader/use-image-uploader';
 import { apiInstance } from '@/lib/axios';
 import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useModal } from '@/store/useModal';
+import useSubmitActivity from '@/models/activity/use-submit-activity';
 
 interface TimeSlotData {
   date: string;
@@ -50,32 +51,19 @@ export default function ActivityRegistrationForm() {
   } = useTimeSlot();
   const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
-  const { setIsOpen } = useModal();
 
-  const openModal = (modalKey: string) => {
-    setIsOpen(modalKey);
+  const data: ActivitySettingData = {
+    title,
+    category,
+    description,
+    address,
+    price,
+    schedules: timeSlots,
+    bannerImageUrl: bannerImage,
+    subImageUrls: uploadedImages,
   };
 
-  const onSubmit = async () => {
-    const data: ActivitySettingData = {
-      title: title,
-      category: category,
-      description: description,
-      address: address,
-      price: price,
-      schedules: timeSlots,
-      bannerImageUrl: bannerImage,
-      subImageUrls: uploadedImages,
-    };
-    try {
-      // const response = await apiInstance.post<ActivitySettingData>('activities', data);
-      // console.log(response);
-      console.log(data);
-      openModal('alertMessage');
-    } catch (error) {
-      alert('체험등록에 실패했습니다. 다시 시도해 주세요.');
-    }
-  };
+  const { onSubmit } = useSubmitActivity(data);
 
   return (
     <>
