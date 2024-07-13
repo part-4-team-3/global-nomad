@@ -9,8 +9,10 @@ import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
 import AlertModal from '@/components/molecules/modal/AlertModal';
-import useSubmitActivity from '@/models/activity/use-submit-activity';
+import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
+import { useMutation, useMutationState } from '@tanstack/react-query';
+import { useModal } from '@/store/useModal';
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
@@ -34,6 +36,7 @@ export default function ActivityRegistrationForm() {
   } = useTimeSlot();
   const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+  const { setIsOpen } = useModal();
 
   /** 체험 등록 데이터 */
   const data: ActivitySettingData = {
@@ -46,12 +49,33 @@ export default function ActivityRegistrationForm() {
     bannerImageUrl: bannerImage,
     subImageUrls: uploadedImages,
   };
+  const openModal = (modalKey: string) => {
+    setIsOpen(modalKey);
+  };
 
-  const { onSubmit } = useSubmitActivity(data);
+  const mutation = useMutation({
+    ...submitMutationOptions,
+    onSuccess: () => {
+      openModal('alertMessage');
+    },
+  });
+
+  const submit = ({
+    title,
+    category,
+    description,
+    address,
+    price,
+    schedules: timeSlots,
+    bannerImageUrl: bannerImage,
+    subImageUrls: uploadedImages,
+  }: ActivitySettingData) => {
+    mutation.mutate(data);
+  };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="flex items-center justify-between">
           <h1>내 체험 등록</h1>
           <Button text="등록하기" color="black" size="s" type="submit" />
