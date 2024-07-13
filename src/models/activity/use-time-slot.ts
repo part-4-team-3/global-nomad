@@ -1,12 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { format } from 'date-fns';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { TimeSlotData } from '@/types/activity';
 
 const useTimeSlot = () => {
   const [date, setDate] = useState<string>();

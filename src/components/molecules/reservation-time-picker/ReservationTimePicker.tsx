@@ -3,12 +3,8 @@ import Input from '@/components/atoms/input/Input';
 import Image from 'next/image';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import TimeSlotList from '../activity-registration-form/TimeSlotList';
+import { TimeSlotData } from '@/types/activity';
 
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
 interface Props {
   selectedDay: string;
   startTime: string;

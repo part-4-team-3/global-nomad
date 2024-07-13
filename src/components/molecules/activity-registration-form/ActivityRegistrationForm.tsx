@@ -8,26 +8,9 @@ import ReservationTimePicker from '../reservation-time-picker/ReservationTimePic
 import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
-import { apiInstance } from '@/lib/axios';
 import AlertModal from '@/components/molecules/modal/AlertModal';
-import { useModal } from '@/store/useModal';
 import useSubmitActivity from '@/models/activity/use-submit-activity';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-interface ActivitySettingData {
-  title: string;
-  category: string;
-  description: string;
-  address: string;
-  price: number;
-  schedules: TimeSlotData[];
-  subImageUrls: string[];
-  bannerImageUrl: string;
-}
+import { ActivitySettingData } from '@/types/activity';
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
@@ -52,6 +35,7 @@ export default function ActivityRegistrationForm() {
   const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
+  /** 체험 등록 데이터 */
   const data: ActivitySettingData = {
     title,
     category,

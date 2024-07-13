@@ -1,12 +1,7 @@
 import Image from 'next/image';
 import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { TimeSlotData } from '@/types/activity';
 
 interface Props {
   timeSlots: TimeSlotData[];
