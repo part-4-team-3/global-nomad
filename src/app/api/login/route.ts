@@ -23,7 +23,24 @@ export async function POST(req: NextRequest) {
     await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
     await redis.expire(user.id.toString(), 100000000000);
 
-    return NextResponse.json(response.data, { status: response.status });
+    const res = NextResponse.json(response.data, { status: response.status });
+    res.cookies.set('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: 'strict',
+      path: '/',
+    });
+    res.cookies.set('refreshToken', refreshToken, {
+      httpOnly: true,
+      sameSite: 'strict',
+      path: '/',
+    });
+    res.cookies.set('userId', user.id.toString(), {
+      httpOnly: true,
+      sameSite: 'strict',
+      path: '/',
+    });
+
+    return res;
   } catch (err) {
     if (err instanceof AxiosError) {
       return NextResponse.json(err, { status: err.response?.status });
