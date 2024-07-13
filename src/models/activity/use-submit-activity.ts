@@ -1,6 +1,7 @@
 import { apiInstance } from '@/lib/axios';
 import { useModal } from '@/store/useModal';
 import { ActivitySettingData } from '@/types/activity';
+import axios, { AxiosError } from 'axios';
 
 const useSubmitActivity = (data: ActivitySettingData) => {
   const { setIsOpen } = useModal();
@@ -13,8 +14,16 @@ const useSubmitActivity = (data: ActivitySettingData) => {
     try {
       const response = await apiInstance.post<ActivitySettingData>('activities', data);
       openModal('alertMessage');
-    } catch (error) {
-      alert('체험 등록에 실패했습니다. 다시 시도해 주세요.');
+    } catch (error: unknown) {
+      console.log(error);
+      console.log(axios.isAxiosError(error));
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.message;
+        {
+          /* 모달창으로 수정예정 */
+        }
+        alert(errorMessage);
+      }
     }
   };
 
