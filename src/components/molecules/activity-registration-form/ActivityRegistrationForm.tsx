@@ -9,6 +9,8 @@ import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
 import { apiInstance } from '@/lib/axios';
+import AlertModal from '@/components/molecules/modal/AlertModal';
+import { useModal } from '@/store/useModal';
 
 interface TimeSlotData {
   date: string;
@@ -48,93 +50,102 @@ export default function ActivityRegistrationForm() {
   } = useTimeSlot();
   const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+  const { setIsOpen } = useModal();
+
+  const openModal = (modalKey: string) => {
+    setIsOpen(modalKey);
+  };
 
   const onSubmit = async () => {
-    // const data: ActivitySettingData =
-    // console.log(data);
+    const data: ActivitySettingData = {
+      title: title,
+      category: category,
+      description: description,
+      address: address,
+      price: price,
+      schedules: timeSlots,
+      bannerImageUrl: bannerImage,
+      subImageUrls: uploadedImages,
+    };
     try {
-      const response = await apiInstance.post<ActivitySettingData>('activities', {
-        title: title,
-        category: category,
-        description: description,
-        address: address,
-        price: price,
-        schedules: timeSlots,
-        bannerImageUrl: bannerImage,
-        subImageUrls: uploadedImages,
-      });
-      console.log(response);
+      // const response = await apiInstance.post<ActivitySettingData>('activities', data);
+      // console.log(response);
+      console.log(data);
+      openModal('alertMessage');
     } catch (error) {
-      alert('이미지 업로드에 실패했습니다. 다시 시도해 주세요.');
+      alert('체험등록에 실패했습니다. 다시 시도해 주세요.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center justify-between">
-        <h1>내 체험 등록</h1>
-        <Button text="등록하기" color="black" size="s" type="submit" />
-      </div>
-      <div className="flex flex-col gap-24pxr">
-        <Input size="full" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
-        <Controller
-          name="category"
-          control={control}
-          render={({ field }) => (
-            <Select
-              options={options}
-              placeholder="카테고리"
-              value={field.value}
-              onChange={(value) => {
-                field.onChange(value);
-                setCategory(value);
-              }}
-            />
-          )}
-        />
-        <Input size="full" placeholder="설명" onChange={(e) => setDescription(e.target.value)} />
-        <label>가격</label>
-        <Input
-          size="full"
-          type="number"
-          placeholder="가격"
-          onChange={(e) => setPrice(parseFloat(e.target.value))}
-        />
-        <label>주소</label>
-        <Input
-          size="full"
-          placeholder="주소를 입력해주세요"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <label>예약 가능한 시간대</label>
-        <ReservationTimePicker
-          selectedDay={selectedDay}
-          startTime={startTime}
-          endTime={endTime}
-          timeSlots={timeSlots}
-          isCalendarOpen={isCalendarOpen}
-          handleFormatDayClick={handleFormatDayClick}
-          setStartTime={setStartTime}
-          setEndTime={setEndTime}
-          handleAddTimeSlot={handleAddTimeSlot}
-          handleDeleteTimeSlot={handleDeleteTimeSlot}
-          handleCalendarOpen={handleCalendarOpen}
-        />
-        <label>배너 이미지</label>
-        <ImageUploader
-          title="banner"
-          images={bannerImage}
-          handleUploadImage={handleUploadImage}
-          handleDeleteImage={handleDeleteImage}
-        />
-        <label>소개 이미지</label>
-        <ImageUploader
-          title="intro"
-          images={uploadedImages}
-          handleUploadImage={handleUploadImage}
-          handleDeleteImage={handleDeleteImage}
-        />
-      </div>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex items-center justify-between">
+          <h1>내 체험 등록</h1>
+          <Button text="등록하기" color="black" size="s" type="submit" />
+        </div>
+        <div className="flex flex-col gap-24pxr">
+          <Input size="full" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select
+                options={options}
+                placeholder="카테고리"
+                value={field.value}
+                onChange={(value) => {
+                  field.onChange(value);
+                  setCategory(value);
+                }}
+              />
+            )}
+          />
+          <Input size="full" placeholder="설명" onChange={(e) => setDescription(e.target.value)} />
+          <label>가격</label>
+          <Input
+            size="full"
+            type="number"
+            placeholder="가격"
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
+          />
+          <label>주소</label>
+          <Input
+            size="full"
+            placeholder="주소를 입력해주세요"
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <label>예약 가능한 시간대</label>
+          <ReservationTimePicker
+            selectedDay={selectedDay}
+            startTime={startTime}
+            endTime={endTime}
+            timeSlots={timeSlots}
+            isCalendarOpen={isCalendarOpen}
+            handleFormatDayClick={handleFormatDayClick}
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            handleAddTimeSlot={handleAddTimeSlot}
+            handleDeleteTimeSlot={handleDeleteTimeSlot}
+            handleCalendarOpen={handleCalendarOpen}
+          />
+          <label>배너 이미지</label>
+          <ImageUploader
+            title="banner"
+            images={bannerImage}
+            handleUploadImage={handleUploadImage}
+            handleDeleteImage={handleDeleteImage}
+          />
+          <label>소개 이미지</label>
+          <ImageUploader
+            title="intro"
+            images={uploadedImages}
+            handleUploadImage={handleUploadImage}
+            handleDeleteImage={handleDeleteImage}
+          />
+        </div>
+      </form>
+      <AlertModal text="체험등록이 완료되었습니다." />
+    </>
   );
 }
