@@ -37,6 +37,7 @@ export default function LoginForm() {
     onSuccess: (data) => {
       cookie.setCookie('accessToken', data.accessToken);
       cookie.setCookie('refreshToken', data.refreshToken);
+      cookie.setCookie('userId', data.user.id.toString());
       setUser(data.user);
 
       router.push('/');
