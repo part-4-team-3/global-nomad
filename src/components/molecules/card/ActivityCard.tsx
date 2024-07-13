@@ -24,7 +24,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
         width={isBest ? 384 : 283}
         height={isBest ? 384 : 283}
         alt=""
-        className={`object-cover ${isBest ? 'absolute size-full' : 'h-168pxr w-full rounded-[20px] md:h-221pxr lg:h-283pxr'}`}
+        className={`bg-[#d9d9d9] object-cover ${isBest ? 'absolute size-full' : 'h-168pxr w-full rounded-[20px] md:h-221pxr lg:h-283pxr'}`}
         onError={() => setIsImageError(true)}
       />
       <div
@@ -38,7 +38,11 @@ export default function ActivityCard({ activity, isBest }: Props) {
             : {}
         }
       >
-        <ReviewRating color={isBest ? 'white' : 'gray'} />
+        <ReviewRating
+          rating={activity.rating}
+          reviewCount={activity.reviewCount}
+          color={isBest ? 'white' : 'gray'}
+        />
         <h3
           className={`break-keep text-18pxr leading-[120%] ${isBest ? 'w-full text-18pxr font-[700] text-white md:w-[80%] md:text-30pxr' : 'mt-10pxr font-[600] md:text-24pxr'} `}
         >
@@ -48,7 +52,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
           <b
             className={`font-[700] ${isBest ? 'text-16pxr text-white md:text-20pxr' : 'text-20pxr md:text-28pxr'}`}
           >
-            ₩ {activity.price}
+            ₩ {activity.price.toLocaleString('ko-KR')}
           </b>
           <span className={`text-var-gray9 ${isBest ? 'text-14pxr' : 'text-16pxr md:text-20pxr'}`}>
             / 인

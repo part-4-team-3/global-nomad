@@ -1,10 +1,12 @@
 import Image from 'next/image';
 
 interface Props {
+  rating: number;
+  reviewCount: number;
   color?: 'white' | 'gray';
 }
 
-export default function ReviewRating({ color }: Props) {
+export default function ReviewRating({ rating, reviewCount, color }: Props) {
   const imageSrc = !color ? '/star-icon.svg' : '/star-bold.svg';
   return (
     <div className="flex items-center gap-5pxr">
@@ -12,7 +14,10 @@ export default function ReviewRating({ color }: Props) {
       <span
         className={`text-14pxr md:text-16pxr ${color === 'white' ? 'text-14pxr font-[600] text-white' : color === 'gray' ? 'font-[500]' : 'font-[400]'}`}
       >
-        4.9 <span className={color === 'gray' ? 'text-var-gray9' : ''}>(444)</span>
+        {rating ? rating : 0}{' '}
+        <span className={color === 'gray' ? 'text-var-gray9' : ''}>
+          ({reviewCount ? reviewCount : 0})
+        </span>
       </span>
     </div>
   );
