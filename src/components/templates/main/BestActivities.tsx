@@ -43,7 +43,6 @@ export default function BestActivities({ activitiesData }: Props) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
       setIsPrevDisabled(scrollLeft === 0);
       setIsNextDisabled(scrollLeft + clientWidth >= scrollWidth);
-      console.log(scrollLeft, clientWidth, scrollWidth);
     }
   };
 
@@ -73,7 +72,12 @@ export default function BestActivities({ activitiesData }: Props) {
         <h3 className="text-18pxr font-[700] md:text-36pxr">🔥 인기 체험</h3>
         <div className="hidden gap-[12px] lg:flex">
           {arrowList.map((arrow) => (
-            <button key={arrow.name} onClick={arrow.onClick} disabled={arrow.disabled}>
+            <button
+              key={arrow.name}
+              onClick={arrow.onClick}
+              disabled={arrow.disabled}
+              className="disabled:opacity-[50%]"
+            >
               <Image
                 src="/arrow-right.svg"
                 width={44}
