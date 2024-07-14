@@ -17,7 +17,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
   return (
     <Link
       href=""
-      className={`flex flex-none snap-start ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:h-384pxr md:w-[calc((100%-48px)/3)]' : 'w-168pxr flex-col gap-16pxr md:w-221pxr lg:w-283pxr'} `}
+      className={`flex flex-none snap-start ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:h-384pxr md:w-384pxr lg:w-[calc((100%-48px)/3)]' : 'w-168pxr flex-col gap-[16px] md:w-221pxr lg:w-283pxr'} `}
     >
       <Image
         src={isImageError ? defaultImage : activity.bannerImageUrl}
@@ -28,7 +28,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
         onError={() => setIsImageError(true)}
       />
       <div
-        className={`w-full ${isBest ? 'relative flex flex-col justify-end gap-6pxr px-20pxr py-24pxr md:gap-20pxr md:py-30pxr' : 'file:'}`}
+        className={`w-full ${isBest ? 'relative flex flex-col justify-end gap-[6px] px-[20px] py-[24px] md:gap-[20px] md:py-[30px]' : ''}`}
         style={
           isBest
             ? {
@@ -44,11 +44,11 @@ export default function ActivityCard({ activity, isBest }: Props) {
           color={isBest ? 'white' : 'gray'}
         />
         <h3
-          className={`break-keep text-18pxr leading-[120%] ${isBest ? 'w-full text-18pxr font-[700] text-white md:w-[80%] md:text-30pxr' : 'mt-10pxr font-[600] md:text-24pxr'} `}
+          className={`break-keep text-18pxr leading-[120%] ${isBest ? 'w-full text-18pxr font-[700] text-white md:w-[80%] md:text-30pxr' : 'mt-[10px] font-[600] md:text-24pxr'} `}
         >
           {activity.title}
         </h3>
-        <div className={`flex items-center gap-5pxr ${isBest ? '' : 'mt-8pxr'}`}>
+        <div className={`flex items-center gap-[5px] ${isBest ? '' : 'mt-[8px]'}`}>
           <b
             className={`font-[700] ${isBest ? 'text-16pxr text-white md:text-20pxr' : 'text-20pxr md:text-28pxr'}`}
           >

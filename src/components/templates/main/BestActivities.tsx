@@ -43,10 +43,10 @@ export default function BestActivities({ activitiesData }: Props) {
   }, []);
 
   return (
-    <div className="mt-40pxr flex flex-col gap-33pxr">
+    <div className="mt-[24px] flex flex-col gap-[16px] md:gap-[33px] lg:mt-[40px]">
       <div className="flex items-center justify-between">
-        <h3 className="text-36pxr font-[700]">🔥 인기 체험</h3>
-        <div className="hidden gap-12pxr lg:flex">
+        <h3 className="text-18pxr font-[700] md:text-36pxr">🔥 인기 체험</h3>
+        <div className="hidden gap-[12px] lg:flex">
           {arrowList.map((arrow) => (
             <button key={arrow.name} onClick={arrow.onClick}>
               <Image
