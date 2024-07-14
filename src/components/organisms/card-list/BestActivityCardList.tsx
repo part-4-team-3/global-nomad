@@ -4,18 +4,18 @@ import React, { LegacyRef } from 'react';
 
 interface Props {
   activitiesData: ActivityResponse;
-  carouselRef: LegacyRef<HTMLUListElement> | undefined;
+  carouselRef: LegacyRef<HTMLDivElement> | undefined;
 }
 
 export default function BestActivityCardList({ activitiesData, carouselRef }: Props) {
   return (
-    <ul
+    <div
       ref={carouselRef}
-      className="scrollbar-hide flex w-full snap-x snap-proximity gap-[16px] overflow-x-auto md:gap-[24px]"
+      className="scrollbar-hide flex w-full snap-x snap-mandatory gap-[16px] overflow-x-auto md:gap-[24px]"
     >
       {activitiesData.activities.map((activity) => (
         <ActivityCard key={activity.id} activity={activity} isBest />
       ))}
-    </ul>
+    </div>
   );
 }

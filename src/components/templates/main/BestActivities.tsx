@@ -11,7 +11,9 @@ interface Props {
 
 export default function BestActivities({ activitiesData }: Props) {
   const [scrollAmount, setScrollAmount] = useState(0);
-  const carouselRef = useRef<HTMLUListElement>(null);
+  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const arrowList = [
     {
       name: 'prev',
@@ -21,6 +23,7 @@ export default function BestActivities({ activitiesData }: Props) {
           carouselRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         }
       },
+      disabled: isPrevDisabled,
     },
     {
       name: 'next',
@@ -30,8 +33,19 @@ export default function BestActivities({ activitiesData }: Props) {
           carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
       },
+      disabled: isNextDisabled,
     },
   ];
+  console.log(isNextDisabled);
+
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setIsPrevDisabled(scrollLeft === 0);
+      setIsNextDisabled(scrollLeft + clientWidth >= scrollWidth);
+      console.log(scrollLeft, clientWidth, scrollWidth);
+    }
+  };
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -39,6 +53,17 @@ export default function BestActivities({ activitiesData }: Props) {
       const maxScroll = 1224;
       const calculatedScroll = Math.min(containerWidth, maxScroll) / 3;
       setScrollAmount(calculatedScroll);
+      handleScroll();
+    }
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleScroll);
+      return () => {
+        carousel.removeEventListener('scroll', handleScroll);
+      };
     }
   }, []);
 
@@ -48,7 +73,7 @@ export default function BestActivities({ activitiesData }: Props) {
         <h3 className="text-18pxr font-[700] md:text-36pxr">🔥 인기 체험</h3>
         <div className="hidden gap-[12px] lg:flex">
           {arrowList.map((arrow) => (
-            <button key={arrow.name} onClick={arrow.onClick}>
+            <button key={arrow.name} onClick={arrow.onClick} disabled={arrow.disabled}>
               <Image
                 src="/arrow-right.svg"
                 width={44}
