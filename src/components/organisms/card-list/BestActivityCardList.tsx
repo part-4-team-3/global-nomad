@@ -1,18 +1,20 @@
 import ActivityCard from '@/components/molecules/card/ActivityCard';
 import { ActivityResponse } from '@/types/activity';
-import React from 'react';
+import React, { LegacyRef } from 'react';
 
 interface Props {
   activitiesData: ActivityResponse;
+  carouselRef: LegacyRef<HTMLUListElement> | undefined;
 }
 
-export default function BestActivityCardList({ activitiesData }: Props) {
+export default function BestActivityCardList({ activitiesData, carouselRef }: Props) {
   return (
-    <ul className="flex w-full gap-[24px] overflow-hidden">
+    <ul
+      ref={carouselRef}
+      className="scroll-snap-x-mandatory scroll-snap-both scrollbar-hide flex w-full gap-[24px] overflow-x-auto"
+    >
       {activitiesData.activities.map((activity) => (
-        <li key={activity.id}>
-          <ActivityCard activity={activity} isBest />
-        </li>
+        <ActivityCard key={activity.id} activity={activity} isBest />
       ))}
     </ul>
   );
