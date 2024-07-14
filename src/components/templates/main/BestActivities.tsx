@@ -2,8 +2,9 @@
 
 import BestActivityCardList from '@/components/organisms/card-list/BestActivityCardList';
 import { ActivityResponse } from '@/types/activity';
+import { throttle } from 'lodash';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
   activitiesData: ActivityResponse;
@@ -36,15 +37,14 @@ export default function BestActivities({ activitiesData }: Props) {
       disabled: isNextDisabled,
     },
   ];
-  console.log(isNextDisabled);
 
-  const handleScroll = () => {
+  const updateScrollState = throttle(() => {
     if (carouselRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
       setIsPrevDisabled(scrollLeft === 0);
       setIsNextDisabled(scrollLeft + clientWidth >= scrollWidth);
     }
-  };
+  }, 200);
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -52,19 +52,19 @@ export default function BestActivities({ activitiesData }: Props) {
       const maxScroll = 1224;
       const calculatedScroll = Math.min(containerWidth, maxScroll) / 3;
       setScrollAmount(calculatedScroll);
-      handleScroll();
+      updateScrollState();
     }
-  }, []);
+  }, [updateScrollState]);
 
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
-      carousel.addEventListener('scroll', handleScroll);
+      carousel.addEventListener('scroll', updateScrollState);
       return () => {
-        carousel.removeEventListener('scroll', handleScroll);
+        carousel.removeEventListener('scroll', updateScrollState);
       };
     }
-  }, []);
+  }, [updateScrollState]);
 
   return (
     <div className="mt-[24px] flex flex-col gap-[16px] md:gap-[33px] lg:mt-[40px]">
