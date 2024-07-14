@@ -8,7 +8,7 @@ interface Props {
 
 export default function BestActivityCardList({ activitiesData }: Props) {
   return (
-    <ul className="flex flex-wrap gap-[24px]">
+    <ul className="flex w-full gap-[24px] overflow-hidden">
       {activitiesData.activities.map((activity) => (
         <li key={activity.id}>
           <ActivityCard activity={activity} isBest />
