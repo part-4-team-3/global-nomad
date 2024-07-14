@@ -17,7 +17,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
   return (
     <Link
       href=""
-      className={`scroll-snap-align-start flex flex-none ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:h-384pxr md:w-[calc((100%-48px)/3)]' : 'w-168pxr flex-col gap-16pxr md:w-221pxr lg:w-283pxr'} `}
+      className={`flex flex-none snap-start ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:h-384pxr md:w-[calc((100%-48px)/3)]' : 'w-168pxr flex-col gap-16pxr md:w-221pxr lg:w-283pxr'} `}
     >
       <Image
         src={isImageError ? defaultImage : activity.bannerImageUrl}

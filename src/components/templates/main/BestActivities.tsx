@@ -37,7 +37,7 @@ export default function BestActivities({ activitiesData }: Props) {
     if (carouselRef.current) {
       const containerWidth = carouselRef.current.offsetWidth + 24;
       const maxScroll = 1224;
-      const calculatedScroll = Math.min(containerWidth, maxScroll);
+      const calculatedScroll = Math.min(containerWidth, maxScroll) / 3;
       setScrollAmount(calculatedScroll);
     }
   }, []);
