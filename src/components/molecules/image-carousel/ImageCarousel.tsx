@@ -14,15 +14,25 @@ interface Props {
 
 export default function ImageCarousel({ bannerImg, subImg }: Props) {
   return (
-    <Carousel className="relative w-[400px]">
-      <CarouselContent className="h-[310px] w-full">
-        <CarouselItem>
-          <Image src={bannerImg} fill alt="" objectFit="contain" loading="eager" />
+    <Carousel className="w-full">
+      <CarouselContent className="h-310pxr w-full">
+        <CarouselItem className="relative">
+          <Image src={bannerImg} fill alt="" objectFit="contain" />
         </CarouselItem>
+
+        {subImg?.map((img) => (
+          <CarouselItem key={img.id} className="relative">
+            <Image src={img.imageUrl} fill alt="" objectFit="contain" />
+          </CarouselItem>
+        ))}
       </CarouselContent>
 
-      <CarouselPrevious className="absolute left-10pxr" />
-      <CarouselNext className="absolute right-10pxr" />
+      {subImg && (
+        <>
+          <CarouselPrevious className="absolute left-10pxr" />
+          <CarouselNext className="absolute right-10pxr" />
+        </>
+      )}
     </Carousel>
   );
 }
