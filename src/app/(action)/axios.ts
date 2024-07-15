@@ -13,15 +13,17 @@ export const axiosByServer = axios.create({
 
 // Request interceptor
 axiosByServer.interceptors.request.use(async (config) => {
-  // redis에서 userId를 가져옵니다.
+  // 쿠키에서 userId를 가져옵니다.
   const userId = await getCookie('userId');
 
-  // redis에서 userId를 키로하여 accessToken을 가져옵니다.
-  const usersToken = await redis.get(userId!);
+  if (userId) {
+    // redis에서 userId를 키로하여 accessToken을 가져옵니다.
+    const usersToken = await redis.get(userId!);
 
-  // accessToken을 헤더에 추가합니다.
-  const accessToken = JSON.parse(usersToken!).accessToken;
-  config.headers.Authorization = `Bearer ${accessToken}`;
+    // accessToken을 헤더에 추가합니다.
+    const accessToken = JSON.parse(usersToken!).accessToken;
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
 
   return config;
 });
@@ -66,6 +68,8 @@ axiosByServer.interceptors.response.use(
       const prevData = await axios(originalRequest);
       return prevData;
     }
+
+    throw error;
   },
 );
 
@@ -80,15 +84,18 @@ export async function handleRequest(url: string, method: Method, body?: object) 
     } else {
       response = await axiosByServer[method](url, body);
     }
+
     const { data, status } = response;
+
     return NextResponse.json(data, { status });
   } catch (err) {
     if (err instanceof AxiosError) {
       return NextResponse.json(
         {
+          isAxiosError: true,
           message: err.message,
-          status: err.response?.status || 500,
-          data: err.response?.data || null,
+          status: err.response?.status,
+          data: err.response?.data,
         },
         { status: err.response?.status || 500 },
       );
