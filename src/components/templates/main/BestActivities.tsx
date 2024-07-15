@@ -1,10 +1,11 @@
 'use client';
 
+import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import BestActivityCardList from '@/components/organisms/card-list/BestActivityCardList';
 import { ActivityResponse } from '@/types/activity';
 import { throttle } from 'lodash';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
   activitiesData: ActivityResponse;
@@ -50,7 +51,7 @@ export default function BestActivities({ activitiesData }: Props) {
     if (carouselRef.current) {
       const containerWidth = carouselRef.current.offsetWidth + 24;
       const maxScroll = 1224;
-      const calculatedScroll = Math.min(containerWidth, maxScroll) / 3;
+      const calculatedScroll = Math.min(containerWidth, maxScroll) / 3 - 24;
       setScrollAmount(calculatedScroll);
       updateScrollState();
     }
@@ -68,7 +69,7 @@ export default function BestActivities({ activitiesData }: Props) {
 
   return (
     <div className="mt-[24px] flex flex-col gap-[16px] md:gap-[33px] lg:mt-[40px]">
-      <div className="flex items-center justify-between">
+      <InnerLayout className="flex items-center justify-between">
         <h3 className="text-18pxr font-[700] md:text-36pxr">🔥 인기 체험</h3>
         <div className="hidden gap-[12px] lg:flex">
           {arrowList.map((arrow) => (
@@ -88,8 +89,10 @@ export default function BestActivities({ activitiesData }: Props) {
             </button>
           ))}
         </div>
+      </InnerLayout>
+      <div className="mx-auto w-full max-w-1200pxr">
+        <BestActivityCardList activitiesData={activitiesData} carouselRef={carouselRef} />
       </div>
-      <BestActivityCardList activitiesData={activitiesData} carouselRef={carouselRef} />
     </div>
   );
 }

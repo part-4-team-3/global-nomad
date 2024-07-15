@@ -11,7 +11,7 @@ export default function BestActivityCardList({ activitiesData, carouselRef }: Pr
   return (
     <div
       ref={carouselRef}
-      className="scrollbar-hide flex w-full snap-x snap-mandatory gap-[16px] overflow-x-auto md:gap-[24px]"
+      className="flex w-full snap-x snap-mandatory gap-[16px] overflow-x-auto scrollbar-hide md:gap-[24px] md:px-[24px]"
     >
       {activitiesData.activities.map((activity) => (
         <ActivityCard key={activity.id} activity={activity} isBest />
