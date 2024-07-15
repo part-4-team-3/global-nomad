@@ -3,7 +3,7 @@ import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Button from '@/components/atoms/button/Button';
-import ReservationTimePicker from '../reservation-time-picker/ReservationTimePicker';
+import ReservationTimePicker from '../../molecules/reservation-time-picker/ReservationTimePicker';
 import Input from '@/components/atoms/input/Input';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
@@ -12,7 +12,7 @@ import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useMutation } from '@tanstack/react-query';
 import { useModal } from '@/store/useModal';
-import ActivitySelect from '../select/ActivitySelect';
+import ActivitySelect from '../../molecules/select/ActivitySelect';
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
