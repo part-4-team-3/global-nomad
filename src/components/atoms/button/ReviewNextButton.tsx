@@ -9,9 +9,9 @@ interface Props {
 
 export default function ReviewNextButton({ currentPage, href, totalPage }: Props) {
   return (
-    <Link href={href} scroll={false} className="h-[55px]">
+    <Link href={href} scroll={false} className="h-40pxr">
       <button
-        className="max-md:size-[40px] relative size-[55px]"
+        className="max-md:size-[40px] relative size-40pxr"
         disabled={currentPage === totalPage}
       >
         <Image

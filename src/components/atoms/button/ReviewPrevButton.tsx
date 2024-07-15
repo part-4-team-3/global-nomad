@@ -8,8 +8,8 @@ interface Props {
 
 export default function ReviewPrevButton({ href, currentPage }: Props) {
   return (
-    <Link href={href} scroll={false} className="h-[55px]">
-      <button className="max-md:size-[40px] relative size-[55px]" disabled={currentPage === 1}>
+    <Link href={href} scroll={false} className="h-40pxr">
+      <button className="max-md:size-[40px] relative size-40pxr" disabled={currentPage === 1}>
         <Image
           fill
           src={currentPage === 1 ? '/pagination-left-invalid.svg' : '/pagination-left.svg'}
