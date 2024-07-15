@@ -12,7 +12,7 @@ export default function ReviewCard({ review }: Props) {
     : format(review.createdAt, 'yy.MM.dd');
 
   return (
-    <div className="flex gap-[16px]">
+    <div className="flex gap-[16px] p-[24px]">
       <div className="relative h-45pxr w-45pxr shrink-0 overflow-hidden rounded-full">
         <Image src={review.user.profileImageUrl} fill alt="" objectFit="cover" />
       </div>
