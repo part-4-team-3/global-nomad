@@ -24,7 +24,7 @@ export default function ReviewTemplate({
     <div className="flex flex-col items-center py-[40px]">
       <ReviewOverview ratings={ratings} reviewCount={reviewCount} />
       <ReviewList reviews={reviews} />
-      <div className="py-[200px]">
+      <div className="pb-[145px] pt-[40px]">
         <ReviewPagination totalPage={totalPage} currentPage={currentPage} activityId={activityId} />
       </div>
     </div>
