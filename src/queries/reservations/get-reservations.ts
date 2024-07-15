@@ -1,4 +1,4 @@
-import { apiInstance } from '@/lib/axios';
+import { getInstance } from '@/lib/axios';
 import makeQueryString from '@/lib/query-string';
 import { Reservation, ReservationStatus } from '@/types/reservation';
 
@@ -14,10 +14,10 @@ interface GetReservationsResponse {
   cursorId: null | number;
 }
 
-export const getReservations = async (params: Params) => {
-  const queryString = makeQueryString(params);
-  const data = await apiInstance.get<any, GetReservationsResponse>(
-    `/my-reservations${queryString}`,
-  );
-  return data;
+export const getReservations = async (params?: Params) => {
+  const queryString = params ? makeQueryString(params) : '';
+  const instance = getInstance();
+  const data = await instance.get<GetReservationsResponse>(`my-reservations${queryString}`);
+
+  return data.data;
 };
