@@ -12,7 +12,7 @@ import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useMutation } from '@tanstack/react-query';
 import { useModal } from '@/store/useModal';
-import ActivitySelect from '../../molecules/select/ActivitySelect';
+import Select from '@/components/molecules/select/Select';
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
@@ -89,7 +89,7 @@ export default function ActivityRegistrationForm() {
             name="category"
             control={control}
             render={({ field }) => (
-              <ActivitySelect
+              <Select
                 options={options}
                 placeholder="카테고리"
                 value={field.value}
