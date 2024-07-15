@@ -1,20 +1,15 @@
 'use client';
 import { useState } from 'react';
 import { format } from 'date-fns';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { TimeSlotData } from '@/types/activity';
 
 const useTimeSlot = () => {
   const [date, setDate] = useState<string>();
-  const [selectedDay, setSelectedDay] = useState<string>();
+  const [selectedDay, setSelectedDay] = useState<string>('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [timeSlots, setTimeSlots] = useState<TimeSlotData[]>([]);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   /** Calender 열기 */
   const handleCalendarOpen = () => {

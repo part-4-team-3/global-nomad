@@ -1,12 +1,6 @@
 import Image from 'next/image';
-import Input from '@/components/atoms/input/Input';
-import useTimeSlot from '@/models/activity/use-time-slot';
-
-interface TimeSlotData {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { TimeSlotData } from '@/types/activity';
+import TimeSlotInput from '@/components/atoms/input/TimeSlotInput';
 
 interface Props {
   timeSlots: TimeSlotData[];
@@ -19,18 +13,21 @@ export default function TimeSlotList({ timeSlots, handleDeleteTimeSlot }: Props)
       {timeSlots &&
         timeSlots.map((slot, index) => (
           <div key={index} className="relative flex place-items-start gap-[5px] lg:gap-[20px]">
-            <div className="h-40pxr md:h-56pxr">
-              <Input size="full" type="text" value={slot.date} readOnly />
+            <div className="relative flex h-40pxr min-w-132pxr flex-1">
+              <TimeSlotInput type="text" value={slot.date} readOnly={true} />
             </div>
-            <div>
-              <div className="flex gap-[5px] lg:gap-[20px]">
-                <Input size="full" type="time" value={slot.startTime} readOnly />
-                <Input size="full" type="time" value={slot.endTime} readOnly />
+            <div className="relative flex flex-1 items-center justify-center gap-[5px] lg:gap-[12px]">
+              <div className="max-w-80pxr flex-1 md:min-w-104pxr md:max-w-none lg:min-w-140pxr">
+                <TimeSlotInput type="time" value={slot.startTime} readOnly={true} />
+              </div>
+              <div className="max-w-80pxr flex-1 md:min-w-104pxr md:max-w-none lg:min-w-140pxr">
+                <TimeSlotInput type="time" value={slot.endTime} readOnly={true} />
               </div>
             </div>
             <button
               className="relative size-[44px] md:size-[56px]"
               onClick={() => handleDeleteTimeSlot(index)}
+              type="button"
             >
               <Image fill src="/delete-activity-button.svg" alt="체험시간 삭제하기" />
             </button>

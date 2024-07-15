@@ -32,3 +32,19 @@ export interface MyActivityList {
   totalCount: number;
   activities: Activity[];
 }
+
+export interface TimeSlotData {
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+export interface ActivitySettingData {
+  title: string;
+  category: string;
+  description: string;
+  address: string;
+  price: number;
+  schedules: TimeSlotData[];
+  subImageUrls: string[];
+  bannerImageUrl: string;
+}
