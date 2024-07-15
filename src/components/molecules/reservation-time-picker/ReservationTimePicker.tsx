@@ -5,6 +5,7 @@ import useTimeSlot from '@/models/activity/use-time-slot';
 import TimeSlotList from '../activity-registration-form/TimeSlotList';
 import { TimeSlotData } from '@/types/activity';
 import TimeSlotInput from '@/components/atoms/input/TimeSlotInput';
+import Select from '../select/Select';
 
 interface Props {
   selectedDay: string;
@@ -33,6 +34,8 @@ export default function ReservationTimePicker({
   handleAddTimeSlot,
   handleDeleteTimeSlot,
 }: Props) {
+  const options = Array.from({ length: 24 }, (_, hour) => `${hour.toString().padStart(2, '0')}:00`);
+
   return (
     <div>
       <div className="relative flex place-items-end gap-[5px] border-b pb-[16px] md:h-[92px] lg:gap-[20px] lg:pb-[20px]">

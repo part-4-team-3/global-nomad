@@ -2,7 +2,6 @@
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
-import Select from '../select/Select';
 import Button from '@/components/atoms/button/Button';
 import ReservationTimePicker from '../reservation-time-picker/ReservationTimePicker';
 import Input from '@/components/atoms/input/Input';
@@ -13,6 +12,7 @@ import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useMutation } from '@tanstack/react-query';
 import { useModal } from '@/store/useModal';
+import ActivitySelect from '../select/ActivitySelect';
 
 export default function ActivityRegistrationForm() {
   const { register, handleSubmit, control } = useForm<ActivitySettingData>();
@@ -89,7 +89,7 @@ export default function ActivityRegistrationForm() {
             name="category"
             control={control}
             render={({ field }) => (
-              <Select
+              <ActivitySelect
                 options={options}
                 placeholder="카테고리"
                 value={field.value}
