@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import makeQueryString from '@/lib/query-string';
-import { AxiosError } from 'axios';
-import { axiosByServer } from '@/app/(action)/axios';
+import { handleError, handleRequest } from '@/app/(action)/axios';
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,28 +9,8 @@ export async function GET(req: NextRequest) {
     const queryString = makeQueryString(queryParams);
     const url = `${path}${queryString}`;
 
-    const response = await axiosByServer.get(url);
-    const { data, status } = response;
-
-    return NextResponse.json(data, { status });
+    return await handleRequest(url, 'get');
   } catch (err) {
-    if (err instanceof AxiosError) {
-      return NextResponse.json(
-        {
-          message: err.message,
-          status: err.response?.status || 500,
-          data: err.response?.data || null,
-        },
-        { status: err.response?.status || 500 },
-      );
-    }
-
-    return NextResponse.json(
-      {
-        message: 'An unexpected error occurred',
-        status: 500,
-      },
-      { status: 500 },
-    );
+    return await handleError(err);
   }
 }

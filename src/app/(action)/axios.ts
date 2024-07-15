@@ -1,8 +1,9 @@
 'use server';
 
 import redis from '@/lib/redis';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { getCookie } from './(cookie)/cookie';
+import { NextResponse } from 'next/server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -67,3 +68,43 @@ axiosByServer.interceptors.response.use(
     }
   },
 );
+
+type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
+
+// 요청 처리 함수
+export async function handleRequest(url: string, method: Method, body?: object) {
+  try {
+    let response;
+    if (method === 'get' || method === 'delete') {
+      response = await axiosByServer[method](url);
+    } else {
+      response = await axiosByServer[method](url, body);
+    }
+    const { data, status } = response;
+    return NextResponse.json(data, { status });
+  } catch (err) {
+    return handleError(err);
+  }
+}
+
+// 에러 처리 함수
+export async function handleError(err: any) {
+  if (err instanceof AxiosError) {
+    return NextResponse.json(
+      {
+        message: err.message,
+        status: err.response?.status || 500,
+        data: err.response?.data || null,
+      },
+      { status: err.response?.status || 500 },
+    );
+  }
+
+  return NextResponse.json(
+    {
+      message: 'An unexpected error occurred',
+      status: 500,
+    },
+    { status: 500 },
+  );
+}
