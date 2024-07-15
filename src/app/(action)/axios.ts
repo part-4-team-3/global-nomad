@@ -83,28 +83,23 @@ export async function handleRequest(url: string, method: Method, body?: object) 
     const { data, status } = response;
     return NextResponse.json(data, { status });
   } catch (err) {
-    return handleError(err);
-  }
-}
+    if (err instanceof AxiosError) {
+      return NextResponse.json(
+        {
+          message: err.message,
+          status: err.response?.status || 500,
+          data: err.response?.data || null,
+        },
+        { status: err.response?.status || 500 },
+      );
+    }
 
-// 에러 처리 함수
-export async function handleError(err: any) {
-  if (err instanceof AxiosError) {
     return NextResponse.json(
       {
-        message: err.message,
-        status: err.response?.status || 500,
-        data: err.response?.data || null,
+        message: 'An unexpected error occurred',
+        status: 500,
       },
-      { status: err.response?.status || 500 },
+      { status: 500 },
     );
   }
-
-  return NextResponse.json(
-    {
-      message: 'An unexpected error occurred',
-      status: 500,
-    },
-    { status: 500 },
-  );
 }
