@@ -4,7 +4,7 @@ import redis from '@/lib/redis';
 import axios from 'axios';
 import { getCookie } from './(cookie)/cookie';
 
-const BASE_URL = 'https://sp-globalnomad-api.vercel.app/5-3/';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const axiosByServer = axios.create({
   baseURL: BASE_URL,
@@ -27,9 +27,7 @@ axiosByServer.interceptors.request.use(async (config) => {
 
 // Response interceptor
 axiosByServer.interceptors.response.use(
-  (success) => {
-    return success.data;
-  },
+  (success) => success,
 
   async (error) => {
     const originalRequest = error.config;
@@ -43,6 +41,8 @@ axiosByServer.interceptors.response.use(
 
       // redis에서 userId를 키로하여 refreshToken
       const usersToken = await redis.get(userId!);
+
+      if (!usersToken) throw error;
 
       // refreshToken을 가져옵니다.
       const refreshToken = JSON.parse(usersToken!).refreshToken;
@@ -63,7 +63,7 @@ axiosByServer.interceptors.response.use(
       // 새로운 accessToken을 헤더에 추가하여 요청을 재시도합니다.
       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
       const prevData = await axios(originalRequest);
-      return prevData.data;
+      return prevData;
     }
   },
 );
