@@ -18,8 +18,8 @@ export default async function Home() {
       <Banner activity={bestActivitiesData.activities[0]} />
       <InnerLayout>
         <SearchActivity />
-        <BestActivities activitiesData={bestActivitiesData} />
       </InnerLayout>
+      <BestActivities activitiesData={bestActivitiesData} />
     </>
   );
 }
