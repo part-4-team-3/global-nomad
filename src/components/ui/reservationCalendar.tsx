@@ -9,34 +9,25 @@ import Image from 'next/image';
 import { formatDateYYYYMMDD } from '@/lib/formatDate';
 import Chip from '../atoms/chip/Chip';
 import { ReservationByMonth } from '@/types/reservation';
+import { MyActivitiesOfMonth } from '@/types/activity';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-const mockData = [
-  {
-    date: '2024-07-11',
-    reservations: {
-      completed: 0,
-      confirmed: 2,
-      pending: 2,
-    },
-  },
-  {
-    date: '2024-07-15',
-    reservations: {
-      completed: 1,
-      confirmed: 0,
-      pending: 0,
-    },
-  },
-];
+interface Props {
+  activitiesByMonth: MyActivitiesOfMonth[] | undefined;
+  onChangePrevMonth: () => void;
+  onChangeNextMonth: () => void;
+}
 
 function ReservationCalendar({
   className,
   classNames,
   showOutsideDays = true,
+  activitiesByMonth,
+  onChangePrevMonth,
+  onChangeNextMonth,
   ...props
-}: CalendarProps) {
+}: CalendarProps & Props) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -76,10 +67,22 @@ function ReservationCalendar({
       }}
       components={{
         IconLeft: ({ ...props }) => (
-          <Image src="/double-arrow-left.svg" alt="" width={24} height={24} />
+          <Image
+            src="/double-arrow-left.svg"
+            alt=""
+            width={24}
+            height={24}
+            onClick={onChangePrevMonth}
+          />
         ),
         IconRight: ({ ...props }) => (
-          <Image src="/double-arrow-right.svg" alt="" width={24} height={24} />
+          <Image
+            src="/double-arrow-right.svg"
+            alt=""
+            width={24}
+            height={24}
+            onClick={onChangeNextMonth}
+          />
         ),
         Day: ({ date, ...props }) => {
           const onClickDay = () => {
@@ -100,21 +103,22 @@ function ReservationCalendar({
               className={cn(buttonVariants({ variant: 'ghost' }), day_today)}
             >
               {date.getDate()}
-              {mockData.map((item: ReservationByMonth) =>
-                item.date === formatDateYYYYMMDD(date) ? (
-                  <div key={item.date} className={status}>
-                    {item.reservations.pending > 0 && (
-                      <Chip status="booked" count={item.reservations.pending} />
-                    )}
-                    {item.reservations.confirmed > 0 && (
-                      <Chip status="fixed" count={item.reservations.confirmed} />
-                    )}
-                    {item.reservations.completed > 0 && (
-                      <Chip status="completed" count={item.reservations.completed} />
-                    )}
-                  </div>
-                ) : null,
-              )}
+              {!!activitiesByMonth?.length &&
+                activitiesByMonth.map((item: ReservationByMonth) =>
+                  item.date === formatDateYYYYMMDD(date) ? (
+                    <div key={item.date} className={status}>
+                      {item.reservations.pending > 0 && (
+                        <Chip status="booked" count={item.reservations.pending} />
+                      )}
+                      {item.reservations.confirmed > 0 && (
+                        <Chip status="fixed" count={item.reservations.confirmed} />
+                      )}
+                      {item.reservations.completed > 0 && (
+                        <Chip status="completed" count={item.reservations.completed} />
+                      )}
+                    </div>
+                  ) : null,
+                )}
             </button>
           );
         },

@@ -2,11 +2,10 @@ import { NextRequest } from 'next/server';
 import makeQueryString from '@/lib/query-string';
 import { handleRequest } from '@/app/(action)/axios';
 
-export async function GET(req: NextRequest) {
-  const path = '/my-reservations';
+export async function GET(req: NextRequest, { params }: { params: { activityId: string } }) {
+  const activityId = params.activityId;
   const queryParams = Object.fromEntries(req.nextUrl.searchParams);
   const queryString = makeQueryString(queryParams);
-  const url = `${path}${queryString}`;
 
-  return handleRequest(url, 'get');
+  return handleRequest(`my-activities/${activityId}/reservation-dashboard${queryString}`, 'get');
 }

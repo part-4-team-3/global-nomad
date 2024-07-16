@@ -1,18 +1,31 @@
-import { UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { myActivitiesKeys } from './query-keys';
-import { apiInstance } from '@/lib/axios';
+import { apiInstance, getInstance } from '@/lib/axios';
 import { MyActivitiesOfMonth } from '@/types/activity';
 
-export const getMyActivitiesByMonth = {
-  queryOptions: (
-    data: { activityId: number; year: string; month: string },
-    enabled?: boolean,
-  ): UseQueryOptions<MyActivitiesOfMonth, Error> => ({
-    queryKey: myActivitiesKeys.getMyActivitiesByMonth(data.activityId),
-    queryFn: (): Promise<MyActivitiesOfMonth> =>
-      apiInstance.get<any, MyActivitiesOfMonth>(
-        `my-activities/${data.activityId}/reservation-dashboard?year=${data.year}&month=${data.month}`,
-      ),
-    enabled: enabled ?? !!data.activityId,
-  }),
+interface MyActivitiesByMonthResponse {
+  data: MyActivitiesOfMonth[];
+}
+/**
+ * 사용자의 월 별 Activity status 현황 리스트를 가져오는 커스텀 훅입니다.
+ *
+ * 이 훅은 `useQuery`를 사용하여 비동기적으로 사용자의 Activity status 현황리스트를 가져옵니다.
+ * 가져온 데이터는 캐싱되어 다음 요청 시 빠르게 제공될 수 있습니다.
+ *
+ * @param data - 활동 목록을 가져오기 위한 요청 데이터입니다.
+ *               `activityId`는 가져올 Activity ID를 지정하는 number 타입의 필수 값입니다.
+ *               `year`는 가져올 년도를 지정하는 string 타입의 필수 값입니다.
+ *               `month`는 가져올 월을 지정하는 string 타입의 필수 값입니다.
+ * @returns `useQuery`의 결과로, MyActivitiesOfMonth 리스트 타입의 데이터와 관련된 여러 상태와 메서드를 포함합니다.
+ */
+export const useGetMyActivitiesByMonth = (activityId: number, year: string, month: string) => {
+  return useQuery<MyActivitiesByMonthResponse>({
+    queryKey: myActivitiesKeys.getMyActivitiesByMonth(activityId, year, month),
+    queryFn: () => {
+      month = month.padStart(2, '0');
+      const apiInstance = getInstance();
+      return apiInstance.get(`my-reservations/${activityId}?year=${year}&month=${month}`);
+    },
+    enabled: !!activityId && !!year && !!month,
+  });
 };
