@@ -9,6 +9,10 @@ export interface ReservationByMonth {
 
 export type ReservationStatus = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
 
+export function isReservationStatus(status: string): status is ReservationStatus {
+  return ['pending', 'confirmed', 'declined', 'canceled', 'completed'].includes(status);
+}
+
 export interface Reservation {
   activity: {
     id: number;
