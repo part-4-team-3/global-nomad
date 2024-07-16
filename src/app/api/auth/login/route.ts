@@ -1,13 +1,7 @@
 import redis from '@/lib/redis';
-import { User } from '@/types/user';
+import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
-
-interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: User;
-}
 
 export async function POST(req: NextRequest) {
   try {
