@@ -26,7 +26,7 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
     : '날짜 선택하기';
 
   return (
-    <div className="fixed bottom-[0px] left-[0px] right-[0px] z-10 flex w-screen justify-between border-t border-[#a1a1a1] bg-white p-[16px]">
+    <div className="fixed bottom-[0px] left-[0px] right-[0px] z-10 flex w-screen justify-between border-t border-[#a1a1a1] bg-white p-[16px] md:hidden lg:hidden">
       <div className="flex flex-col gap-8pxr">
         <div className="flex gap-6pxr font-[500]">
           <PriceDisplay price={price * participants} />
