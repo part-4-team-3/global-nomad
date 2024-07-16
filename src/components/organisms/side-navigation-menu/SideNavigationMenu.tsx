@@ -3,12 +3,12 @@
 import MyPageProfile from '@/components/molecules/my-page-profile/MyPageProfile';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function SideNavigationMenu() {
-  /* 멘토링 이후 로직 수정 예정입니다. */
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const pathname = usePathname();
   const menuStyle =
     'flex w-full gap-[14px] py-[9px] px-[16px] text-[16pxr] font-bold text-var-gray3 hover:text-var-green-dark';
 
@@ -54,16 +54,15 @@ export default function SideNavigationMenu() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`${menuStyle} ${activeItem === item.text ? activeMenuStyle : ''}`}
+                className={`${menuStyle} ${pathname === item.href ? activeMenuStyle : ''}`}
                 onMouseEnter={() => setHoveredItem(item.text)}
                 onMouseLeave={() => setHoveredItem(null)}
-                onClick={() => setActiveItem(item.text)}
               >
                 <div className="relative size-[24px]">
                   <Image
                     fill
                     src={
-                      activeItem === item.text || hoveredItem === item.text
+                      pathname === item.href || hoveredItem === item.text
                         ? item.activeImg
                         : item.defaultImg
                     }
