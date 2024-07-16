@@ -1,4 +1,3 @@
-'use client';
 import EditProfileImage from '@/components/atoms/edit-profile-image/EditProfileImage';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -6,7 +5,7 @@ import useUser from '@/store/useUser';
 
 export default function MyPageProfile() {
   const { user } = useUser();
-  const pathname = usePathname();
+  // const pathname = usePathname();
   return (
     <div className="relative flex items-center justify-center">
       <div className="relative size-160pxr rounded-full">
@@ -17,7 +16,7 @@ export default function MyPageProfile() {
             {user && user.nickname.slice(0, 1)}
           </div>
         )}
-        {pathname === 'mypage' && <EditProfileImage />}
+        <EditProfileImage />
       </div>
     </div>
   );
