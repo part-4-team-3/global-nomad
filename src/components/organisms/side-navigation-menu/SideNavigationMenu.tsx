@@ -30,7 +30,7 @@ export default function SideNavigationMenu() {
       text: '예약 내역',
     },
     {
-      href: '/myactivity',
+      href: '/myactivity/post',
       defaultImg: '/my-activity-setting-icon.svg',
       activeImg: '/my-activity-setting-icon-active.svg',
       alt: '내 체험 관리',
