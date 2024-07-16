@@ -3,7 +3,7 @@
 import ActivityReservationBar from '@/components/organisms/activity-reservation-bar/ActivityReservationBar';
 import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
 import { ReservationProvider } from '@/models/activity-reservation/use-reservation';
-
+import ActivityReservationForm from '@/components/organisms/activity-reservation-form.tsx/ActivityReservationForm';
 interface Props {
   price: number;
   scheduledDates: Date[];
@@ -18,6 +18,11 @@ export default function ActivityReservationContainer({
   return (
     <ReservationProvider>
       <ActivityReservationBar
+        price={price}
+        scheduleHash={scheduleHash}
+        scheduledDates={scheduledDates}
+      />
+      <ActivityReservationForm
         price={price}
         scheduleHash={scheduleHash}
         scheduledDates={scheduledDates}
