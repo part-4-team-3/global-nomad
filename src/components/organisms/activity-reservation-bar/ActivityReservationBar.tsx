@@ -7,6 +7,7 @@ import { ActivityReservationSelector } from '@/components/molecules/activity-res
 import { Schedule } from '@/types/schedule';
 import { format } from 'date-fns';
 import { ActivityParticipantSelector } from '@/components/molecules/activity-participant-selector/ActivityParticipantSelector';
+import { useReservation } from '@/models/activity-reservation/use-reservation';
 
 interface Props {
   price: number;
@@ -17,8 +18,9 @@ interface Props {
 export default function ActivityReservationBar({ price, scheduleHash, scheduledDates }: Props) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
   const [isParticipantSelectorOpen, setIsParticipantSelectorOpen] = useState<boolean>(false);
-  const [selectedSchedule, setSelectedSchedule] = useState<Schedule | undefined>();
-  const [participants, setParticipants] = useState<number>(1);
+  const {selectedSchedule, setSelectedSchedule, participants, setParticipants} = useReservation();
+
+
 
   const dateButtonText = selectedSchedule
     ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
