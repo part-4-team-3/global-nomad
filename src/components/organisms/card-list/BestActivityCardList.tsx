@@ -12,7 +12,7 @@ export default function BestActivityCardList({ activitiesData, carouselRef }: Pr
     <div className="w-full">
       <div
         ref={carouselRef}
-        className="flex snap-x snap-mandatory scroll-px-[16px] gap-[16px] overflow-x-auto px-[16px] scrollbar-hide md:scroll-px-[24px] md:gap-[24px] md:px-[24px]"
+        className="flex snap-x snap-mandatory scroll-px-[16px] gap-[16px] overflow-x-auto px-[16px] scrollbar-hide md:scroll-px-[24px] md:gap-[24px] md:px-[24px] xl:scroll-px-[0px]"
       >
         {activitiesData.activities.map((activity) => (
           <ActivityCard key={activity.id} activity={activity} isBest />
