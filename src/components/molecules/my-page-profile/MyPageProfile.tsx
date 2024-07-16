@@ -1,3 +1,4 @@
+'use client';
 import EditProfileImage from '@/components/atoms/edit-profile-image/EditProfileImage';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
