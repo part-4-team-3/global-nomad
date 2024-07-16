@@ -99,6 +99,7 @@ const config = {
       screens: {
         md: { min: '450px' },
         lg: { min: '1024px' },
+        xl: { min: '1245px' },
       },
       inset: {
         unset: 'unset',

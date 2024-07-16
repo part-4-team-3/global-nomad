@@ -49,9 +49,9 @@ export default function BestActivities({ activitiesData }: Props) {
 
   useEffect(() => {
     if (carouselRef.current) {
-      const containerWidth = carouselRef.current.offsetWidth + 24;
+      const containerWidth = carouselRef.current.offsetWidth;
       const maxScroll = 1224;
-      const calculatedScroll = Math.min(containerWidth, maxScroll) / 3 - 24;
+      const calculatedScroll = Math.min(containerWidth, maxScroll) / 3;
       setScrollAmount(calculatedScroll);
       updateScrollState();
     }
