@@ -30,7 +30,7 @@ export default function SideNavigationMenu() {
       text: '예약 내역',
     },
     {
-      href: '/myactivity',
+      href: '/myactivity/post',
       defaultImg: '/my-activity-setting-icon.svg',
       activeImg: '/my-activity-setting-icon-active.svg',
       alt: '내 체험 관리',
@@ -46,7 +46,7 @@ export default function SideNavigationMenu() {
   ];
 
   return (
-    <div className="flex w-1/4 flex-col gap-[24px] rounded-xl p-[24px] shadow-md">
+    <div className="flex hidden h-432pxr w-1/4 flex-col gap-[24px] rounded-xl p-[24px] shadow-md md:block">
       <MyPageProfile />
       <nav className="mt-4">
         <ul>

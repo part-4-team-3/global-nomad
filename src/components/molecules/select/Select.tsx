@@ -15,9 +15,9 @@ const Select = forwardRef(
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-      <div className={`relative ${InputStyles.formField}`}>
+      <div className={`relative ${InputStyles.full}`}>
         <Input
-          size="formField"
+          size="full"
           readOnly
           value={value}
           onClick={() => {
