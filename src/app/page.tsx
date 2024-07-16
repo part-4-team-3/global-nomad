@@ -3,6 +3,7 @@ import SearchActivity from '@/components/molecules/search/SearchActivity';
 import Header from '@/components/templates/header/Header';
 import Banner from '@/components/templates/main/Banner';
 import BestActivities from '@/components/templates/main/BestActivities';
+import FilteredActivities from '@/components/templates/main/FilteredActivities';
 import { getActivities } from '@/queries/activities/get-activities';
 
 export default async function Home() {
@@ -20,6 +21,7 @@ export default async function Home() {
         <SearchActivity />
       </InnerLayout>
       <BestActivities activitiesData={bestActivitiesData} />
+      <FilteredActivities />
     </>
   );
 }
