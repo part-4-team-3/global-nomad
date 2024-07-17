@@ -7,4 +7,12 @@ export const myActivitiesKeys = {
     month,
   ],
   getMyActivities: (cursorId: number | null, size: number) => ['my-activities', cursorId, size],
+  getMyScheduleByDate: (activityId: number, date: string) => ['my-activities', activityId, date],
+  getMyReservationByDate: (
+    activityId: number,
+    cursorId: number | null,
+    size: number,
+    scheduleId: number | null,
+    staus: string,
+  ) => ['my-activities', activityId, cursorId, size, scheduleId, staus, 'reservations'],
 };

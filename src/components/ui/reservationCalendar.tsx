@@ -10,6 +10,7 @@ import { formatDateYYYYMMDD } from '@/lib/formatDate';
 import Chip from '../atoms/chip/Chip';
 import { ReservationByMonth } from '@/types/reservation';
 import { MyActivitiesOfMonth } from '@/types/activity';
+import { useModal } from '@/store/useModal';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -17,6 +18,7 @@ interface Props {
   activitiesByMonth: MyActivitiesOfMonth[] | undefined;
   onChangePrevMonth: () => void;
   onChangeNextMonth: () => void;
+  setDate: (date: Date) => void;
 }
 
 function ReservationCalendar({
@@ -24,10 +26,13 @@ function ReservationCalendar({
   classNames,
   showOutsideDays = true,
   activitiesByMonth,
+  setDate,
   onChangePrevMonth,
   onChangeNextMonth,
   ...props
 }: CalendarProps & Props) {
+  const { setIsOpen } = useModal();
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -86,7 +91,9 @@ function ReservationCalendar({
         ),
         Day: ({ date, ...props }) => {
           const onClickDay = () => {
-            console.log('Clicked on', formatDateYYYYMMDD(date));
+            console.log('clicked');
+            setDate(date);
+            setIsOpen('reservation-info');
           };
 
           const isToday = date.toDateString() === new Date().toDateString();

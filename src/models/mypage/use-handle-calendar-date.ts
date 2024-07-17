@@ -29,5 +29,5 @@ export function useHandleCalendarDate() {
     });
   };
 
-  return { date, handlePrevMonth, handleNextMonth };
+  return { date, setDate, handlePrevMonth, handleNextMonth };
 }
