@@ -21,7 +21,7 @@ export default function ReviewTemplate({
   const totalPage = Math.ceil(reviewCount / 3);
 
   return (
-    <div className="flex flex-col items-center py-[40px]">
+    <div className="flex flex-col items-center py-[40px] md:border-t md:border-var-gray4">
       <ReviewOverview ratings={ratings} reviewCount={reviewCount} />
       <ReviewList reviews={reviews} />
       <div className="pb-[145px] pt-[40px]">

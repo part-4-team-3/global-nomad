@@ -53,8 +53,8 @@ export default function Map({ address }: Props) {
   }, [address]);
 
   return (
-    <div className="flex w-full max-w-450pxr flex-col gap-[8px] px-[24px] py-[16px]">
-      <div className="h-450pxr w-full" ref={mapRef}></div>
+    <div className="flex w-full max-w-450pxr flex-col gap-[8px] px-[24px] py-[16px] md:max-w-full md:border-t md:border-var-gray4 md:py-[40px]">
+      <div className="z-0 h-450pxr w-full" ref={mapRef}></div>
       <AddressLabel address={address} />
     </div>
   );

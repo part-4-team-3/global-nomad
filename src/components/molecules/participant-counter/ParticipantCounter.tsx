@@ -9,7 +9,7 @@ interface Props {
 
 export default function ParticipantCounter({ value, onChange }: Props) {
   return (
-    <div className="flex w-fit rounded-[6px] border border-var-gray6">
+    <div className="flex w-fit rounded-[6px] border border-var-gray6 shadow">
       <button className="p-[10px]" onClick={() => onChange(-1)} disabled={value === 1}>
         <Image src="/minus-icon.svg" width={20} height={20} alt="minus" />
       </button>
