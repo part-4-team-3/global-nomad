@@ -18,10 +18,10 @@ export default function ActivityHeader({ category, title, rating, address, revie
     setOptionOpen((prev) => !prev);
   };
   return (
-    <div className="flex w-full justify-between p-16pxr text-[#112211]">
+    <div className="flex w-full justify-between p-[16px] text-[#112211] md:p-[24px]">
       <div className="flex flex-col">
         <p className="text-14pxr">{category}</p>
-        <p className="text-24pxr font-[700]">{title}</p>
+        <p className="text-24pxr font-[700] md:text-32pxr">{title}</p>
         <div className="flex gap-12pxr">
           <div className="flex items-center gap-6pxr">
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />

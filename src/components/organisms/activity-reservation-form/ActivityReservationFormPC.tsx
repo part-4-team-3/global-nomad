@@ -55,7 +55,7 @@ export default function ActivityReservationFormPC({ price, scheduleHash, schedul
               ))}
             </div>
           ) : (
-            <p className="w-full text-center">{message}</p>
+            <p className="h-46pxr w-full text-center">{message}</p>
           )}
 
           <div className="flex flex-col gap-[8px]">
