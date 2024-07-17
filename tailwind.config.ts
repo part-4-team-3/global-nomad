@@ -104,6 +104,9 @@ const config = {
       inset: {
         unset: 'unset',
       },
+      boxShadow: {
+        custom: '0 10px 20px rgba(0, 0, 0, 0.15)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],

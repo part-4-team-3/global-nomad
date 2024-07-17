@@ -1,6 +1,5 @@
 import DropdownMenu from '@/components/molecules/dropdown-menu/DropdownMenu';
-import { RESERVATION_LABELS } from '@/constant/reservation-labels';
-import { ReservationStatus, isReservationStatus } from '@/types/reservation';
+import { RESERVATION_LABELS, ReservationStatus, isReservationStatus } from '@/types/reservation';
 
 interface Props {
   setStatus: (status: ReservationStatus | null) => void;
