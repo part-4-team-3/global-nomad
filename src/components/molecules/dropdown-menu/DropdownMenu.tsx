@@ -35,7 +35,7 @@ export default function DropdownMenu({ text, children, className }: Props) {
     <div ref={dropdownRef} className={cn('relative flex w-full flex-col', className)}>
       <button
         onClick={handleToggle}
-        className="flex w-full justify-between rounded-[15px] border border-var-green-dark px-20pxr py-16pxr text-18pxr leading-[22px] text-var-green-dark"
+        className="flex w-full justify-between rounded-[15px] border border-var-green-dark px-20pxr py-15pxr text-18pxr leading-[22px] text-var-green-dark"
       >
         {text}
         <Image src="/arrow-down.svg" width={22} height={22} alt="dropdown" />

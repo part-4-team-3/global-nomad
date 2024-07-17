@@ -39,7 +39,7 @@ export default function Button({
     ? '!bg-var-gray3 border border-var-gray3 !text-white'
     : 'border border-var-green-dark2';
 
-  const style = `rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${className} ${disabledStyle}`;
+  const style = `flex justify-center items-center rounded-[6px] font-[700] ${colorStyle} ${sizeStyle} ${className} ${disabledStyle}`;
 
   if (link)
     return (
