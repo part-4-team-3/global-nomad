@@ -1,5 +1,6 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import SearchActivity from '@/components/molecules/search/SearchActivity';
+import Footer from '@/components/templates/footer/Footer';
 import Header from '@/components/templates/header/Header';
 import Banner from '@/components/templates/main/Banner';
 import BestActivities from '@/components/templates/main/BestActivities';
@@ -22,6 +23,7 @@ export default async function Home() {
       </InnerLayout>
       <BestActivities activitiesData={bestActivitiesData} />
       <FilteredActivities />
+      <Footer />
     </>
   );
 }
