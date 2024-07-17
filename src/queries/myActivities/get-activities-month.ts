@@ -24,7 +24,7 @@ export const useGetMyActivitiesByMonth = (activityId: number, year: string, mont
     queryFn: () => {
       month = month.padStart(2, '0');
       const apiInstance = getInstance();
-      return apiInstance.get(`my-reservations/${activityId}?year=${year}&month=${month}`);
+      return apiInstance.get(`my-activities/${activityId}?year=${year}&month=${month}`);
     },
     enabled: !!activityId && !!year && !!month,
   });

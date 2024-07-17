@@ -28,7 +28,7 @@ export const useGetScheduleByDate = (activityId: number, date: string) => {
     queryKey: myActivitiesKeys.getMyScheduleByDate(activityId, date),
     queryFn: () => {
       const apiInstance = getInstance();
-      return apiInstance.get(`my-reservations/reserve-schedule/${activityId}?date=${date}`);
+      return apiInstance.get(`my-activities/reserve-schedule/${activityId}?date=${date}`);
     },
     enabled: !!activityId && !!date,
   });
