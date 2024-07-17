@@ -1,4 +1,4 @@
-import { apiInstance } from '@/lib/axios';
+import { getInstance } from '@/lib/axios';
 import { Activity } from '@/types/activity';
 
 interface GetActivitiesResponse {
@@ -23,6 +23,7 @@ export const getActivities = async (params: GetActivitiesParams) => {
     })
     .join('&');
 
-  const data = await apiInstance.get<any, GetActivitiesResponse>(`/activities?${queryParams}`);
-  return data;
+  const apiInstance = getInstance();
+  const data = await apiInstance.get<GetActivitiesResponse>(`activities?${queryParams}`);
+  return data.data;
 };
