@@ -1,4 +1,5 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
+import HamburgerMenu from '@/components/organisms/side-navigation-menu/HamburgerMenu';
 import SideNavigationMenu from '@/components/organisms/side-navigation-menu/SideNavigationMenu';
 import Footer from '@/components/templates/footer/Footer';
 import Header from '@/components/templates/header/Header';
