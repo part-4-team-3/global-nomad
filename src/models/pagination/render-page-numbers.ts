@@ -1,12 +1,10 @@
-'use client';
-
 interface Props {
   currentPage: number;
   totalPage: number;
 }
 
 /**현재 페이지를 기준으로 좌우 2개씩 총 5개의 페이지 번호 계산 */
-const RentderPageNumbers = ({ currentPage, totalPage }: Props) => {
+const RenderPageNumbers = ({ currentPage, totalPage }: Props) => {
   let start: number;
   let end: number;
 
@@ -34,4 +32,4 @@ const RentderPageNumbers = ({ currentPage, totalPage }: Props) => {
   return numbers;
 };
 
-export default RentderPageNumbers;
+export default RenderPageNumbers;

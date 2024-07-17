@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, forwardRef, ForwardedRef } from 'react';
-import Input, { InputStyles } from '../../atoms/input/Input';
+import Input from '../../atoms/input/Input';
 import Option from './Option';
 import Image from 'next/image';
 
@@ -15,9 +15,9 @@ const Select = forwardRef(
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-      <div className={`relative ${InputStyles.formField}`}>
+      <div className={`relative h-full w-full`}>
         <Input
-          size="formField"
+          size="full"
           readOnly
           value={value}
           onClick={() => {

@@ -9,6 +9,10 @@ export interface ReservationByMonth {
 
 export type ReservationStatus = 'pending' | 'confirmed' | 'declined' | 'canceled' | 'completed';
 
+export function isReservationStatus(status: string): status is ReservationStatus {
+  return ['pending', 'confirmed', 'declined', 'canceled', 'completed'].includes(status);
+}
+
 export interface Reservation {
   activity: {
     id: number;
@@ -30,6 +34,7 @@ export interface Reservation {
   createdAt: string;
   updatedAt: string;
 }
+
 
 export interface ReservationListByTime {
   reservations: [
@@ -54,3 +59,20 @@ export interface ReservationListByTime {
   totalCount: number;
   cursorId: null | number;
 }
+
+export const RESERVATION_LABELS: Record<ReservationStatus, string> = {
+  pending: '예약 신청',
+  confirmed: '예약 승인',
+  declined: '예약 거절',
+  canceled: '예약 취소',
+  completed: '체험 완료',
+};
+
+export const RESERVATION_COLORS: Record<ReservationStatus, string> = {
+  pending: 'text-var-blue-dark',
+  confirmed: 'text-var-orange-dark',
+  declined: 'text-var-red-dark',
+  canceled: 'text-var-gray2',
+  completed: 'text-var-gray2',
+};
+

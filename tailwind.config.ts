@@ -99,13 +99,17 @@ const config = {
       screens: {
         md: { min: '450px' },
         lg: { min: '1024px' },
+        xl: { min: '1245px' },
       },
       inset: {
         unset: 'unset',
       },
+      boxShadow: {
+        custom: '0 10px 20px rgba(0, 0, 0, 0.15)',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config;
 
 export default config;
