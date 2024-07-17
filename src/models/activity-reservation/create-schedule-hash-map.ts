@@ -5,6 +5,8 @@ export type ScheduleHashMap = {
 };
 
 export function createScheduleHashMap(schedules: Schedule[]): ScheduleHashMap {
+  if (!schedules) return {};
+
   return schedules.reduce((acc: ScheduleHashMap, schedule: Schedule) => {
     const { date, startTime, endTime, id } = schedule;
     if (!acc[date]) {
