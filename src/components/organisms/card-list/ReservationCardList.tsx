@@ -3,9 +3,10 @@ import { ReservationListByTime } from '@/types/reservation';
 
 interface Props {
   reservationList: ReservationListByTime;
+  status: 'pending' | 'confirmed' | 'declined';
 }
 
-export default function ReservationCardList({ reservationList }: Props) {
+export default function ReservationCardList({ reservationList, status }: Props) {
   return (
     <div className="flex flex-col gap-14pxr">
       {reservationList.reservations.map((reservation) => {
@@ -14,6 +15,9 @@ export default function ReservationCardList({ reservationList }: Props) {
             key={reservation.id}
             nickname={reservation.nickname}
             headCount={reservation.headCount}
+            activityId={reservation.activityId}
+            reservationId={reservation.id}
+            status={status}
           />
         );
       })}

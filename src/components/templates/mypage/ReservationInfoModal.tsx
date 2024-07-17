@@ -40,7 +40,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
 
   const newDate = new Date(date);
   const newDateStr = `${newDate.getFullYear()}년 ${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
-
+  console.log(selectedSchedule);
   return (
     <>
       {isSelected && (
@@ -90,7 +90,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
           <div className="mt-32pxr flex flex-col justify-center">
             <p className="mb-16pxr text-20pxr font-[600]">예약 내역</p>
             {myReservationByTime?.data && (
-              <ReservationCardList reservationList={myReservationByTime?.data} />
+              <ReservationCardList reservationList={myReservationByTime?.data} status={status} />
             )}
           </div>
         </div>
