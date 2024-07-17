@@ -1,5 +1,6 @@
 'use client';
 
+import AddressLabel from '@/components/atoms/address-label/AddressLabel';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -28,10 +29,7 @@ export default function ActivityHeader({ category, title, rating, address, revie
               {rating} ({reviewCount})
             </p>
           </div>
-          <div className="flex items-center gap-2pxr">
-            <Image src="/location-icon.svg" width={18} height={18} alt="location" />
-            <p className="text-14pxr">{address}</p>
-          </div>
+          <AddressLabel address={address} />
         </div>
       </div>
       <div className="flex items-center justify-center">

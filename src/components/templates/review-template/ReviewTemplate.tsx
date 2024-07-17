@@ -21,10 +21,10 @@ export default function ReviewTemplate({
   const totalPage = Math.ceil(reviewCount / 3);
 
   return (
-    <div className="flex flex-col py-[40px]">
+    <div className="flex flex-col items-center py-[40px]">
       <ReviewOverview ratings={ratings} reviewCount={reviewCount} />
       <ReviewList reviews={reviews} />
-      <div className="py-[200px]">
+      <div className="pb-[145px] pt-[40px]">
         <ReviewPagination totalPage={totalPage} currentPage={currentPage} activityId={activityId} />
       </div>
     </div>
