@@ -17,7 +17,7 @@ interface GetReservationsResponse {
 export const getReservations = async (params?: Params) => {
   const queryString = params ? makeQueryString(params) : '';
   const instance = getInstance();
-  const data = await instance.get<GetReservationsResponse>(`my-reservations${queryString}`);
+  const data = await instance.get<GetReservationsResponse>(`my-activities${queryString}`);
 
   return data.data;
 };

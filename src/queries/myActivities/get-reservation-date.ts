@@ -38,8 +38,8 @@ export const useGetReservationByDate = (
     queryFn: () => {
       const apiInstance = getInstance();
       const url = cursorId
-        ? `my-reservations/reservations/${activityId}?cursorId=${cursorId}&size=${size}&scheduleId=${scheduleId}&status=${status}`
-        : `my-reservations/reservations/${activityId}?size=${size}&scheduleId=${scheduleId}&status=${status}`;
+        ? `my-activities/reservations/${activityId}?cursorId=${cursorId}&size=${size}&scheduleId=${scheduleId}&status=${status}`
+        : `my-activities/reservations/${activityId}?size=${size}&scheduleId=${scheduleId}&status=${status}`;
       return apiInstance.get(url);
     },
     enabled: !!(activityId && scheduleId && status),

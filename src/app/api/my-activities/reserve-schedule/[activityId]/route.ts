@@ -6,6 +6,5 @@ export async function GET(req: NextRequest, { params }: { params: { activityId: 
   const activityId = params.activityId;
   const queryParams = Object.fromEntries(req.nextUrl.searchParams);
   const queryString = makeQueryString(queryParams);
-
   return handleRequest(`my-activities/${activityId}/reserved-schedule${queryString}`, 'get');
 }
