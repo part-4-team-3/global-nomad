@@ -3,7 +3,7 @@ import ActivityCard from '@/components/molecules/card/ActivityCard';
 // 테스트용 mock 데이터 넣어둠
 export default function ActivityCardList() {
   return (
-    <div>
+    <ul className="mt-[32px]">
       <ActivityCard
         activity={{
           id: 0,
@@ -21,6 +21,6 @@ export default function ActivityCardList() {
           updatedAt: '2024-07-15T22:24:48.809Z',
         }}
       />
-    </div>
+    </ul>
   );
 }
