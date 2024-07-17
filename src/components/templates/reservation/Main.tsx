@@ -1,3 +1,4 @@
+import ReservationCard from '@/components/molecules/reservation-card/ReservationCard';
 import { getReservations } from '@/queries/reservations/get-reservations';
 import { Reservation, ReservationStatus } from '@/types/reservation';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -65,14 +66,8 @@ export default function Main({ status }: Props) {
             (
               reservation: Reservation, //TODO: 카드 컴포넌트 완성시 교체
             ) => (
-              <div key={reservation.id}>
-                <h1>{reservation.activity.title}</h1>
-                <p>Status: {reservation.status}</p>
-                <p>Date: {reservation.date}</p>
-                <p>
-                  Time: {reservation.startTime} - {reservation.endTime}
-                </p>
-                <p>Total Price: {reservation.totalPrice}</p>
+              <div key={reservation.id} className="mb-[24px]">
+                <ReservationCard {...reservation} />
               </div>
             ),
           )}
