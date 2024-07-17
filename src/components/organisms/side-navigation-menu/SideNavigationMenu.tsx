@@ -46,7 +46,7 @@ export default function SideNavigationMenu() {
   ];
 
   return (
-    <div className="flex w-1/4 flex-col gap-[24px] rounded-xl p-[24px] shadow-md">
+    <div className="flex w-1/4 shrink-0 flex-col gap-[24px] rounded-xl p-[24px] shadow-md">
       <MyPageProfile />
       <nav className="mt-4">
         <ul>
