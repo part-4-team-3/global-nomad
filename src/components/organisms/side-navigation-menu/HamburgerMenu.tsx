@@ -31,7 +31,9 @@ export default function HamburgerMenu() {
     <div className="flex flex-col">
       <div className="space-x-2 flex items-center">
         <button className="text-3xl" onClick={() => setIsActive((prev) => !prev)}>
-          <div>test</div>
+          <div className="relative size-32pxr">
+            <Image fill src="/hamburger-menu-button.svg" alt="마이페이지 메뉴" />
+          </div>
         </button>
       </div>
       <ul
