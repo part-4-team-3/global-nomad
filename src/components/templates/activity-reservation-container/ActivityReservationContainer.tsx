@@ -3,7 +3,7 @@
 import ActivityReservationBar from '@/components/organisms/activity-reservation-bar/ActivityReservationBar';
 import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
 import { ReservationProvider } from '@/models/activity-reservation/use-reservation';
-import ActivityReservationForm from '@/components/organisms/activity-reservation-form.tsx/ActivityReservationForm';
+import ActivityReservationForm from '@/components/organisms/activity-reservation-form/ActivityReservationForm';
 interface Props {
   price: number;
   scheduledDates: Date[];
