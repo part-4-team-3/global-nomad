@@ -10,3 +10,8 @@ export const getCookie = async (key: string) => {
 export const setCookie = async (key: string, value: string) => {
   cookies().set(key, value);
 };
+
+// 쿠키를 삭제하는 함수
+export const deleteCookie = (key: string) => {
+  cookies().delete(key);
+};
