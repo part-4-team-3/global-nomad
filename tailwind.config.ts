@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { PluginAPI } from 'tailwindcss/types/config';
 
 const pxToRem = (px: number, base = 16) => `${px / base}rem`;
 
@@ -109,7 +110,21 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwind-scrollbar-hide'),
+    function ({ addUtilities }: PluginAPI) {
+      addUtilities({
+        '.no-drag': {
+          '-webkit-user-drag': 'none' /* Chrome, Safari, Opera */,
+          '-khtml-user-drag': 'none' /* Konqueror */,
+          '-moz-user-drag': 'none' /* Firefox */,
+          '-ms-user-drag': 'none' /* Internet Explorer/Edge */,
+          'user-drag': 'none',
+        },
+      });
+    },
+  ],
 } satisfies Config;
 
 export default config;
