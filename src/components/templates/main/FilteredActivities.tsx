@@ -12,8 +12,6 @@ interface Props {
 }
 
 export default async function FilteredActivities({ searchParams }: Props) {
-  console.log('searchParams.category:', searchParams.category);
-
   const { activities } = await getActivities({
     method: 'offset',
     sort: 'latest',
