@@ -85,6 +85,12 @@ export async function handleRequest(url: string, method: Method, body?: object) 
       response = await axiosByServer[method](url, body);
     }
 
+    if (method === 'delete') {
+      console.log(response.status);
+      const resMsg = '삭제가 완료되었습니다';
+      return NextResponse.json({ message: resMsg }, { status: 201 });
+    }
+
     const { data, status } = response;
 
     return NextResponse.json(data, { status });
