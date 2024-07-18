@@ -6,8 +6,13 @@ import Banner from '@/components/templates/main/Banner';
 import BestActivities from '@/components/templates/main/BestActivities';
 import FilteredActivities from '@/components/templates/main/FilteredActivities';
 import { getActivities } from '@/queries/activities/get-activities';
+import { ActivityCategory } from '@/types/activity';
 
-export default async function Home() {
+interface Props {
+  searchParams: { category: ActivityCategory };
+}
+
+export default async function Home({ searchParams }: Props) {
   const bestActivitiesData = await getActivities({
     method: 'offset',
     sort: 'most_reviewed',
@@ -22,7 +27,7 @@ export default async function Home() {
         <SearchActivity />
       </InnerLayout>
       <BestActivities activitiesData={bestActivitiesData} />
-      <FilteredActivities />
+      <FilteredActivities searchParams={searchParams} />
       <Footer />
     </>
   );

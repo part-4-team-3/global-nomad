@@ -1,5 +1,5 @@
 import { getInstance } from '@/lib/axios';
-import { Activity } from '@/types/activity';
+import { Activity, ActivityCategory, ActivityMethod, ActivitySort } from '@/types/activity';
 
 interface GetActivitiesResponse {
   activities: Activity[];
@@ -7,15 +7,23 @@ interface GetActivitiesResponse {
 }
 
 interface GetActivitiesParams {
-  method: 'offset' | 'cursor';
+  method: ActivityMethod;
   cursorId?: number;
-  category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+  category?: ActivityCategory;
   keyword?: string;
-  sort?: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+  sort?: ActivitySort;
   page?: number;
   size?: number;
 }
-
+/**
+ * @param method: 'offset' | 'cursor';
+ * @param cursorId?: number;
+ * @param category?: '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+ * @param keyword?: string;
+ * @param sort?: 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+ * @param page?: number;
+ * @param size?: number;
+ */
 export const getActivities = async (params: GetActivitiesParams) => {
   const queryParams = Object.entries(params)
     .map(([key, value]) => {

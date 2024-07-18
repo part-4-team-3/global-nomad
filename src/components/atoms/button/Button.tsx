@@ -43,7 +43,7 @@ export default function Button({
 
   if (link)
     return (
-      <Link className={style} href={link}>
+      <Link className={style} href={link} scroll={false}>
         {text}
       </Link>
     );
