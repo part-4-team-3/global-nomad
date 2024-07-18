@@ -16,7 +16,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
   const defaultImage = isBest ? '/card_default_bg_top.svg' : '/card_default_bg.svg';
   return (
     <Link
-      href=""
+      href={`/activity/${activity.id}`}
       className={`flex flex-none snap-start ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'w-168pxr flex-col gap-[16px] md:w-221pxr lg:w-283pxr'} `}
     >
       <Image

@@ -1,41 +1,16 @@
 import Button from '@/components/atoms/button/Button';
 
 export default function FilteredNavList() {
-  const categoryList = [
-    {
-      title: '문화 · 예술',
-      link: 'culture',
-    },
-    {
-      title: '식음료',
-      link: 'food',
-    },
-    {
-      title: '스포츠',
-      link: 'sports',
-    },
-    {
-      title: '투어',
-      link: 'tour',
-    },
-    {
-      title: '관광',
-      link: 'sightseeing',
-    },
-    {
-      title: '웰빙',
-      link: 'wellbeing',
-    },
-  ];
+  const categoryList = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
   return (
     <ul className="flex gap-[24px]">
       {categoryList.map((category) => (
-        <li key={category.title}>
+        <li key={category}>
           <Button
-            text={category.title}
+            text={category}
             color="white"
             className="w-127pxr !rounded-[15px] py-[14px]"
-            link={`/?category=${category.link}`}
+            link={`/?category=${category}`}
           />
         </li>
       ))}

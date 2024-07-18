@@ -4,13 +4,19 @@ import ActivityCardList from '@/components/organisms/card-list/ActivityCardList'
 import FilteredNavList from '@/components/organisms/nav-list/FilteredNavList';
 import ReviewPagination from '@/components/organisms/review-pagination/ReviewPagination';
 import { getActivities } from '@/queries/activities/get-activities';
+import { ActivityCategory } from '@/types/activity';
 import React from 'react';
 
-export default async function FilteredActivities() {
-  const activitiesData = await getActivities({
+interface Props {
+  searchParams: { category: ActivityCategory };
+}
+
+export default async function FilteredActivities({ searchParams }: Props) {
+  const { activities } = await getActivities({
     method: 'offset',
     sort: 'latest',
     size: 8,
+    category: searchParams.category,
   });
 
   return (
@@ -23,7 +29,7 @@ export default async function FilteredActivities() {
         </DropdownMenu>
       </div>
       <h2 className="mt-[40px] text-36pxr font-[700]">🛼 모든 체험</h2>
-      <ActivityCardList />
+      <ActivityCardList activityList={activities} />
       <div className="mt-[72px] flex justify-center">
         <ReviewPagination totalPage={1} currentPage={1} activityId={1} />
       </div>

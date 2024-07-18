@@ -13,6 +13,10 @@ export interface Activity {
   updatedAt: string;
 }
 
+export type ActivityMethod = 'offset' | 'cursor';
+export type ActivityCategory = '문화 · 예술' | '식음료' | '스포츠' | '투어' | '관광' | '웰빙';
+export type ActivitySort = 'most_reviewed' | 'price_asc' | 'price_desc' | 'latest';
+
 export interface ActivityResponse {
   activities: Activity[];
   totalCount: number;
