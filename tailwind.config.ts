@@ -114,7 +114,7 @@ const config = {
   },
   plugins: [
     require('tailwindcss-animate'),
-    require('tailwind-scrollbar-hide'),
+    require('tailwind-scrollbar-hide'), // 'scrollbar-hide'
     function ({ addUtilities }: PluginAPI) {
       addUtilities({
         // 이미지 드래그 막기

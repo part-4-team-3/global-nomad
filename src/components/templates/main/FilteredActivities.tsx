@@ -27,19 +27,19 @@ export default async function FilteredActivities({ searchParams }: Props) {
   };
 
   return (
-    <InnerLayout className="mb-[342px] mt-[60px]">
-      <div className="flex justify-between">
+    <InnerLayout className="mb-[200px] mt-[40px] md:mb-[342px] md:mt-[60px]">
+      <div className="flex justify-between gap-[10px]">
         <FilteredNavList currentCategory={searchParams.category} />
-        <DropdownMenu text="가격" className="!w-127pxr">
-          <Link className="w-full" href={addSearchParam({ sort: 'price_asc' })}>
+        <DropdownMenu text="가격" className="w-90pxr shrink-0 md:!w-127pxr">
+          <Link className="w-full" href={addSearchParam({ sort: 'price_asc' })} scroll={false}>
             가격이 낮은 순
           </Link>
-          <Link className="w-full" href={addSearchParam({ sort: 'price_desc' })}>
+          <Link className="w-full" href={addSearchParam({ sort: 'price_desc' })} scroll={false}>
             가격이 높은 순
           </Link>
         </DropdownMenu>
       </div>
-      <h2 className="mt-[40px] text-36pxr font-[700]">
+      <h2 className="mt-[22px] text-18pxr font-[700] md:mt-[40px] md:text-36pxr">
         {searchParams.category ? searchParams.category : '🛼 모든 체험'}
       </h2>
       <ActivityCardList activityList={activities} />
