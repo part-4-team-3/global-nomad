@@ -10,6 +10,6 @@ export const getRatingDescription = (rating: number): string => {
   } else if (rating > 1) {
     return '매우 불만족';
   } else {
-    return '최악';
+    return '아직 남겨진 후기가 없습니다';
   }
 };
