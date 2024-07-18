@@ -44,7 +44,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
   return (
     <>
       {isSelected && (
-        <div className="absolute right-[0] top-[0] flex h-screen w-screen flex-col border border-var-gray6 bg-white p-24pxr md:h-full md:w-full lg:h-697pxr lg:w-429pxr">
+        <div className="mt-[-73px] flex h-full w-full flex-col border-t border-var-gray6 bg-white p-24pxr md:h-full md:rounded-[14px] md:border">
           <div className="flex items-center justify-between">
             <h1 className="text-28pxr font-[700]">예약 정보</h1>
             <Image

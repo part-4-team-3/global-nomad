@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, forwardRef, ForwardedRef, useRef } from 'react';
+import React, { useState, forwardRef, ForwardedRef, useRef, useEffect } from 'react';
 import Input from '../../atoms/input/Input';
 import Option from './Option';
 import Image from 'next/image';
@@ -19,11 +19,19 @@ const InfinitySelect = forwardRef(
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
+
     const divRef = useRef<HTMLDivElement | null>(null);
+    const [observeRef, setObserveRef] = useState<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+      if (divRef) {
+        setObserveRef(divRef.current);
+      }
+    }, [isOpen]);
 
     useObserverByScroll({
       isLoading,
-      ref: divRef,
+      ref: observeRef,
       fetchNextPage,
     });
 
@@ -60,9 +68,7 @@ const InfinitySelect = forwardRef(
                 }}
               />
             ))}
-            <li className="relative rounded-md">
-              <div className="w-pull flex h-1pxr items-center" ref={divRef} />
-            </li>
+            <div className="w-pull relative flex h-2pxr rounded-md" ref={divRef} />
           </ul>
         )}
       </div>
