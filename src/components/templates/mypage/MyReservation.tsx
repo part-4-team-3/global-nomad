@@ -30,11 +30,11 @@ export default function MyReservation() {
   return (
     <div
       className={cn(
-        'items-left flex w-full flex-col justify-center px-16pxr',
+        'items-left flex w-full flex-col justify-center',
         isOpen && 'items-left flex w-full flex-col justify-center px-[0px]',
       )}
     >
-      <div className={cn('flex w-full flex-col', isOpen && 'hidden w-full')}>
+      <div className={cn('flex w-full flex-col', isOpen && 'hidden w-full md:block')}>
         <h1 className="text-32pxr font-[700] text-[#000]">예약 현황</h1>
         <div className="relative mt-34pxr w-full">
           <p className="absolute left-[20px] top-[-10px] z-10 bg-white text-14pxr font-[400]">

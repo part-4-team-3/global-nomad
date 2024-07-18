@@ -6,6 +6,7 @@ import { useGetMyActivitiesByMonth } from '@/queries/myActivities/get-activities
 import { useHandleCalendarDate } from '@/models/mypage/use-handle-calendar-date';
 import { formatDateYYYYMMDD } from '@/lib/formatDate';
 import ReservationInfoModal from '@/components/templates/mypage/ReservationInfoModal';
+import { cn } from '@/lib/tailwind-utils';
 
 interface Props {
   activityId: number;
@@ -25,7 +26,7 @@ export default function ReservationCalendar({ activityId, isOpen }: Props) {
     <div className="relative">
       <UIReservationCalendar
         mode="single"
-        className="h-full w-full rounded-md border"
+        className={cn('h-full w-full rounded-md border', isOpen && 'hidden md:hidden lg:block')}
         setDate={setDate}
         activitiesByMonth={myActivitiesByMonth?.data}
         onChangePrevMonth={handlePrevMonth}
@@ -33,7 +34,7 @@ export default function ReservationCalendar({ activityId, isOpen }: Props) {
       />
 
       {isOpen && (
-        <div className="absolute right-[0] top-[0] h-screen w-screen">
+        <div className="h-full w-full px-[-16px] md:mt-100pxr lg:absolute lg:right-[0] lg:top-[22px] lg:h-627pxr lg:w-429pxr">
           <ReservationInfoModal activityId={activityId} date={formatDateYYYYMMDD(date!)} />
         </div>
       )}
