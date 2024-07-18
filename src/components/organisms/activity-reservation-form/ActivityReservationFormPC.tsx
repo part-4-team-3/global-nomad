@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import ScheduleButton from '@/components/atoms/schedule-button/ScheduleButton';
 import postReservation from '@/queries/reservations/post-reservation';
 import { ReservationFormProps } from '@/types/reservation-form-props';
+import { toast } from 'react-toastify';
 
 export default function ActivityReservationFormPC({
   price,
@@ -20,6 +21,20 @@ export default function ActivityReservationFormPC({
 }: ReservationFormProps) {
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
   const [date, setDate] = useState<Date | undefined>(undefined);
+
+  const handleReservation = async (
+    activityId: number,
+    selectedScheduleId: number | undefined,
+    participants: number,
+  ) => {
+    const res = await postReservation(activityId, selectedScheduleId, participants);
+    if (res < 0) {
+      toast('예약에 실패했습니다');
+      return;
+    }
+
+    toast('예약에 성공했습니다');
+  };
 
   const formattedDate = date ? format(date, 'yyyy-MM-dd') : '';
   const message = date ? '해당 날짜에 가능한 스케줄이 없습니다' : '날짜를 선택해주세요';
@@ -74,7 +89,9 @@ export default function ActivityReservationFormPC({
             color="black"
             className="rounded-[4px] px-24pxr py-14pxr disabled:bg-var-gray3"
             disabled={!selectedSchedule}
-            onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
+            onClick={() => {
+              handleReservation(activityId, selectedSchedule?.id, participants);
+            }}
           ></Button>
         </div>
         <div className="flex justify-between p-[24px]">

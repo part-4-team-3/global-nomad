@@ -33,6 +33,8 @@ export default async function Page({ params, searchParams }: Props) {
           rating={data.rating}
           address={data.address}
           reviewCount={data.reviewCount}
+          activityId={params.id}
+          creatorId={data.userId}
         />
         <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
         <div className="relative flex lg:gap-[24px]">
@@ -54,6 +56,7 @@ export default async function Page({ params, searchParams }: Props) {
             scheduleHash={scheduleHash}
             scheduledDates={scheduledDates}
             activityId={params.id}
+            creatorId={data.userId}
           />
         </div>
       </div>
