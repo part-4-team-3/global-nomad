@@ -8,3 +8,8 @@ export async function GET(req: NextRequest) {
 
   return handleRequest(`activities${queryString}`, 'get');
 }
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  return await handleRequest('activities', 'post', body);
+}

@@ -23,6 +23,7 @@ export interface Reservation {
   id: number;
   teamId: string;
   userId: number;
+  nickname: string;
   status: ReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
@@ -32,6 +33,31 @@ export interface Reservation {
   endTime: string;
   createdAt: string;
   updatedAt: string;
+}
+
+
+export interface ReservationListByTime {
+  reservations: [
+    {
+      id: number;
+      status: 'pending' | 'confirmed' | 'declined';
+      totalPrice: number;
+      headCount: number;
+      nickname: string;
+      userId: number;
+      date: string;
+      startTime: string;
+      endTime: string;
+      createdAt: string;
+      updatedAt: string;
+      activityId: number;
+      scheduleId: number;
+      reviewSubmitted: boolean;
+      teamId: string;
+    },
+  ];
+  totalCount: number;
+  cursorId: null | number;
 }
 
 export const RESERVATION_LABELS: Record<ReservationStatus, string> = {
@@ -49,3 +75,4 @@ export const RESERVATION_COLORS: Record<ReservationStatus, string> = {
   canceled: 'text-var-gray2',
   completed: 'text-var-gray2',
 };
+

@@ -6,14 +6,24 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Profile from '@/components/atoms/profile/Profile';
 import useUser from '@/store/useUser';
+import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
+import { useRouter } from 'next/navigation';
 
 export default function HamburgerMenu() {
-  const { user } = useUser();
+  const router = useRouter();
+  const { user, clearUser } = useUser();
   const pathname = usePathname();
   const [isActive, setIsActive] = useState(false);
   const menuStyle =
     'flex w-full gap-[14px] py-[24px] px-[16px] text-[16pxr] font-bold text-var-gray3';
   const activeMenuStyle = 'text-var-green-dark  bg-var-green2 rounded-[12px]';
+
+  /** 로그아웃 로직 */
+  const handleLogout = () => {
+    deleteCookie('userId');
+    clearUser();
+    router.push('/signin');
+  };
 
   /** 햄버거메뉴 활성화시 스크롤 불가 */
   useEffect(() => {
@@ -44,8 +54,11 @@ export default function HamburgerMenu() {
             <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
           </li>
         ) : (
-          <li className="border-b py-[12px] font-bold text-[16pxr] text-var-gray3">
+          <li className="flex gap-[20px] border-b py-[12px] font-bold text-[16pxr] text-var-gray3">
             로그인이 필요합니다.
+            <Link className="text-var-green-dark2" href="/signin">
+              로그인
+            </Link>
           </li>
         )}
         {isActive &&
@@ -68,7 +81,10 @@ export default function HamburgerMenu() {
           ))}
         {user && (
           <div className="mt-auto flex justify-end p-[16px]">
-            <button className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3">
+            <button
+              className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3"
+              onClick={handleLogout}
+            >
               로그아웃
             </button>
           </div>

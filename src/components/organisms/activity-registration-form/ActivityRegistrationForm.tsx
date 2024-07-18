@@ -1,7 +1,6 @@
 'use client';
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import { Controller, useForm } from 'react-hook-form';
-import { useState } from 'react';
 import Button from '@/components/atoms/button/Button';
 import ReservationTimePicker from '../../molecules/reservation-time-picker/ReservationTimePicker';
 import Input from '@/components/atoms/input/Input';
@@ -15,12 +14,18 @@ import { useModal } from '@/store/useModal';
 import Select from '@/components/molecules/select/Select';
 
 export default function ActivityRegistrationForm() {
-  const { register, handleSubmit, control } = useForm<ActivitySettingData>();
-  const [title, setTitle] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [price, setPrice] = useState<number>(0);
+  const { register, handleSubmit, control } = useForm<ActivitySettingData>({
+    defaultValues: {
+      title: '',
+      category: '',
+      description: '',
+      address: '',
+      price: 0,
+      schedules: [],
+      bannerImageUrl: '',
+      subImageUrls: [],
+    },
+  });
   const {
     selectedDay,
     startTime,
@@ -40,17 +45,6 @@ export default function ActivityRegistrationForm() {
   const inputTitleClass = 'text-var-black text-20pxr font-bold leading-[26px] md:text-24pxr';
   const { setIsOpen } = useModal();
 
-  /** 체험 등록 데이터 */
-  const data: ActivitySettingData = {
-    title,
-    category,
-    description,
-    address,
-    price,
-    schedules: timeSlots,
-    bannerImageUrl: bannerImage,
-    subImageUrls: uploadedImages,
-  };
   const openModal = (modalKey: string) => {
     setIsOpen(modalKey);
   };
@@ -63,17 +57,13 @@ export default function ActivityRegistrationForm() {
   });
 
   /** 체험 등록 api 함수 */
-  const submit = ({
-    title,
-    category,
-    description,
-    address,
-    price,
-    schedules: timeSlots,
-    bannerImageUrl: bannerImage,
-    subImageUrls: uploadedImages,
-  }: ActivitySettingData) => {
-    mutation.mutate(data);
+  const submit = (data: ActivitySettingData) => {
+    mutation.mutate({
+      ...data,
+      schedules: timeSlots,
+      bannerImageUrl: bannerImage,
+      subImageUrls: uploadedImages,
+    });
   };
 
   return (
@@ -84,7 +74,7 @@ export default function ActivityRegistrationForm() {
             <h1 className="text-32pxr font-bold">내 체험 등록</h1>
             <Button text="등록하기" color="black" size="s" type="submit" />
           </div>
-          <Input size="full" placeholder="제목" onChange={(e) => setTitle(e.target.value)} />
+          <Input size="full" placeholder="제목" {...register('title')} />
           <Controller
             name="category"
             control={control}
@@ -93,30 +83,25 @@ export default function ActivityRegistrationForm() {
                 options={options}
                 placeholder="카테고리"
                 value={field.value}
-                onChange={(value) => {
-                  field.onChange(value);
-                  setCategory(value);
-                }}
+                onChange={field.onChange}
               />
             )}
           />
-          <Input size="full" placeholder="설명" onChange={(e) => setDescription(e.target.value)} />
+          <Input size="full" placeholder="설명" {...register('description')} />
           <div className={containerClass}>
             <label className={inputTitleClass}>가격</label>
             <Input
               size="full"
               type="number"
               placeholder="가격"
-              onChange={(e) => setPrice(parseFloat(e.target.value))}
+              {...register('price', {
+                setValueAs: (value) => parseFloat(value),
+              })}
             />
           </div>
           <div className={containerClass}>
             <label className={inputTitleClass}>주소</label>
-            <Input
-              size="full"
-              placeholder="주소를 입력해주세요"
-              onChange={(e) => setAddress(e.target.value)}
-            />
+            <Input size="full" placeholder="주소를 입력해주세요" {...register('address')} />
           </div>
           <div className={containerClass}>
             <label className={inputTitleClass}>예약 가능한 시간대</label>
