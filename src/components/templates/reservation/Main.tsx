@@ -1,15 +1,22 @@
 import ReservationCard from '@/components/molecules/reservation-card/ReservationCard';
 import { getReservations } from '@/queries/reservations/get-reservations';
 import { Reservation, ReservationStatus } from '@/types/reservation';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { cancelReservationMutationOptions } from './../../../mutations/my-reservations/cancel';
+import { toast } from 'react-toastify';
 
 const PAGE_SIZE = 10;
 
 interface Props {
   status: ReservationStatus | null;
 }
+
+type ReservationsPage = {
+  reservations: Reservation[];
+  cursorId: number | null;
+};
 
 export default function Main({ status }: Props) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } =
@@ -51,6 +58,62 @@ export default function Main({ status }: Props) {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  const queryClient = useQueryClient();
+
+  const updateCache = (reservationId: number, newStatus: ReservationStatus) => {
+    if (status === null) {
+      queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+        ['reservations', null],
+        (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              reservations: page.reservations.map((reservation) =>
+                reservation.id === reservationId
+                  ? { ...reservation, status: newStatus }
+                  : reservation,
+              ),
+            })),
+          };
+        },
+      );
+    }
+
+    if (status === 'pending') {
+      queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+        ['reservations', 'pending'],
+        (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              reservations: page.reservations.filter(
+                (reservation) => reservation.id !== reservationId,
+              ),
+            })),
+          };
+        },
+      );
+    }
+
+    // 나머지 상태는 쿼리 무효화
+    [null, 'pending', 'confirmed', 'declined', 'canceled', 'completed'].forEach((item) => {
+      if (status === item) return;
+      queryClient.invalidateQueries({ queryKey: ['reservations', item] });
+    });
+  };
+
+  const mutation = useMutation({
+    ...cancelReservationMutationOptions,
+    onSuccess: (data) => {
+      updateCache(data.id, 'canceled');
+      toast('예약 취소되었습니다.');
+    },
+  });
+
   if (isPending) return <div>Loading...</div>; //TODO: 로딩 이미지 넣어야함
 
   if (isError) return <div>error</div>;
@@ -67,7 +130,12 @@ export default function Main({ status }: Props) {
               reservation: Reservation, //TODO: 카드 컴포넌트 완성시 교체
             ) => (
               <div key={reservation.id} className="mb-[24px]">
-                <ReservationCard {...reservation} />
+                <ReservationCard
+                  {...reservation}
+                  onCancel={() => {
+                    mutation.mutate({ reservationId: reservation.id });
+                  }}
+                />
               </div>
             ),
           )}
