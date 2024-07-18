@@ -28,7 +28,9 @@ export default async function FilteredActivities({ searchParams }: Props) {
           <button className="w-full">가격이 높은 순</button>
         </DropdownMenu>
       </div>
-      <h2 className="mt-[40px] text-36pxr font-[700]">🛼 모든 체험</h2>
+      <h2 className="mt-[40px] text-36pxr font-[700]">
+        {searchParams.category ? searchParams.category : '🛼 모든 체험'}
+      </h2>
       <ActivityCardList activityList={activities} />
       <div className="mt-[72px] flex justify-center">
         <ReviewPagination totalPage={1} currentPage={1} activityId={1} />
