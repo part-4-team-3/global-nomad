@@ -27,6 +27,7 @@ interface GetActivitiesParams {
 export const getActivities = async (params: GetActivitiesParams) => {
   const queryParams = Object.entries(params)
     .map(([key, value]) => {
+      if (!value) return;
       return `${key}=${value}`;
     })
     .join('&');
