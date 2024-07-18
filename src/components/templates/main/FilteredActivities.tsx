@@ -22,7 +22,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
   return (
     <InnerLayout className="mb-[342px] mt-[60px]">
       <div className="flex justify-between">
-        <FilteredNavList />
+        <FilteredNavList currentCategory={searchParams.category} />
         <DropdownMenu text="가격" className="!w-127pxr">
           <button className="w-full">가격이 낮은 순</button>
           <button className="w-full">가격이 높은 순</button>
