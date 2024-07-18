@@ -1,21 +1,29 @@
+import Button from '@/components/atoms/button/Button';
 import ReservationImage from '@/components/atoms/reservation-image/ReservationImage';
+import { useModal } from '@/store/useModal';
 import { RESERVATION_COLORS, RESERVATION_LABELS, Reservation } from '@/types/reservation';
+import EditReviewModal from '../modal/EditReviewModal';
 
-interface Props extends Reservation {}
+interface Props extends Reservation {
+  onCancel: () => void;
+}
 
 export default function ReservationCard({
   activity,
   status,
+  totalPrice,
+  headCount,
   date,
   startTime,
   endTime,
-  headCount,
-  totalPrice,
+  onCancel,
 }: Props) {
+  const { setIsOpen } = useModal();
+
   return (
-    <div className="shadow-custom flex overflow-hidden rounded-[24px]">
-      <ReservationImage src={activity.bannerImageUrl} />
-      <div className="flex flex-col justify-center px-[24px] py-[25.5px]">
+    <div className="flex overflow-hidden rounded-[24px] shadow-custom">
+      <ReservationImage variant="card" src={activity.bannerImageUrl} />
+      <div className="flex w-full flex-col justify-center px-[24px] py-[25.5px]">
         <div className={`${RESERVATION_COLORS[status]} mb-8pxr font-bold`}>
           {RESERVATION_LABELS[status]}
         </div>
@@ -23,7 +31,33 @@ export default function ReservationCard({
         <div className="mb-16pxr text-14pxr">
           {`${date} · ${startTime} - ${endTime} · ${headCount}명`}
         </div>
-        <div className="text-24pxr">{`₩${totalPrice.toLocaleString('ko-KR')}`}</div>
+        <div className="flex w-full justify-between">
+          <span className="text-24pxr">{`₩${totalPrice.toLocaleString('ko-KR')}`}</span>
+          {status === 'pending' && (
+            <Button
+              text="예약 취소"
+              color="white"
+              className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
+              onClick={onCancel}
+            />
+          )}
+          {status === 'completed' && (
+            <Button
+              text="후기 작성"
+              color="black"
+              className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
+              onClick={() => {
+                setIsOpen('editReviewModal');
+              }}
+            />
+          )}
+          <EditReviewModal
+            src={activity.bannerImageUrl}
+            title={activity.title}
+            price={totalPrice}
+            date={`${date} · ${startTime} - ${endTime} · ${headCount}명`}
+          />
+        </div>
       </div>
     </div>
   );
