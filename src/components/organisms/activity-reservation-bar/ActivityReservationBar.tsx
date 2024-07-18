@@ -2,21 +2,21 @@
 
 import { useState } from 'react';
 import Button from '@/components/atoms/button/Button';
-import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
 import { ActivityReservationSelector } from '@/components/molecules/activity-reservation-selector/ActivityReservationSelector';
 import { Schedule } from '@/types/schedule';
 import { format } from 'date-fns';
 import { ActivityParticipantSelector } from '@/components/molecules/activity-participant-selector/ActivityParticipantSelector';
 import { useReservation } from '@/models/activity-reservation/use-reservation';
 import PriceDisplay from '@/components/atoms/price-display/PriceDisplay';
+import postReservation from '@/queries/reservations/post-reservation';
+import { ReservationFormProps } from '@/types/reservation-form-props';
 
-interface Props {
-  price: number;
-  scheduledDates: Date[];
-  scheduleHash: ScheduleHashMap;
-}
-
-export default function ActivityReservationBar({ price, scheduleHash, scheduledDates }: Props) {
+export default function ActivityReservationBar({
+  price,
+  scheduleHash,
+  scheduledDates,
+  activityId,
+}: ReservationFormProps) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
   const [isParticipantSelectorOpen, setIsParticipantSelectorOpen] = useState<boolean>(false);
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
@@ -51,6 +51,7 @@ export default function ActivityReservationBar({ price, scheduleHash, scheduledD
         color="black"
         className="px-24pxr py-14pxr disabled:bg-var-gray3"
         disabled={!selectedSchedule}
+        onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
       ></Button>
 
       {isScheduleSelectorOpen && (
