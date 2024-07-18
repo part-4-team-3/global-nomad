@@ -8,5 +8,5 @@ interface Props {
 
 export default function InnerLayout({ mobilePx, children, className = '' }: Props) {
   const pxStyle = mobilePx === 'keep' ? 'px-[24px]' : 'px-[16px] md:px-[24px]';
-  return <div className={`mx-auto w-full max-w-1248pxr ${pxStyle} ${className}`}>{children}</div>;
+  return <div className={`mx-auto w-full max-w-1248pxr flex-grow ${pxStyle} ${className}`}>{children}</div>;
 }
