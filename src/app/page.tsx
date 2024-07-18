@@ -6,10 +6,10 @@ import Banner from '@/components/templates/main/Banner';
 import BestActivities from '@/components/templates/main/BestActivities';
 import FilteredActivities from '@/components/templates/main/FilteredActivities';
 import { getActivities } from '@/queries/activities/get-activities';
-import { ActivityCategory } from '@/types/activity';
+import { ActivityCategory, ActivitySort } from '@/types/activity';
 
 interface Props {
-  searchParams: { category: ActivityCategory };
+  searchParams: { category: ActivityCategory; sort: ActivitySort };
 }
 
 export default async function Home({ searchParams }: Props) {
