@@ -30,7 +30,6 @@ export default function Map({ address }: Props) {
       geocoder.addressSearch(address, function (result: any, status: any) {
         // 정상적으로 검색이 완료됐으면
         if (status === window.kakao.maps.services.Status.OK) {
-          console.log(result);
           const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
           // 결과값으로 받은 위치를 마커로 표시합니다
