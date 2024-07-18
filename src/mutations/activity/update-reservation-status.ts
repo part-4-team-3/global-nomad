@@ -9,7 +9,7 @@ export const useUpdateReservationStatus = (activityId: number, reservationId: nu
   return useMutation({
     mutationFn: (status: string) => {
       const apiInstance = getInstance();
-      return apiInstance.patch(`my-reservations/status/${activityId}/${reservationId}`, { status });
+      return apiInstance.patch(`my-activities/status/${activityId}/${reservationId}`, { status });
     },
     onSuccess: () => {
       router.push('/calendar');
