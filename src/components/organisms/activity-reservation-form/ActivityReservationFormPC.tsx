@@ -9,12 +9,15 @@ import { useReservation } from '@/models/activity-reservation/use-reservation';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import ScheduleButton from '@/components/atoms/schedule-button/ScheduleButton';
-interface Props {
-  price: number;
-  scheduledDates: Date[];
-  scheduleHash: ScheduleHashMap;
-}
-export default function ActivityReservationFormPC({ price, scheduleHash, scheduledDates }: Props) {
+import postReservation from '@/queries/reservations/post-reservation';
+import { ReservationFormProps } from '@/types/reservation-form-props';
+
+export default function ActivityReservationFormPC({
+  price,
+  scheduleHash,
+  scheduledDates,
+  activityId,
+}: ReservationFormProps) {
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
   const [date, setDate] = useState<Date | undefined>(undefined);
 
@@ -71,6 +74,7 @@ export default function ActivityReservationFormPC({ price, scheduleHash, schedul
             color="black"
             className="rounded-[4px] px-24pxr py-14pxr disabled:bg-var-gray3"
             disabled={!selectedSchedule}
+            onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
           ></Button>
         </div>
         <div className="flex justify-between p-[24px]">

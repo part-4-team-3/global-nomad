@@ -1,21 +1,22 @@
 'use client';
 import { useReservation } from '@/models/activity-reservation/use-reservation';
-import { ScheduleHashMap } from '@/models/activity-reservation/create-schedule-hash-map';
 import { ActivityReservationSelector } from '@/components/molecules/activity-reservation-selector/ActivityReservationSelector';
 import { Schedule } from '@/types/schedule';
 import Button from '@/components/atoms/button/Button';
 import { format } from 'date-fns';
 import { useState } from 'react';
-interface Props {
-  price: number;
-  scheduledDates: Date[];
-  scheduleHash: ScheduleHashMap;
-}
+import postReservation from '@/queries/reservations/post-reservation';
 
 import PriceDisplay from '@/components/atoms/price-display/PriceDisplay';
 import ParticipantCounter from '@/components/molecules/participant-counter/ParticipantCounter';
+import { ReservationFormProps } from '@/types/reservation-form-props';
 
-export default function ActivityReservationForm({ price, scheduleHash, scheduledDates }: Props) {
+export default function ActivityReservationForm({
+  price,
+  scheduleHash,
+  scheduledDates,
+  activityId,
+}: ReservationFormProps) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
 
@@ -54,6 +55,7 @@ export default function ActivityReservationForm({ price, scheduleHash, scheduled
             color="black"
             className="rounded-[4px] px-24pxr py-14pxr disabled:bg-var-gray3"
             disabled={!selectedSchedule}
+            onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
           ></Button>
         </div>
         <div className="flex justify-between p-[24px]">
