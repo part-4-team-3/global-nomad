@@ -8,7 +8,7 @@ export default function MyPageProfile() {
   const pathname = usePathname();
   return (
     <div className="relative flex items-center justify-center pb-[24px]">
-      <div className="max-size-160pxr relative rounded-full">
+      <div className="relative size-160pxr rounded-full">
         {user && user.profileImageUrl ? (
           <Image fill src={user.profileImageUrl} alt="프로필 사진" />
         ) : (
