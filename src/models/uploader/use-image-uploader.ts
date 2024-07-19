@@ -1,20 +1,24 @@
 'use client';
-import { apiInstance } from '@/lib/axios';
+import { apiInstance, getInstance } from '@/lib/axios';
 import { useModal } from '@/store/useModal';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { submitMutationOptions } from '@/mutations/activity/activity-image-uploader';
 
 /** api 응답 인터페이스 */
-interface ApiResponse {
+interface ActivityImageUrlApiResponse {
   activityImageUrl: string;
+}
+interface ProfileImageUrlApiResponse {
   profileImageUrl: string;
 }
 
 /** 이미지 Url 받아오는 함수 */
 export const useImageUploader = () => {
+  const mutation = useMutation(submitMutationOptions);
   const [bannerImage, setBannerImage] = useState<string>('');
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
-  const [profileImage, setProfileImage] = useState<string>('/close-button-icon.svg'); //초기값 수정 예정
+  const [profileImage, setProfileImage] = useState<string>(''); //초기값 수정 예정
   const { setIsClose } = useModal();
 
   const closeModal = () => {
@@ -36,12 +40,12 @@ export const useImageUploader = () => {
     const formData = new FormData();
     formData.append('image', uploadFile);
     try {
-      const response: ApiResponse = await apiInstance.post('activities/image', formData);
+      const imageUrl: ActivityImageUrlApiResponse = await mutation.mutateAsync(formData);
       if (title === 'banner') {
-        setBannerImage(response.activityImageUrl);
+        setBannerImage(imageUrl.activityImageUrl);
       } else if (title === 'intro') {
         if (uploadedImages.length < 4) {
-          setUploadedImages((prevImages) => [...prevImages, response.activityImageUrl]);
+          setUploadedImages((prevImages) => [...prevImages, imageUrl.activityImageUrl]);
         } else {
           alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
         }
@@ -64,7 +68,10 @@ export const useImageUploader = () => {
     formData.append('image', uploadFile);
 
     try {
-      const response: ApiResponse = await apiInstance.post('users/me/image', formData);
+      const response: ProfileImageUrlApiResponse = await apiInstance.post(
+        'users/me/image',
+        formData,
+      );
       setProfileImage(response.profileImageUrl);
     } catch (error) {
       alert(error);
@@ -92,7 +99,7 @@ export const useImageUploader = () => {
     formData.append('image', uploadFile);
 
     try {
-      const response = await apiInstance.patch<ApiResponse>('users/me', {
+      const response = await apiInstance.patch<ProfileImageUrlApiResponse>('users/me', {
         profileImageUrl: profileImage,
       });
       console.log(response);
