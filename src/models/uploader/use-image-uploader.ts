@@ -1,9 +1,13 @@
 'use client';
-import { apiInstance, getInstance } from '@/lib/axios';
 import { useModal } from '@/store/useModal';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { submitMutationOptions } from '@/mutations/activity/activity-image-uploader';
+import { submitActivityImageMutationOptions } from '@/mutations/activity/activity-image-uploader';
+import {
+  submitProfileImageMutationOptions,
+  updateProfileImageMutationOptions,
+} from '@/mutations/users/profile-image-uploader';
+import useUser from '@/store/useUser';
 
 /** api 응답 인터페이스 */
 interface ActivityImageUrlApiResponse {
@@ -15,11 +19,14 @@ interface ProfileImageUrlApiResponse {
 
 /** 이미지 Url 받아오는 함수 */
 export const useImageUploader = () => {
-  const mutation = useMutation(submitMutationOptions);
+  const activityMutation = useMutation(submitActivityImageMutationOptions);
+  const profileMutation = useMutation(submitProfileImageMutationOptions);
+  const updateProfileMutation = useMutation(updateProfileImageMutationOptions);
   const [bannerImage, setBannerImage] = useState<string>('');
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>(''); //초기값 수정 예정
   const { setIsClose } = useModal();
+  const { user, setUser } = useUser.getState();
 
   const closeModal = () => {
     setIsClose();
@@ -40,7 +47,7 @@ export const useImageUploader = () => {
     const formData = new FormData();
     formData.append('image', uploadFile);
     try {
-      const imageUrl: ActivityImageUrlApiResponse = await mutation.mutateAsync(formData);
+      const imageUrl: ActivityImageUrlApiResponse = await activityMutation.mutateAsync(formData);
       if (title === 'banner') {
         setBannerImage(imageUrl.activityImageUrl);
       } else if (title === 'intro') {
@@ -68,11 +75,8 @@ export const useImageUploader = () => {
     formData.append('image', uploadFile);
 
     try {
-      const response: ProfileImageUrlApiResponse = await apiInstance.post(
-        'users/me/image',
-        formData,
-      );
-      setProfileImage(response.profileImageUrl);
+      const imageUrl: ProfileImageUrlApiResponse = await profileMutation.mutateAsync(formData);
+      setProfileImage(imageUrl.profileImageUrl);
     } catch (error) {
       alert(error);
     }
@@ -89,20 +93,11 @@ export const useImageUploader = () => {
 
   /** 프로필 이미지 서버에 전송하는 함수 */
   const submitProfileImage = async () => {
-    if (!profileImage) {
-      alert('이미지를 선택해 주세요.');
-      return;
-    }
-
-    const uploadFile = profileImage;
-    const formData = new FormData();
-    formData.append('image', uploadFile);
-
+    const data = {
+      profileImageUrl: profileImage,
+    };
     try {
-      const response = await apiInstance.patch<ProfileImageUrlApiResponse>('users/me', {
-        profileImageUrl: profileImage,
-      });
-      console.log(response);
+      const response = await updateProfileMutation.mutateAsync(data);
       alert('프로필 변경에 성공했습니다!');
       closeModal();
     } catch (error) {

@@ -5,20 +5,18 @@ interface ApiResponse {
   activityImageUrl: 'string';
 }
 
+/** 이미지 등록 함수 */
 const submit = async (body: FormData) => {
   const instance = getInstance();
-  const response = await instance.post<ApiResponse>('activities/image', body, {
-    headers: {
-      accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const response = await instance.post<ApiResponse>('activities/image', body);
   return response.data;
 };
 
-export const submitMutationOptions: UseMutationOptions<ApiResponse, Error, FormData> = {
-  mutationFn: submit,
-  onError: (error: Error) => {
-    alert('이미지 등록에 실패했습니다. 다시 시도해주세요.');
-  },
-};
+/**  이미지 등록 Mutation Options */
+export const submitActivityImageMutationOptions: UseMutationOptions<ApiResponse, Error, FormData> =
+  {
+    mutationFn: submit,
+    onError: (error: Error) => {
+      alert('이미지 등록에 실패했습니다. 다시 시도해주세요.');
+    },
+  };
