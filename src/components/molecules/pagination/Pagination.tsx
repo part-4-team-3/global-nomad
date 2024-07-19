@@ -8,20 +8,20 @@ import { usePageControls } from '@/models/pagination/use-page-controls';
 
 interface Props {
   totalCount: number;
-  size: number;
+  size?: number;
   currentPage: number;
-  onPrev: () => void;
-  onNext: () => void;
-  onClick: (index: number) => void;
+  // onPrev: () => void;
+  // onNext: () => void;
+  // onClick: (index: number) => void;
 }
 
 export default function Pagination({
   totalCount = 50,
   size = 5,
   currentPage = 1,
-  onPrev,
-  onNext,
-  onClick,
+  // onPrev,
+  // onNext,
+  // onClick,
 }: Props) {
   /* 추후 상위 컴포넌트에서 사용될 커스텀훅입니다. */
   const { currentPageNumber, handlePageClick, handleNextButton, handlePrevButton } =

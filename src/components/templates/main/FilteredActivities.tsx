@@ -1,5 +1,6 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import DropdownMenu from '@/components/molecules/dropdown-menu/DropdownMenu';
+import Pagination from '@/components/molecules/pagination/Pagination';
 import ActivityCardList from '@/components/organisms/card-list/ActivityCardList';
 import FilteredNavList from '@/components/organisms/nav-list/FilteredNavList';
 import ReviewPagination from '@/components/organisms/review-pagination/ReviewPagination';
@@ -10,15 +11,16 @@ import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-  searchParams: { category: ActivityCategory; sort: ActivitySort };
+  searchParams: { category: ActivityCategory; sort: ActivitySort; page: number };
 }
 
 export default async function FilteredActivities({ searchParams }: Props) {
-  const { activities } = await getActivities({
+  const { activities, totalCount } = await getActivities({
     method: 'offset',
     size: 8,
     category: searchParams.category,
     sort: searchParams.sort ? searchParams.sort : 'latest',
+    page: searchParams.page ? searchParams.page : 1,
   });
 
   const addSearchParam = (param: {}) => {
@@ -43,9 +45,14 @@ export default async function FilteredActivities({ searchParams }: Props) {
         {searchParams.category ? searchParams.category : '🛼 모든 체험'}
       </h2>
       <ActivityCardList activityList={activities} />
-      <div className="mt-[72px] flex justify-center">
-        <ReviewPagination totalPage={1} currentPage={1} activityId={1} />
-      </div>
+      {!totalCount ? (
+        <div className="mt-[30px] text-center">게시물이 없습니다.</div>
+      ) : (
+        <div className="mt-[72px] flex justify-center">
+          {/* <ReviewPagination totalPage={(totalCount + 8) / 8} currentPage={1} activityId={1} /> */}
+          <Pagination totalCount={totalCount} currentPage={searchParams.page} />
+        </div>
+      )}
     </InnerLayout>
   );
 }

@@ -9,7 +9,7 @@ import { getActivities } from '@/queries/activities/get-activities';
 import { ActivityCategory, ActivitySort } from '@/types/activity';
 
 interface Props {
-  searchParams: { category: ActivityCategory; sort: ActivitySort };
+  searchParams: { category: ActivityCategory; sort: ActivitySort; page: number };
 }
 
 export default async function Home({ searchParams }: Props) {
