@@ -25,7 +25,13 @@ export default function ReviewTemplate({
       <ReviewOverview ratings={ratings} reviewCount={reviewCount} />
       <ReviewList reviews={reviews} />
       <div className="pb-[145px] pt-[40px]">
-        <ReviewPagination totalPage={totalPage} currentPage={currentPage} activityId={activityId} />
+        {totalPage > 0 && (
+          <ReviewPagination
+            totalPage={totalPage}
+            currentPage={currentPage}
+            activityId={activityId}
+          />
+        )}
       </div>
     </div>
   );

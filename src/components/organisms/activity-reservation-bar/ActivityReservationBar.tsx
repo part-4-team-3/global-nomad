@@ -8,8 +8,9 @@ import { format } from 'date-fns';
 import { ActivityParticipantSelector } from '@/components/molecules/activity-participant-selector/ActivityParticipantSelector';
 import { useReservation } from '@/models/activity-reservation/use-reservation';
 import PriceDisplay from '@/components/atoms/price-display/PriceDisplay';
-import postReservation from '@/queries/reservations/post-reservation';
 import { ReservationFormProps } from '@/types/reservation-form-props';
+import { toast } from 'react-toastify';
+import postReservation from '@/queries/reservations/post-reservation';
 
 export default function ActivityReservationBar({
   price,
@@ -20,10 +21,24 @@ export default function ActivityReservationBar({
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
   const [isParticipantSelectorOpen, setIsParticipantSelectorOpen] = useState<boolean>(false);
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
-
+  const selectedId = selectedSchedule ? selectedSchedule.id : -1;
   const dateButtonText = selectedSchedule
     ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
     : '날짜 선택하기';
+
+  const handleReservation = async (
+    activityId: number,
+    selectedScheduleId: number | undefined,
+    participants: number,
+  ) => {
+    const res = await postReservation(activityId, selectedScheduleId, participants);
+    if (res < 0) {
+      toast('예약에 실패했습니다');
+      return;
+    }
+
+    toast('예약에 성공했습니다');
+  };
 
   return (
     <div className="fixed bottom-[0px] left-[0px] right-[0px] z-10 flex w-screen justify-between border-t border-[#a1a1a1] bg-white p-[16px] md:hidden lg:hidden">
@@ -51,7 +66,9 @@ export default function ActivityReservationBar({
         color="black"
         className="px-24pxr py-14pxr disabled:bg-var-gray3"
         disabled={!selectedSchedule}
-        onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
+        onClick={() => {
+          handleReservation(activityId, selectedSchedule?.id, participants);
+        }}
       ></Button>
 
       {isScheduleSelectorOpen && (

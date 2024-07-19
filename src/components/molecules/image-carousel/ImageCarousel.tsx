@@ -16,14 +16,14 @@ export default function ImageCarousel({ bannerImg, subImg }: Props) {
   return (
     <div className="px-[24px] pb-[32px]">
       <Carousel className="w-full rounded-[8px] border border-var-gray6">
-        <CarouselContent className="h-310pxr w-full">
+        <CarouselContent className="h-310pxr w-full md:h-500pxr lg:h-675pxr">
           <CarouselItem className="relative">
-            <Image src={bannerImg} fill alt="" objectFit="contain" />
+            <Image src={bannerImg} fill alt="" objectFit="cover" />
           </CarouselItem>
 
           {subImg?.map((img) => (
             <CarouselItem key={img.id} className="relative">
-              <Image src={img.imageUrl} fill alt="" objectFit="contain" />
+              <Image src={img.imageUrl} fill alt="" objectFit="cover" />
             </CarouselItem>
           ))}
         </CarouselContent>

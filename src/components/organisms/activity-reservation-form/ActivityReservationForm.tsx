@@ -10,6 +10,7 @@ import postReservation from '@/queries/reservations/post-reservation';
 import PriceDisplay from '@/components/atoms/price-display/PriceDisplay';
 import ParticipantCounter from '@/components/molecules/participant-counter/ParticipantCounter';
 import { ReservationFormProps } from '@/types/reservation-form-props';
+import { toast } from 'react-toastify';
 
 export default function ActivityReservationForm({
   price,
@@ -19,6 +20,20 @@ export default function ActivityReservationForm({
 }: ReservationFormProps) {
   const [isScheduleSelectorOpen, setIsScheduleSelectorOpen] = useState<boolean>(false);
   const { selectedSchedule, setSelectedSchedule, participants, setParticipants } = useReservation();
+
+  const handleReservation = async (
+    activityId: number,
+    selectedScheduleId: number | undefined,
+    participants: number,
+  ) => {
+    const res = await postReservation(activityId, selectedScheduleId, participants);
+    if (res < 0) {
+      toast('예약에 실패했습니다');
+      return;
+    }
+
+    toast('예약에 성공했습니다');
+  };
 
   const dateButtonText = selectedSchedule
     ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
@@ -55,7 +70,9 @@ export default function ActivityReservationForm({
             color="black"
             className="rounded-[4px] px-24pxr py-14pxr disabled:bg-var-gray3"
             disabled={!selectedSchedule}
-            onClick={() => postReservation(activityId, selectedSchedule?.id, participants)}
+            onClick={() => {
+              handleReservation(activityId, selectedSchedule?.id, participants);
+            }}
           ></Button>
         </div>
         <div className="flex justify-between p-[24px]">

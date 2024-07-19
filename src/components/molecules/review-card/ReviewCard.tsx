@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Review } from '@/types/review';
 import { format } from 'date-fns';
+import ProfileImage from '@/components/atoms/profile/ProfileImage';
 
 interface Props {
   review: Review;
@@ -12,9 +13,13 @@ export default function ReviewCard({ review }: Props) {
     : format(review.createdAt, 'yy.MM.dd');
 
   return (
-    <div className="flex gap-[16px] p-[24px]">
-      <div className="relative h-45pxr w-45pxr shrink-0 overflow-hidden rounded-full">
-        <Image src={review.user.profileImageUrl} fill alt="" objectFit="cover" />
+    <div className="flex flex-grow gap-[16px] p-[24px]">
+      <div className="relative h-45pxr w-45pxr shrink-0 overflow-hidden">
+        <ProfileImage
+          imageUrl={review.user.profileImageUrl}
+          nickname={review.user.nickname}
+          className="size-45pxr text-24pxr font-[600]"
+        />
       </div>
 
       <div>

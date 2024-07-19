@@ -7,7 +7,7 @@ interface Props {
 
 export default function ReviewList({ reviews }: Props) {
   return (
-    <div>
+    <div className="w-full">
       {reviews.map((review, index) => (
         <div
           key={review.id}
