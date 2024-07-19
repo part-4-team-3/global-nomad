@@ -23,9 +23,7 @@ export default async function Home({ searchParams }: Props) {
     <>
       <Header />
       <Banner activity={bestActivitiesData.activities[0]} />
-      <InnerLayout>
-        <SearchActivity />
-      </InnerLayout>
+      <SearchActivity />
       <BestActivities activitiesData={bestActivitiesData} />
       <FilteredActivities searchParams={searchParams} />
       <Footer />
