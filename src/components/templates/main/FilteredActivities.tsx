@@ -49,7 +49,6 @@ export default async function FilteredActivities({ searchParams }: Props) {
         <div className="mt-[30px] text-center">게시물이 없습니다.</div>
       ) : (
         <div className="mt-[72px] flex justify-center">
-          {/* <ReviewPagination totalPage={(totalCount + 8) / 8} currentPage={1} activityId={1} /> */}
           <Pagination totalCount={totalCount} currentPage={searchParams.page} />
         </div>
       )}
