@@ -3,7 +3,6 @@ import DropdownMenu from '@/components/molecules/dropdown-menu/DropdownMenu';
 import Pagination from '@/components/molecules/pagination/Pagination';
 import ActivityCardList from '@/components/organisms/card-list/ActivityCardList';
 import FilteredNavList from '@/components/organisms/nav-list/FilteredNavList';
-import ReviewPagination from '@/components/organisms/review-pagination/ReviewPagination';
 import makeQueryString from '@/lib/query-string';
 import { getActivities } from '@/queries/activities/get-activities';
 import { ActivityCategory, ActivitySort } from '@/types/activity';
