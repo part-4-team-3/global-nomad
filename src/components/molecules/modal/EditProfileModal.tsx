@@ -3,10 +3,12 @@ import Modal from './Modal';
 import Button from '@/components/atoms/button/Button';
 import { useModal } from '@/store/useModal';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
+import useUser from '@/store/useUser';
 
 export default function EditProfileModal() {
   const { profileImage, handleEditProfileImage, submitProfileImage } = useImageUploader();
   const { setIsClose } = useModal();
+  const { user } = useUser();
 
   const closeModal = () => {
     setIsClose();
@@ -17,9 +19,14 @@ export default function EditProfileModal() {
       <div className="relative flex flex-col items-center justify-center gap-[48px] px-[50px] py-[24px] pb-[72px]">
         <label className="flex flex-col gap-[24px] font-bold text-[48pxr]">
           프로필 이미지 변경하기
-          {/* 임시이미지입니다. */}
-          <div className="relative size-[160px] overflow-hidden rounded-full">
-            <Image fill src={profileImage} alt="프로필 사진" />
+          <div className="relative size-160pxr overflow-hidden rounded-full">
+            {profileImage ? (
+              <Image fill src={profileImage} alt="프로필 사진" />
+            ) : (
+              <div className="flex size-160pxr items-center justify-center rounded-[50%] bg-var-gray1 text-80pxr text-white">
+                {user && user.nickname.slice(0, 1)}
+              </div>
+            )}
           </div>
           <input
             type="file"

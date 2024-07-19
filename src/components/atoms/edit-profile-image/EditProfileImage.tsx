@@ -12,7 +12,7 @@ export default function EditProfileImage() {
   return (
     <>
       <button
-        className="absolute bottom-[0px] right-[12px] size-[44px]"
+        className="absolute bottom-[24px] right-[12px] size-[44px]"
         onClick={() => openModal('editProfileImage')}
       >
         <Image fill src="/profile-image-setting-icon.svg" alt="프로필 사진 수정하기" />
