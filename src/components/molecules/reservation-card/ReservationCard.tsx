@@ -1,14 +1,15 @@
 import Button from '@/components/atoms/button/Button';
-import ReservationImage from '@/components/atoms/reservation-image/ReservationImage';
 import { useModal } from '@/store/useModal';
 import { RESERVATION_COLORS, RESERVATION_LABELS, Reservation } from '@/types/reservation';
 import EditReviewModal from '../modal/EditReviewModal';
+import CardImage from '@/components/atoms/card-image/CardImage';
 
 interface Props extends Reservation {
   onCancel: () => void;
 }
 
 export default function ReservationCard({
+  id,
   activity,
   status,
   totalPrice,
@@ -22,7 +23,7 @@ export default function ReservationCard({
 
   return (
     <div className="flex overflow-hidden rounded-[24px] shadow-custom">
-      <ReservationImage variant="card" src={activity.bannerImageUrl} />
+      <CardImage variant="card" src={activity.bannerImageUrl} />
       <div className="flex w-full flex-col justify-center px-[24px] py-[25.5px]">
         <div className={`${RESERVATION_COLORS[status]} mb-8pxr font-bold`}>
           {RESERVATION_LABELS[status]}
@@ -42,21 +43,24 @@ export default function ReservationCard({
             />
           )}
           {status === 'completed' && (
-            <Button
-              text="후기 작성"
-              color="black"
-              className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
-              onClick={() => {
-                setIsOpen('editReviewModal');
-              }}
-            />
+            <>
+              <Button
+                text="후기 작성"
+                color="black"
+                className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
+                onClick={() => {
+                  setIsOpen(`editReviewModal-${id}`);
+                }}
+              />
+              <EditReviewModal
+                id={id}
+                src={activity.bannerImageUrl}
+                title={activity.title}
+                price={totalPrice}
+                date={`${date} · ${startTime} - ${endTime} · ${headCount}명`}
+              />
+            </>
           )}
-          <EditReviewModal
-            src={activity.bannerImageUrl}
-            title={activity.title}
-            price={totalPrice}
-            date={`${date} · ${startTime} - ${endTime} · ${headCount}명`}
-          />
         </div>
       </div>
     </div>

@@ -11,11 +11,11 @@ const SIZE = {
   modal: 'size-100pxr md:size-126pxr',
 };
 
-export default function ReservationImage({ variant, src }: Props) {
+export default function CardImage({ variant, src }: Props) {
   const [isError, setIsError] = useState(false);
 
   return (
-    <div className={`relative ${SIZE[variant]}`}>
+    <div className={`relative ${SIZE[variant]} overflow-hidden rounded-l-[24px]`}>
       <Image
         src={isError ? '/no-image.jpg' : src}
         layout="fill"

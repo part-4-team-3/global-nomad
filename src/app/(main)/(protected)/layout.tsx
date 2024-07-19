@@ -9,7 +9,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen flex flex-col ">
+    <div className="flex h-screen flex-col">
       <Header />
       <InnerLayout>
         <div className="flex py-[72px] md:gap-[16px] lg:gap-[24px]">

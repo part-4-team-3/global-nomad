@@ -14,7 +14,7 @@ export const menuItems = [
     text: '예약 내역',
   },
   {
-    href: '/myactivity/post',
+    href: '/myactivity',
     defaultImg: '/my-activity-setting-icon.svg',
     activeImg: '/my-activity-setting-icon-active.svg',
     alt: '내 체험 관리',

@@ -1,3 +1,3 @@
 export const reservationsKeys = {
-  getReservations: (cursorId: number | null, size: number) => ['reservation', cursorId],
+  getMyReservations: (cursorId: number | null, size: number) => ['reservation', cursorId],
 };
