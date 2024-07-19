@@ -9,3 +9,9 @@ export async function GET(req: NextRequest, { params }: { params: { activityId: 
 
   return handleRequest(`my-activities/${activityId}/reservation-dashboard${queryString}`, 'get');
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: { activityId: string } }) {
+  const activityId = params.activityId;
+
+  return handleRequest(`my-activities/${activityId}`, 'delete');
+}

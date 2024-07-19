@@ -1,11 +1,13 @@
+'use client';
+
 import ReservationCard from '@/components/molecules/reservation-card/ReservationCard';
-import { getReservations } from '@/queries/reservations/get-reservations';
 import { Reservation, ReservationStatus } from '@/types/reservation';
 import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { cancelReservationMutationOptions } from './../../../mutations/my-reservations/cancel';
 import { toast } from 'react-toastify';
+import { getMyReservations } from '@/queries/reservations/get-my-reservations';
 
 const PAGE_SIZE = 10;
 
@@ -39,7 +41,7 @@ export default function Main({ status }: Props) {
           params.status = status;
         }
 
-        return getReservations(params);
+        return getMyReservations(params);
       },
       initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.cursorId,
@@ -119,30 +121,23 @@ export default function Main({ status }: Props) {
   if (isError) return <div>error</div>;
 
   return (
-    //TODO: 무한스크롤을 위해 헤더, 푸터 페이지 패딩들 계산해서 높이 지정
-    <div
-    // className="h-100pxr overflow-y-scroll"
-    >
+    <div className="h-[calc(100vh-406px)] overflow-y-scroll">
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
-          {page.reservations.map(
-            (
-              reservation: Reservation, //TODO: 카드 컴포넌트 완성시 교체
-            ) => (
-              <div key={reservation.id} className="mb-[24px]">
-                <ReservationCard
-                  {...reservation}
-                  onCancel={() => {
-                    mutation.mutate({ reservationId: reservation.id });
-                  }}
-                />
-              </div>
-            ),
-          )}
+          {page.reservations.map((reservation: Reservation) => (
+            <div key={reservation.id} className="mb-[24px]">
+              <ReservationCard
+                {...reservation}
+                onCancel={() => {
+                  mutation.mutate({ reservationId: reservation.id });
+                }}
+              />
+            </div>
+          ))}
         </div>
       ))}
       {hasNextPage && !isFetchingNextPage && (
-        <div ref={ref} className="h-1"></div> // 숨겨진 div, 무한 스크롤 트리거
+        <div ref={ref} className="h-1pxr"></div> // 숨겨진 div, 무한 스크롤 트리거
       )}
       {isFetchingNextPage && (
         <div>Loading more...</div> // 무한 스크롤 로딩 표시
