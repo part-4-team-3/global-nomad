@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { PluginAPI } from 'tailwindcss/types/config';
 
 const pxToRem = (px: number, base = 16) => `${px / base}rem`;
 
@@ -97,9 +98,11 @@ const config = {
         },
       },
       screens: {
-        md: { min: '450px' },
-        lg: { min: '1024px' },
-        xl: { min: '1245px' },
+        // * Default: 모바일
+        md: { min: '450px' }, // * 테블릿
+        md2: { min: '750px' }, // (테블릿과 PC 사이)
+        lg: { min: '1024px' }, // * PC
+        xl: { min: '1245px' }, // (innerLayout 내부로 들어왔을 때)
       },
       inset: {
         unset: 'unset',
@@ -109,7 +112,22 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwind-scrollbar-hide'), // 'scrollbar-hide'
+    function ({ addUtilities }: PluginAPI) {
+      addUtilities({
+        // 이미지 드래그 막기
+        '.no-drag': {
+          '-webkit-user-drag': 'none' /* Chrome, Safari, Opera */,
+          '-khtml-user-drag': 'none' /* Konqueror */,
+          '-moz-user-drag': 'none' /* Firefox */,
+          '-ms-user-drag': 'none' /* Internet Explorer/Edge */,
+          'user-drag': 'none',
+        },
+      });
+    },
+  ],
 } satisfies Config;
 
 export default config;

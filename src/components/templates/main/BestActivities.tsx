@@ -84,7 +84,7 @@ export default function BestActivities({ activitiesData }: Props) {
                 width={44}
                 height={44}
                 alt={arrow.name}
-                className={arrow.style}
+                className={`no-drag ${arrow.style}`}
               />
             </button>
           ))}
