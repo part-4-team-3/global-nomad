@@ -22,6 +22,7 @@ export default function ActivityForm({ stateData }: Props) {
     setEndTime,
     schedules,
     setSchedules,
+    addschedules,
     deletedSchedule,
     setScheduleIds,
     isCalendarOpen,
@@ -38,6 +39,7 @@ export default function ActivityForm({ stateData }: Props) {
     setSubImages,
     deletedImages,
     setBannerImage,
+    addImages,
     handleUploadImage,
     handleDeleteImage,
   } = useImageUploader();
@@ -48,21 +50,28 @@ export default function ActivityForm({ stateData }: Props) {
   setValue('schedules', schedules);
   setValue('bannerImageUrl', bannerImage);
   setValue('subImageUrls', uploadedImages);
-  setValue('subImageUrlsToAdd', uploadedImages);
+  setValue('subImageUrlsToAdd', addImages);
   setValue('subImageIdsToRemove', deletedImages);
   setValue('scheduleIdsToRemove', deletedSchedule);
+  setValue('schedulesToAdd', addschedules);
 
   /* 서버에서 받아온 데이터 state에 저장 */
   useEffect(() => {
     const ids = stateData?.subImages.map((image) => image.id);
     const imgs = stateData?.subImages.map((image) => image.imageUrl);
     const timeIds = stateData?.schedules.map((time) => time.id);
+
     if (ids?.length && timeIds?.length && imgs?.length) {
+      const imagesWithIds = imgs.map((url, index) => ({
+        url,
+        id: ids[index],
+      }));
+
       setSchedules(stateData?.schedules || []);
       setScheduleIds(timeIds);
       setBannerImage(stateData?.bannerImageUrl || '');
       setUploadedImages(imgs);
-      setSubImages(ids);
+      setSubImages(imagesWithIds);
     }
   }, [stateData]);
 

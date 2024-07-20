@@ -31,12 +31,12 @@ const useTimeSlot = () => {
     if (date && startTime && endTime) {
       const newTimeSlot = { date, startTime, endTime };
       setSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
+      setAddSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
       setDate('');
       setSelectedDay('');
       setStartTime('');
       setEndTime('');
       setIsCalendarOpen(false);
-      setAddSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
     } else {
       alert('모든 필드를 채워주세요.');
     }
@@ -44,9 +44,14 @@ const useTimeSlot = () => {
 
   /** 시간대 삭제 처리 */
   const handleDeleteSchedules = (index: number) => {
-    setScheduleIds((prev) => prev.filter((_, idx) => idx !== index));
+    const deletedScheduleId = schedules[index]?.id;
     setSchedules((prev) => prev.filter((_, idx) => idx !== index));
-    setDeletedschedule((prev) => [...(prev || []), scheduleIds[index]]);
+    setAddSchedules((prev) => prev.filter((_, idx) => idx !== index));
+    if (deletedScheduleId !== undefined) {
+      setDeletedschedule((prev) => [...prev, deletedScheduleId]);
+    }
+
+    setScheduleIds((prev) => prev.filter((id) => id !== deletedScheduleId));
   };
 
   return {

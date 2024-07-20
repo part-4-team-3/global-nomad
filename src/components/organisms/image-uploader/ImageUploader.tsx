@@ -6,7 +6,7 @@ interface Props {
   title: 'banner' | 'intro';
   images: string[] | string;
   handleUploadImage: (e: React.ChangeEvent<HTMLInputElement>, title: 'banner' | 'intro') => void;
-  handleDeleteImage: (title: 'banner' | 'intro', index: number) => void;
+  handleDeleteImage: (title: 'banner' | 'intro', url: string) => void;
   deleteImages?: string[];
 }
 
@@ -36,11 +36,11 @@ export default function ImageUploader({
             <GeneratedImage
               key={index}
               url={imageUrl}
-              onClose={() => handleDeleteImage(title, index)}
+              onClose={() => handleDeleteImage(title, imageUrl)}
             />
           ))
         : images && (
-            <GeneratedImage key={0} url={images} onClose={() => handleDeleteImage(title, 0)} />
+            <GeneratedImage key={0} url={images} onClose={() => handleDeleteImage(title, '')} />
           )}
     </div>
   );

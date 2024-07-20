@@ -11,6 +11,7 @@ import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams, useRouter } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { act, useEffect, useState } from 'react';
+import { stat } from 'fs';
 
 export default function ActivityEditForm() {
   const router = useRouter();
@@ -59,9 +60,8 @@ export default function ActivityEditForm() {
       subImageUrlsToAdd: formValues.subImageUrlsToAdd,
       subImageIdsToRemove: formValues.subImageIdsToRemove,
       scheduleIdsToRemove: formValues.scheduleIdsToRemove,
-      schedulesToAdd: formValues.schedules,
+      schedulesToAdd: formValues.schedulesToAdd,
     };
-    console.log(activityId);
     mutation.mutate({ activityId, body });
   };
 
