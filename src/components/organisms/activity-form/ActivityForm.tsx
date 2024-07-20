@@ -5,31 +5,52 @@ import ReservationTimePicker from '../../molecules/reservation-time-picker/Reser
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
+import { useEffect } from 'react';
+import { DetailActivityData } from '@/types/activity';
 
-export default function ActivityForm() {
+interface Props {
+  stateData?: DetailActivityData;
+}
+
+export default function ActivityForm({ stateData }: Props) {
   const { register, control, setValue } = useFormContext();
   const {
     selectedDay,
     startTime,
-    endTime,
-    timeSlots,
-    isCalendarOpen,
-    handleFormatDayClick,
     setStartTime,
+    endTime,
     setEndTime,
-    handleAddTimeSlot,
-    handleDeleteTimeSlot,
+    schedules,
+    setSchedules,
+    isCalendarOpen,
     handleCalendarOpen,
+    handleFormatDayClick,
+    handleAddSchedules,
+    handleDeleteSchedules,
   } = useTimeSlot();
-  const { uploadedImages, bannerImage, handleUploadImage, handleDeleteImage } = useImageUploader();
+  const {
+    uploadedImages,
+    setUploadedImages,
+    bannerImage,
+    setBannerImage,
+    handleUploadImage,
+    handleDeleteImage,
+  } = useImageUploader();
   const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
   const containerClass = 'flex flex-col gap-[12px] md:gap-[16px] lg:gap-[24px]';
   const inputTitleClass = 'text-var-black text-20pxr font-bold leading-[26px] md:text-24pxr';
 
-  setValue('schedules', timeSlots);
+  setValue('schedules', schedules);
   setValue('bannerImageUrl', bannerImage);
   setValue('subImageUrls', uploadedImages);
 
+  /* 서버에서 받아온 데이터 state에 저장 */
+  useEffect(() => {
+    const subImageUrls = stateData?.subImages.map((item) => item.imageUrl) || [];
+    setSchedules([] || stateData?.schedules);
+    setBannerImage(stateData?.bannerImageUrl || '');
+    setUploadedImages(subImageUrls);
+  }, [stateData]);
   return (
     <>
       <Input size="full" placeholder="제목" {...register('title')} />
@@ -67,13 +88,13 @@ export default function ActivityForm() {
           selectedDay={selectedDay}
           startTime={startTime}
           endTime={endTime}
-          timeSlots={timeSlots}
+          timeSlots={schedules}
           isCalendarOpen={isCalendarOpen}
           handleFormatDayClick={handleFormatDayClick}
           setStartTime={setStartTime}
           setEndTime={setEndTime}
-          handleAddTimeSlot={handleAddTimeSlot}
-          handleDeleteTimeSlot={handleDeleteTimeSlot}
+          handleAddTimeSlot={handleAddSchedules}
+          handleDeleteTimeSlot={handleDeleteSchedules}
           handleCalendarOpen={handleCalendarOpen}
         />
       </div>

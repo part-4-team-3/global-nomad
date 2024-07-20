@@ -108,7 +108,9 @@ export const useImageUploader = () => {
   return {
     profileImage,
     bannerImage,
+    setBannerImage,
     uploadedImages,
+    setUploadedImages,
     handleUploadImage,
     handleEditProfileImage,
     handleDeleteImage,

@@ -42,6 +42,37 @@ export interface TimeSlotData {
   startTime: string;
   endTime: string;
 }
+export interface DetailActivityData {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  subImages: [
+    {
+      imageUrl: string;
+      id: number;
+    },
+  ];
+  schedules: [
+    {
+      times: {
+        endTime: string;
+        startTime: string;
+        id: number;
+      };
+
+      date: string;
+    },
+  ];
+}
 export interface ActivitySettingData {
   title: string;
   category: string;
