@@ -23,7 +23,7 @@ export default function Pagination({ currentPage, totalPage, searchParams = '' }
           href={addSearchParam({ page: number }, searchParams)}
           key={number}
           scroll={false}
-          className={`py-17 text-base flex size-40pxr items-center justify-center rounded-2xl border-[1px] border-var-green-dark text-[18pxr] text-var-green-dark ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
+          className={`flex size-40pxr items-center justify-center rounded-[15px] border border-var-green-dark text-[18pxr] text-var-green-dark md:size-55pxr ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
         >
           {number}
         </Link>

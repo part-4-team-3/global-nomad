@@ -10,7 +10,7 @@ interface Props {
 
 export default function PageArrowButton({ href, currentPage, totalPage, direction }: Props) {
   const buttonStyle =
-    'flex justify-center items-center size-40pxr md:size-55pxr rounded-[15px] border border-var-green-dark';
+    'flex justify-center items-center size-40pxr md:size-55pxr rounded-[15px] border';
   const imageStyle = `size-21pxr no-drag ${direction === 'prev' ? 'scale-x-[-1]' : ''}`;
 
   if (
@@ -18,7 +18,7 @@ export default function PageArrowButton({ href, currentPage, totalPage, directio
     (direction === 'next' && currentPage === totalPage)
   )
     return (
-      <button disabled className={`${buttonStyle}`}>
+      <button disabled className={`border-var-gray6 ${buttonStyle}`}>
         <Image
           width={55}
           height={55}
@@ -30,7 +30,7 @@ export default function PageArrowButton({ href, currentPage, totalPage, directio
     );
 
   return (
-    <Link href={href} scroll={false} className={`${buttonStyle}`}>
+    <Link href={href} scroll={false} className={`border-var-green-dark ${buttonStyle}`}>
       <Image
         width={55}
         height={55}
