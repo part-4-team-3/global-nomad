@@ -1,11 +1,13 @@
 import Button from '@/components/atoms/button/Button';
+import { addSearchParam } from '@/lib/query-string';
 import { ActivityCategory } from '@/types/activity';
 
 interface Props {
   currentCategory: ActivityCategory;
+  searchParamsSort: {};
 }
 
-export default function FilteredNavList({ currentCategory }: Props) {
+export default function FilteredNavList({ currentCategory, searchParamsSort }: Props) {
   const categoryList = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
   return (
@@ -16,7 +18,7 @@ export default function FilteredNavList({ currentCategory }: Props) {
             text={category}
             color="white"
             className={`w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
-            link={`/?category=${category}`}
+            link={addSearchParam({ category }, searchParamsSort)}
           />
         </li>
       ))}

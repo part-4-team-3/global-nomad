@@ -1,43 +1,38 @@
-'use client';
-
-import PageNumberButton from '@/components/atoms/button/PageNumberButton';
-import NextButton from '@/components/atoms/pagination-button/NextButton';
-import PrevButton from '@/components/atoms/pagination-button/PrevButton';
-import RentderPageNumbers from '@/models/pagination/render-page-numbers';
-import { usePageControls } from '@/models/pagination/use-page-controls';
-
+import Link from 'next/link';
+import RenderPageNumbers from '@/models/pagination/render-page-numbers';
+import ReviewPrevButton from '@/components/atoms/button/ReviewPrevButton';
+import ReviewNextButton from '@/components/atoms/button/ReviewNextButton';
+import { addSearchParam } from '@/lib/query-string';
 interface Props {
-  totalCount: number;
-  size?: number;
+  totalPage: number;
   currentPage: number;
-  // onPrev: () => void;
-  // onNext: () => void;
-  // onClick: (index: number) => void;
+  searchParams?: {};
 }
 
-export default function Pagination({
-  totalCount = 50,
-  size = 5,
-  currentPage = 1,
-  // onPrev,
-  // onNext,
-  // onClick,
-}: Props) {
-  /* 추후 상위 컴포넌트에서 사용될 커스텀훅입니다. */
-  const { currentPageNumber, handlePageClick, handleNextButton, handlePrevButton } =
-    usePageControls({ initialPage: currentPage });
-  const totalPage = Math.ceil(totalCount / size);
-  const numbers = RentderPageNumbers({ currentPage: currentPageNumber, totalPage: totalPage });
+export default function Pagination({ currentPage, totalPage, searchParams = '' }: Props) {
+  const numbers = RenderPageNumbers({ currentPage: currentPage, totalPage: totalPage });
+  console.log(searchParams);
 
   return (
-    <div className="flex items-center gap-[10px]">
-      <PrevButton currentPage={currentPageNumber} onPrev={handlePrevButton} />
-      <PageNumberButton
-        currentPage={currentPageNumber}
-        numbers={numbers}
-        onClick={handlePageClick}
+    <div className="flex h-fit items-center gap-[10px]">
+      <ReviewPrevButton
+        currentPage={currentPage}
+        href={addSearchParam({ page: Number(currentPage) - 1 }, searchParams)}
       />
-      <NextButton currentPage={currentPageNumber} totalPage={totalPage} onNext={handleNextButton} />
+      {numbers.map((number) => (
+        <Link href={addSearchParam({ page: number }, searchParams)} key={number} scroll={false}>
+          <button
+            className={`py-17 text-base size-40pxr items-center justify-center rounded-2xl border-[1px] border-var-green-dark text-[18pxr] text-var-green-dark ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
+          >
+            {number}
+          </button>
+        </Link>
+      ))}
+      <ReviewNextButton
+        currentPage={currentPage}
+        totalPage={totalPage}
+        href={addSearchParam({ page: Number(currentPage) + 1 }, searchParams)}
+      />
     </div>
   );
 }
