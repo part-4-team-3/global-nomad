@@ -22,8 +22,6 @@ export default async function FilteredActivities({ searchParams }: Props) {
     page: searchParams.page ? searchParams.page : 1,
   });
 
-  console.log(searchParams.sort);
-
   return (
     <InnerLayout className="mb-[200px] mt-[40px] md:mb-[342px] md:mt-[60px]">
       <div className="flex justify-between gap-[10px]">
@@ -58,7 +56,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
         <div className="mt-[72px] flex justify-center">
           <Pagination
             totalPage={Math.ceil(totalCount / 8)}
-            currentPage={searchParams.page}
+            currentPage={Number(searchParams.page)}
             searchParams={searchParams}
           />
         </div>

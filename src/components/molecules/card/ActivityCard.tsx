@@ -13,7 +13,7 @@ interface Props {
 
 export default function ActivityCard({ activity, isBest }: Props) {
   const [isImageError, setIsImageError] = useState(false);
-  const defaultImage = isBest ? '/card_default_bg_top.svg' : '/card_default_bg.svg';
+  const defaultImage = isBest ? '/card-default-bg-top.svg' : '/card-default-bg.svg';
   return (
     <Link
       href={`/activity/${activity.id}`}
