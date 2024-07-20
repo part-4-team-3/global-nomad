@@ -29,7 +29,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
         />
-        <DropdownMenu text="가격" className="w-90pxr shrink-0 md:!w-127pxr">
+        <DropdownMenu text="가격" className="!w-90pxr shrink-0 md:!w-127pxr">
           <Link
             className="w-full"
             href={addSearchParam({ sort: 'price_asc' }, searchParams)}
@@ -56,7 +56,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
         <div className="mt-[72px] flex justify-center">
           <Pagination
             totalPage={Math.ceil(totalCount / 8)}
-            currentPage={Number(searchParams.page)}
+            currentPage={searchParams.page ? Number(searchParams.page) : 1}
             searchParams={searchParams}
           />
         </div>

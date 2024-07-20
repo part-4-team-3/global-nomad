@@ -44,7 +44,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
           color={isBest ? 'white' : 'gray'}
         />
         <h3
-          className={`break-keep text-18pxr leading-[120%] ${isBest ? 'w-full text-18pxr font-[700] text-white md:w-[80%] md:text-30pxr' : 'mt-[10px] font-[600] md:text-24pxr'} `}
+          className={`w-full truncate break-keep text-18pxr leading-[120%] ${isBest ? 'w-full text-18pxr font-[700] text-white md:w-[80%] md:text-30pxr' : 'mt-[10px] font-[600] md:text-24pxr'} `}
         >
           {activity.title}
         </h3>
