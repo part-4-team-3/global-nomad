@@ -32,14 +32,14 @@ export default async function ActivityHeader({
   return (
     <div className="flex w-full justify-between p-[16px] text-[#112211] md:p-[24px]">
       <div className="flex flex-col">
-        <p className="text-14pxr">{category}</p>
-        <p className="text-24pxr font-[700] md:text-32pxr">{title}</p>
+        <h3 className="text-14pxr">{category}</h3>
+        <h2 className="text-24pxr font-[700] md:text-32pxr">{title}</h2>
         <div className="flex gap-12pxr">
           <div className="flex items-center gap-6pxr">
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />
-            <p className="text-14pxr font-[400]">
-              {rating} ({reviewCount})
-            </p>
+            <div className="text-14pxr font-[400]">
+              <data value={rating}>{rating} </data>(<data value={reviewCount}>{reviewCount}</data>)
+            </div>
           </div>
           <AddressLabel address={address} />
         </div>
