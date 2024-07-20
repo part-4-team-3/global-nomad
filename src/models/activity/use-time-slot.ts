@@ -9,6 +9,9 @@ const useTimeSlot = () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [schedules, setSchedules] = useState<TimeSlotData[] | []>([]);
+  const [addschedules, setAddSchedules] = useState<TimeSlotData[] | []>([]);
+  const [scheduleIds, setScheduleIds] = useState<number[]>([]);
+  const [deletedSchedule, setDeletedschedule] = useState<number[]>([]);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   /** Calender 열기 */
@@ -33,14 +36,17 @@ const useTimeSlot = () => {
       setStartTime('');
       setEndTime('');
       setIsCalendarOpen(false);
+      setAddSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
     } else {
       alert('모든 필드를 채워주세요.');
     }
   };
 
-  /** 이미지 삭제 처리 */
+  /** 시간대 삭제 처리 */
   const handleDeleteSchedules = (index: number) => {
+    setScheduleIds((prev) => prev.filter((_, idx) => idx !== index));
     setSchedules((prev) => prev.filter((_, idx) => idx !== index));
+    setDeletedschedule((prev) => [...(prev || []), scheduleIds[index]]);
   };
 
   return {
@@ -53,6 +59,10 @@ const useTimeSlot = () => {
     setEndTime,
     schedules,
     setSchedules,
+    addschedules,
+    deletedSchedule,
+    scheduleIds,
+    setScheduleIds,
     isCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,

@@ -61,17 +61,7 @@ export interface DetailActivityData {
       id: number;
     },
   ];
-  schedules: [
-    {
-      times: {
-        endTime: string;
-        startTime: string;
-        id: number;
-      };
-
-      date: string;
-    },
-  ];
+  schedules: [{ id: number; endTime: string; startTime: string; date: string }];
 }
 export interface ActivitySettingData {
   title: string;
@@ -82,6 +72,18 @@ export interface ActivitySettingData {
   schedules: TimeSlotData[];
   subImageUrls: string[];
   bannerImageUrl: string;
+}
+
+export interface ActivityEditData {
+  title: string;
+  category: string;
+  description: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  subImageIdsToRemove: number[];
+  subImageUrlsToAdd: string[];
+  scheduleIdsToRemove: number[];
 }
 
 export interface MyActivitiesByDate {

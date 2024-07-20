@@ -7,6 +7,7 @@ interface Props {
   images: string[] | string;
   handleUploadImage: (e: React.ChangeEvent<HTMLInputElement>, title: 'banner' | 'intro') => void;
   handleDeleteImage: (title: 'banner' | 'intro', index: number) => void;
+  deleteImages?: string[];
 }
 
 export default function ImageUploader({

@@ -22,6 +22,8 @@ export default function ActivityForm({ stateData }: Props) {
     setEndTime,
     schedules,
     setSchedules,
+    deletedSchedule,
+    setScheduleIds,
     isCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,
@@ -32,6 +34,9 @@ export default function ActivityForm({ stateData }: Props) {
     uploadedImages,
     setUploadedImages,
     bannerImage,
+    subImages,
+    setSubImages,
+    deletedImages,
     setBannerImage,
     handleUploadImage,
     handleDeleteImage,
@@ -43,14 +48,24 @@ export default function ActivityForm({ stateData }: Props) {
   setValue('schedules', schedules);
   setValue('bannerImageUrl', bannerImage);
   setValue('subImageUrls', uploadedImages);
+  setValue('subImageUrlsToAdd', uploadedImages);
+  setValue('subImageIdsToRemove', deletedImages);
+  setValue('scheduleIdsToRemove', deletedSchedule);
 
   /* 서버에서 받아온 데이터 state에 저장 */
   useEffect(() => {
-    const subImageUrls = stateData?.subImages.map((item) => item.imageUrl) || [];
-    setSchedules([] || stateData?.schedules);
-    setBannerImage(stateData?.bannerImageUrl || '');
-    setUploadedImages(subImageUrls);
+    const ids = stateData?.subImages.map((image) => image.id);
+    const imgs = stateData?.subImages.map((image) => image.imageUrl);
+    const timeIds = stateData?.schedules.map((time) => time.id);
+    if (ids?.length && timeIds?.length && imgs?.length) {
+      setSchedules(stateData?.schedules || []);
+      setScheduleIds(timeIds);
+      setBannerImage(stateData?.bannerImageUrl || '');
+      setUploadedImages(imgs);
+      setSubImages(ids);
+    }
   }, [stateData]);
+
   return (
     <>
       <Input size="full" placeholder="제목" {...register('title')} />

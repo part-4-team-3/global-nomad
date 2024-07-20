@@ -23,6 +23,8 @@ export const useImageUploader = () => {
   const profileMutation = useMutation(submitProfileImageMutationOptions);
   const updateProfileMutation = useMutation(updateProfileImageMutationOptions);
   const [bannerImage, setBannerImage] = useState<string>('');
+  const [subImages, setSubImages] = useState<number[]>([]);
+  const [deletedImages, setDeletedImages] = useState<number[]>([]);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>(''); //초기값 수정 예정
   const { setIsClose } = useModal();
@@ -87,7 +89,9 @@ export const useImageUploader = () => {
     if (title === 'banner') {
       setBannerImage('');
     } else {
+      setSubImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
       setUploadedImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
+      setDeletedImages((prevDeleted) => [...(prevDeleted || []), subImages[index]]);
     }
   };
 
@@ -110,6 +114,9 @@ export const useImageUploader = () => {
     bannerImage,
     setBannerImage,
     uploadedImages,
+    subImages,
+    setSubImages,
+    deletedImages,
     setUploadedImages,
     handleUploadImage,
     handleEditProfileImage,

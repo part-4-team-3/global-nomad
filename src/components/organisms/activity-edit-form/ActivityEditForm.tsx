@@ -3,32 +3,21 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { submitMutationOptions } from '@/mutations/activity/submit-activity';
-import { DetailActivityData, ActivitySettingData } from '@/types/activity';
+import { patchMutationOptions, submitMutationOptions } from '@/mutations/activity/submit-activity';
+import { ActivityEditData } from '@/types/activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams, useRouter } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
-import { useEffect, useState } from 'react';
+import { act, useEffect, useState } from 'react';
 
 export default function ActivityEditForm() {
   const router = useRouter();
   const params = useParams();
   const activityId = Number(params.id);
   const [stateData, setStateData] = useState<any>();
-  const methods = useForm<ActivitySettingData>({
-    defaultValues: {
-      title: '',
-      category: '',
-      description: '',
-      address: '',
-      price: 0,
-      schedules: [],
-      bannerImageUrl: '',
-      subImageUrls: [],
-    },
-  });
+  const methods = useForm();
   const { setIsOpen } = useModal();
 
   const openModal = (modalKey: string) => {
@@ -50,22 +39,30 @@ export default function ActivityEditForm() {
     }
   }, []);
 
-  console.log(stateData);
   const mutation = useMutation({
-    ...submitMutationOptions,
+    ...patchMutationOptions,
     onSuccess: () => {
       openModal('alertMessage');
       router.push('/myactivity');
     },
   });
 
-  const submit = (data: ActivitySettingData) => {
-    // mutation.mutate({
-    //   ...data,
-    //   schedules: methods.getValues('schedules'),
-    //   bannerImageUrl: methods.getValues('bannerImageUrl'),
-    //   subImageUrls: methods.getValues('subImageUrls'),
-    // });
+  const submit = () => {
+    const formValues = methods.getValues();
+    const body = {
+      title: formValues.title,
+      category: formValues.category,
+      description: formValues.description,
+      price: formValues.price,
+      address: formValues.address,
+      bannerImageUrl: formValues.bannerImageUrl,
+      subImageUrlsToAdd: formValues.subImageUrlsToAdd,
+      subImageIdsToRemove: formValues.subImageIdsToRemove,
+      scheduleIdsToRemove: formValues.scheduleIdsToRemove,
+      schedulesToAdd: formValues.schedules,
+    };
+    console.log(activityId);
+    mutation.mutate({ activityId, body });
   };
 
   return (
