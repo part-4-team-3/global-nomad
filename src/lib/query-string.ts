@@ -5,3 +5,8 @@ export default function makeQueryString(params: Record<string, any>): string {
     .join('&');
   return queryString ? `?${queryString}` : '';
 }
+
+export const addSearchParam = (param: {}, searchParams?: {}) => {
+  const newParams = { ...searchParams, ...param };
+  return makeQueryString(newParams);
+};
