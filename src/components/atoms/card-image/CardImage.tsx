@@ -7,8 +7,8 @@ interface Props {
 }
 
 const SIZE = {
-  card: 'size-128pxr md:size-156pxr lg:size-204pxr',
-  modal: 'size-100pxr md:size-126pxr',
+  card: 'w-128pxr md:w-156pxr lg:w-204pxr',
+  modal: 'w-100pxr md:w-126pxr',
 };
 
 export default function CardImage({ variant, src }: Props) {

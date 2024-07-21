@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Activity } from './../../../types/activity';
+import { Activity, MyActivityList } from './../../../types/activity';
 import MyActivityCard from '@/components/molecules/activity-card/MyActivityCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getInstance } from '@/lib/axios';
@@ -13,13 +13,13 @@ export default function Main() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } =
     useInfiniteQuery({
       queryKey: ['my-activities'],
-      queryFn: ({ pageParam }) => {
+      queryFn: ({ pageParam }: { pageParam: number | null }) => {
         const instance = getInstance();
         const url = pageParam
           ? `my-activities?size=${PAGE_SIZE}&cursorId=${pageParam}`
           : `my-activities?size=${PAGE_SIZE}`;
 
-        return instance.get(url);
+        return instance.get<MyActivityList>(url);
       },
 
       initialPageParam: null,
@@ -35,7 +35,6 @@ export default function Main() {
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
-      console.log('test123123');
       fetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
@@ -45,7 +44,7 @@ export default function Main() {
   if (isError) return <div>error</div>;
 
   return (
-    <div className="h-[calc(100vh-406px)] overflow-y-scroll">
+    <div className="h-[calc(100vh-406px)] overflow-y-scroll scrollbar-hide">
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.data.activities.map((activity: Activity) => (

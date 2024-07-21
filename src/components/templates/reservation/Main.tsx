@@ -62,56 +62,75 @@ export default function Main({ status }: Props) {
 
   const queryClient = useQueryClient();
 
-  const updateCache = (reservationId: number, newStatus: ReservationStatus) => {
-    if (status === null) {
-      queryClient.setQueryData<InfiniteData<ReservationsPage>>(
-        ['reservations', null],
-        (oldData) => {
-          if (!oldData) return oldData;
-          return {
-            ...oldData,
-            pages: oldData.pages.map((page) => ({
-              ...page,
-              reservations: page.reservations.map((reservation) =>
-                reservation.id === reservationId
-                  ? { ...reservation, status: newStatus }
-                  : reservation,
-              ),
-            })),
-          };
-        },
-      );
-    }
-
-    if (status === 'pending') {
-      queryClient.setQueryData<InfiniteData<ReservationsPage>>(
-        ['reservations', 'pending'],
-        (oldData) => {
-          if (!oldData) return oldData;
-          return {
-            ...oldData,
-            pages: oldData.pages.map((page) => ({
-              ...page,
-              reservations: page.reservations.filter(
-                (reservation) => reservation.id !== reservationId,
-              ),
-            })),
-          };
-        },
-      );
-    }
-
-    // 나머지 상태는 쿼리 무효화
-    [null, 'pending', 'confirmed', 'declined', 'canceled', 'completed'].forEach((item) => {
-      if (status === item) return;
-      queryClient.invalidateQueries({ queryKey: ['reservations', item] });
+  const updateCache = (reservationId: number) => {
+    let target: Reservation;
+    [null, 'pending', 'canceled'].forEach((key) => {
+      if (key === null) {
+        queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+          ['reservations', null],
+          (oldData) => {
+            if (!oldData) return oldData;
+            return {
+              ...oldData,
+              pages: oldData.pages.map((page) => ({
+                ...page,
+                reservations: page.reservations.map((reservation) => {
+                  if (reservation.id === reservationId) {
+                    target = reservation;
+                    return { ...reservation, status: 'canceled' };
+                  } else return reservation;
+                }),
+              })),
+            };
+          },
+        );
+      } else if (key === 'pending') {
+        queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+          ['reservations', 'pending'],
+          (oldData) => {
+            if (!oldData) return oldData;
+            return {
+              ...oldData,
+              pages: oldData.pages.map((page) => ({
+                ...page,
+                reservations: page.reservations.filter((reservation) => {
+                  if (reservation.id === reservationId) target = reservation;
+                  return reservation.id !== reservationId;
+                }),
+              })),
+            };
+          },
+        );
+      } else if (key === 'canceled') {
+        if (target) {
+          queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+            ['reservations', 'canceled'],
+            (oldData) => {
+              if (!oldData) return oldData;
+              return {
+                ...oldData,
+                pages: [
+                  {
+                    ...oldData.pages[0],
+                    reservations: [
+                      { ...target, status: 'canceled' },
+                      ...oldData.pages[0].reservations,
+                    ],
+                  },
+                  ...oldData.pages.slice(1),
+                ],
+              };
+            },
+          );
+        }
+      }
     });
   };
 
   const mutation = useMutation({
     ...cancelReservationMutationOptions,
     onSuccess: (data) => {
-      updateCache(data.id, 'canceled');
+      updateCache(data.id);
       toast('예약 취소되었습니다.');
     },
   });
@@ -121,11 +140,11 @@ export default function Main({ status }: Props) {
   if (isError) return <div>error</div>;
 
   return (
-    <div className="h-[calc(100vh-406px)] overflow-y-scroll">
+    <div className="h-[calc(100vh-406px)] overflow-y-scroll scrollbar-hide">
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.reservations.map((reservation: Reservation) => (
-            <div key={reservation.id} className="mb-[24px]">
+            <div key={reservation.id} className="mb-[8px] md:mb-[16px] lg:mb-[24px]">
               <ReservationCard
                 {...reservation}
                 onCancel={() => {
