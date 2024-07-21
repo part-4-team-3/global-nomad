@@ -10,20 +10,20 @@ import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-  searchParams: { category: ActivityCategory; sort: ActivitySort; page: number };
+  searchParams: { category: ActivityCategory | '모든 체험'; sort: ActivitySort; page: number };
 }
 
 export default async function FilteredActivities({ searchParams }: Props) {
   const { activities, totalCount } = await getActivities({
     method: 'offset',
     size: 8,
-    category: searchParams.category,
+    category: searchParams.category === '모든 체험' ? undefined : searchParams.category,
     sort: searchParams.sort ? searchParams.sort : 'latest',
     page: searchParams.page ? searchParams.page : 1,
   });
 
   return (
-    <InnerLayout className="mb-[200px] mt-[40px] md:mb-[342px] md:mt-[60px]">
+    <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
       <div className="flex justify-between gap-[10px]">
         <FilteredNavList
           currentCategory={searchParams.category}

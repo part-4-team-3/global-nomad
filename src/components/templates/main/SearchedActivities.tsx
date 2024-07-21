@@ -16,7 +16,7 @@ export default async function SearchedActivities({ searchParams }: Props) {
   });
 
   return (
-    <InnerLayout className="mb-[200px] mt-[24px] md:mb-[342px] lg:mt-[40px]">
+    <InnerLayout className="mb-[150px] mt-[24px] md:mb-[250px] lg:mt-[40px]">
       <div className="flex flex-col gap-[12px]">
         <h2 className="text-24pxr font-[400] md:text-32pxr">
           <b className="font-[700]">{searchParams.keyword}</b>(으)로 검색한 결과입니다.
