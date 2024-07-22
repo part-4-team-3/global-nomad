@@ -6,6 +6,7 @@ import { Activity, MyActivityList } from './../../../types/activity';
 import MyActivityCard from '@/components/molecules/activity-card/MyActivityCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getInstance } from '@/lib/axios';
+import LoadingSpinner from '@/components/atoms/loading-spinner/LoadingSpinner';
 
 const PAGE_SIZE = 10;
 
@@ -39,7 +40,12 @@ export default function Main() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isPending) return <div>Loading...</div>; //TODO: 로딩 이미지 넣어야함
+  if (isPending)
+    return (
+      <div className="flex w-full justify-center">
+        <LoadingSpinner />
+      </div>
+    );
 
   if (isError) return <div>error</div>;
 
@@ -48,7 +54,7 @@ export default function Main() {
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.data.activities.map((activity: Activity) => (
-            <div key={activity.id} className="mb-[24px]">
+            <div key={activity.id} className="mb-[16px] lg:mb-[24px]">
               <MyActivityCard {...activity} />
             </div>
           ))}
