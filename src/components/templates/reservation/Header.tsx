@@ -9,7 +9,7 @@ export default function Header({ setStatus }: Props) {
   return (
     <div className="flex h-53pxr w-full items-center justify-between">
       <h1 className="h-38pxr text-32pxr font-bold">예약 내역</h1>
-      <div className="hidden h-53pxr w-160pxr text-18pxr lg:block">
+      <div className="hidden h-53pxr w-160pxr text-18pxr md2:block">
         <DropdownMenu text="상태" className="rounded-[15px] bg-white">
           <button className="w-full" onClick={() => setStatus(null)}>
             전체

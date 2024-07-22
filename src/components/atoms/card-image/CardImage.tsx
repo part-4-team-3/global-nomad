@@ -7,15 +7,17 @@ interface Props {
 }
 
 const SIZE = {
-  card: 'w-128pxr md:w-156pxr lg:w-204pxr',
-  modal: 'w-100pxr md:w-126pxr',
+  card: 'w-full max-w-128pxr md:max-w-156pxr lg:max-w-204pxr',
+  modal: 'w-full max-w-100pxr md:max-w-126pxr',
 };
 
 export default function CardImage({ variant, src }: Props) {
   const [isError, setIsError] = useState(false);
 
   return (
-    <div className={`relative ${SIZE[variant]} overflow-hidden rounded-l-[24px]`}>
+    <div
+      className={`relative ${SIZE[variant]} overflow-hidden ${variant === 'card' ? 'rounded-l-[24px]' : 'rounded-[24px]'}`}
+    >
       <Image
         src={isError ? '/no-image.jpg' : src}
         layout="fill"
