@@ -13,6 +13,7 @@ export const myActivitiesKeys = {
     cursorId: number | null,
     size: number,
     scheduleId: number | null,
-    staus: string,
-  ) => ['my-activities', activityId, cursorId, size, scheduleId, staus, 'reservations'],
+    status: string,
+  ) => ['my-activities', activityId, cursorId, size, scheduleId, status, 'reservations'],
+  getMyActivitiesAll: () => ['my-activities'],
 };
