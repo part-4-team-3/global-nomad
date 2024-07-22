@@ -1,8 +1,8 @@
-import ActivityRegistrationForm from '@/components/organisms/activity-registration-form/ActivityRegistrationForm';
+import ActivityEditForm from '@/components/organisms/activity-edit-form/ActivityEditForm';
 
 export default function Page() {
   {
     /* 임시입니다.*/
   }
-  return <ActivityRegistrationForm />;
+  return <ActivityEditForm />;
 }
