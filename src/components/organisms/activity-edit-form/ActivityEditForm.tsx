@@ -7,12 +7,11 @@ import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import AlertModal from '@/components/molecules/modal/AlertModal';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { useEffect, useState } from 'react';
 
 export default function ActivityEditForm() {
-  const router = useRouter();
   const params = useParams();
   const activityId = Number(params.id);
   const [stateData, setStateData] = useState<any>();
@@ -44,7 +43,6 @@ export default function ActivityEditForm() {
     ...patchMutationOptions,
     onSuccess: () => {
       openModal('alertMessage');
-      router.push('/myactivity');
     },
   });
 
@@ -66,16 +64,19 @@ export default function ActivityEditForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(submit)}>
-        <div className="flex flex-col gap-24pxr">
-          <div className="flex items-center justify-between">
-            <h1 className="text-32pxr font-bold">내 체험 수정</h1>
-            <Button text="수정하기" color="black" size="s" type="submit" />
+    <>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(submit)}>
+          <div className="flex flex-col gap-24pxr">
+            <div className="flex items-center justify-between">
+              <h1 className="text-32pxr font-bold">내 체험 수정</h1>
+              <Button text="수정하기" color="black" size="s" type="submit" />
+            </div>
+            <ActivityForm stateData={stateData} />
           </div>
-          <ActivityForm stateData={stateData} />
-        </div>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+      <AlertModal text="체험수정이 완료되었습니다." />
+    </>
   );
 }

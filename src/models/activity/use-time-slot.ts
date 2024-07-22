@@ -19,11 +19,43 @@ const useTimeSlot = () => {
     setIsCalendarOpen((prev) => !prev);
   };
 
-  /** 예약날짜 추가 */
+  /** 날짜 선택 */
   const handleFormatDayClick = (day: Date) => {
-    setSelectedDay(format(day, 'yy/MM/dd'));
-    setDate(format(day, 'yyyy-MM-dd'));
-    setIsCalendarOpen(false);
+    const selectedDate = format(day, 'yyyy-MM-dd');
+    const today = new Date().toISOString().split('T')[0];
+
+    if (selectedDate >= today) {
+      setSelectedDay(format(day, 'yy/MM/dd'));
+      setDate(selectedDate);
+      setIsCalendarOpen(false);
+    } else {
+      alert('선택된 날짜는 오늘 이후여야 합니다.');
+    }
+  };
+
+  /** 시간 비교를 위한 유틸리티 함수 */
+  const isValidTimeRange = (start: string, end: string): boolean => {
+    return start < end;
+  };
+
+  /** startTime을 업데이트할 때 유효성 검사를 수행 */
+  const handleStartTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newStartTime = event.target.value;
+    if (isValidTimeRange(newStartTime, endTime) || endTime === '') {
+      setStartTime(newStartTime);
+    } else {
+      alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
+    }
+  };
+
+  /**  endTime을 업데이트할 때 유효성 검사를 수행 */
+  const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newEndTime = event.target.value;
+    if (isValidTimeRange(startTime, newEndTime) || startTime === '') {
+      setEndTime(newEndTime);
+    } else {
+      alert('종료 시간은 시작 시간보다 이후이어야 합니다.');
+    }
   };
 
   /** 예약 시간대 추가 */
@@ -73,6 +105,8 @@ const useTimeSlot = () => {
     handleFormatDayClick,
     handleAddSchedules,
     handleDeleteSchedules,
+    handleStartTimeChange,
+    handleEndTimeChange,
   };
 };
 

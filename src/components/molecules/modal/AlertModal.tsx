@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import Button from '@/components/atoms/button/Button';
+import { useRouter } from 'next/navigation';
 import { useModal } from '@/store/useModal';
 
 interface Props {
@@ -8,9 +9,11 @@ interface Props {
 
 export default function AlertModal({ text }: Props) {
   const { setIsClose } = useModal();
+  const router = useRouter();
 
   const closeModal = () => {
     setIsClose();
+    router.push('/myactivity');
   };
 
   return (

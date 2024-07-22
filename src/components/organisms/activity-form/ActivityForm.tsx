@@ -36,6 +36,8 @@ export default function ActivityForm({ stateData }: Props) {
     handleFormatDayClick,
     handleAddSchedules,
     handleDeleteSchedules,
+    handleStartTimeChange,
+    handleEndTimeChange,
   } = useTimeSlot();
   const {
     uploadedImages,
@@ -152,6 +154,8 @@ export default function ActivityForm({ stateData }: Props) {
           handleAddTimeSlot={handleAddSchedules}
           handleDeleteTimeSlot={handleDeleteSchedules}
           handleCalendarOpen={handleCalendarOpen}
+          handleStartTimeChange={handleStartTimeChange}
+          handleEndTimeChange={handleEndTimeChange}
         />
       </div>
       <div className={containerClass}>

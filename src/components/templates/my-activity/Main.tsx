@@ -7,7 +7,6 @@ import MyActivityCard from '@/components/molecules/activity-card/MyActivityCard'
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getInstance } from '@/lib/axios';
 import LoadingSpinner from '@/components/atoms/loading-spinner/LoadingSpinner';
-import AlertModal from '@/components/molecules/modal/AlertModal';
 
 const PAGE_SIZE = 10;
 
@@ -67,7 +66,6 @@ export default function Main() {
       {isFetchingNextPage && (
         <div>Loading more...</div> // 무한 스크롤 로딩 표시
       )}
-      <AlertModal text="체험수정이 완료되었습니다." />
     </div>
   );
 }

@@ -7,11 +7,9 @@ import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
-import { useRouter } from 'next/navigation';
 import AlertModal from '@/components/molecules/modal/AlertModal';
 
 export default function ActivityRegistrationForm() {
-  const router = useRouter();
   const methods = useForm<ActivitySettingData>({
     defaultValues: {
       title: '',
@@ -34,7 +32,6 @@ export default function ActivityRegistrationForm() {
     ...submitMutationOptions,
     onSuccess: () => {
       openModal('alertMessage');
-      router.push('/myactivity');
     },
   });
 
