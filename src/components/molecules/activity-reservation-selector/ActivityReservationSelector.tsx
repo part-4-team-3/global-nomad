@@ -57,7 +57,7 @@ export function ActivityReservationSelector({
 
         <p className="text-18pxr font-[700]">예약 가능한 시간</p>
         {formattedDate != '' && scheduleHash[formattedDate] ? (
-          <div className="flex gap-12pxr">
+          <div className="flex w-full flex-wrap gap-12pxr">
             {scheduleHash[formattedDate].map((schedule) => (
               <ScheduleButton
                 key={schedule.id}
