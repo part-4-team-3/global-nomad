@@ -3,17 +3,26 @@
 import Button from '@/components/atoms/button/Button';
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import SearchInput from '@/components/atoms/input/SearchInput';
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function SearchActivity() {
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const [text, setText] = useState('');
+  const router = useRouter();
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/?keyword=${text}`);
+  };
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+  };
 
   return (
     <InnerLayout>
       <div className="relative -mt-[60px] flex flex-col gap-[15px] rounded-[16px] bg-white px-[24px] py-[16px] shadow-[0_4px_16px_0_rgba(17,34,17,0.05)] md:gap-[30px] md:py-[32px]">
         <h3 className="text-16pxr font-[700] md:text-20pxr">무엇을 체험하고 싶으신가요?</h3>
         <form onSubmit={handleSubmit} className="flex w-full gap-[12px]">
-          <SearchInput onChange={handleChange} />
+          <SearchInput value={text} onChange={handleChange} />
           <Button
             text="검색하기"
             color="black"

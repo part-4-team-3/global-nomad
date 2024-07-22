@@ -10,40 +10,55 @@ import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-  searchParams: { category: ActivityCategory; sort: ActivitySort; page: number };
+  searchParams: { category: ActivityCategory | '모든 체험'; sort: ActivitySort; page: number };
 }
 
 export default async function FilteredActivities({ searchParams }: Props) {
   const { activities, totalCount } = await getActivities({
     method: 'offset',
     size: 8,
-    category: searchParams.category,
+    category: searchParams.category === '모든 체험' ? undefined : searchParams.category,
     sort: searchParams.sort ? searchParams.sort : 'latest',
     page: searchParams.page ? searchParams.page : 1,
   });
 
+  const sortList = [
+    {
+      title: '가격이 낮은 순',
+      query: 'price_asc',
+    },
+    {
+      title: '가격이 높은 순',
+      query: 'price_desc',
+    },
+    {
+      title: '댓글 많은 순',
+      query: 'most_reviewed',
+    },
+    {
+      title: '최신 순',
+      query: 'latest',
+    },
+  ];
+
   return (
-    <InnerLayout className="mb-[200px] mt-[40px] md:mb-[342px] md:mt-[60px]">
+    <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
       <div className="flex justify-between gap-[10px]">
         <FilteredNavList
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
         />
-        <DropdownMenu text="가격" className="!w-90pxr shrink-0 md:!w-127pxr">
-          <Link
-            className="w-full"
-            href={addSearchParam({ sort: 'price_asc' }, searchParams)}
-            scroll={false}
-          >
-            가격이 낮은 순
-          </Link>
-          <Link
-            className="w-full"
-            href={addSearchParam({ sort: 'price_desc' }, searchParams)}
-            scroll={false}
-          >
-            가격이 높은 순
-          </Link>
+        <DropdownMenu text="정렬" className="!w-90pxr shrink-0 md:!w-127pxr">
+          {sortList.map((sort) => (
+            <Link
+              key={sort.query}
+              className="w-full"
+              href={addSearchParam({ sort: sort.query }, searchParams)}
+              scroll={false}
+            >
+              {sort.title}
+            </Link>
+          ))}
         </DropdownMenu>
       </div>
       <h2 className="mt-[22px] text-18pxr font-[700] md:mt-[40px] md:text-36pxr">
