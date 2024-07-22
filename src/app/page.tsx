@@ -7,6 +7,7 @@ import FilteredActivities from '@/components/templates/main/FilteredActivities';
 import SearchedActivities from '@/components/templates/main/SearchedActivities';
 import { getActivities } from '@/queries/activities/get-activities';
 import { ActivityCategory, ActivitySort } from '@/types/activity';
+import { getCookie } from './(action)/(cookie)/cookie';
 
 interface Props {
   searchParams: { category: ActivityCategory; sort: ActivitySort; page: number; keyword: string };
@@ -18,6 +19,9 @@ export default async function Home({ searchParams }: Props) {
     sort: 'most_reviewed',
     size: 9,
   });
+
+  const userId = await getCookie('userId');
+  console.log(userId);
 
   return (
     <>
