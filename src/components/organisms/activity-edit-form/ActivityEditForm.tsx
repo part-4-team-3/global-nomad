@@ -2,7 +2,7 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
@@ -24,9 +24,6 @@ export default function ActivityEditForm() {
   };
 
   useEffect(() => {
-    {
-      /* useQuery 추가 예정 */
-    }
     const fetchActivityDetails = async () => {
       try {
         const data = await getActivityDetails(activityId);
@@ -36,10 +33,11 @@ export default function ActivityEditForm() {
         alert('요청에 실패했습니다.');
       }
     };
+
     if (activityId) {
       fetchActivityDetails();
     }
-  }, []);
+  }, [activityId]);
 
   console.log(stateData);
   const mutation = useMutation({
@@ -78,7 +76,6 @@ export default function ActivityEditForm() {
           <ActivityForm stateData={stateData} />
         </div>
       </form>
-      <AlertModal text="체험수정이 완료되었습니다." />
     </FormProvider>
   );
 }
