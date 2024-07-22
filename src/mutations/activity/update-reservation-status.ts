@@ -12,6 +12,7 @@ export const useUpdateReservationStatus = (activityId: number, reservationId: nu
       return apiInstance.patch(`my-activities/status/${activityId}/${reservationId}`, { status });
     },
     onSuccess: () => {
+      toast('요청이 성공적으로 처리되었습니다.');
       router.push('/calendar');
     },
     onError: (err) => {
