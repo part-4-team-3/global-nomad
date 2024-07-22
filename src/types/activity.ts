@@ -38,9 +38,31 @@ export interface MyActivityList {
 }
 
 export interface TimeSlotData {
+  id?: number;
   date: string;
   startTime: string;
   endTime: string;
+}
+export interface DetailActivityData {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  subImages: [
+    {
+      imageUrl: string;
+      id: number;
+    },
+  ];
+  schedules: [{ id: number; endTime: string; startTime: string; date: string }];
 }
 export interface ActivitySettingData {
   title: string;
@@ -51,6 +73,18 @@ export interface ActivitySettingData {
   schedules: TimeSlotData[];
   subImageUrls: string[];
   bannerImageUrl: string;
+}
+
+export interface ActivityEditData {
+  title: string;
+  category: string;
+  description: string;
+  price: number;
+  address: string;
+  bannerImageUrl: string;
+  subImageIdsToRemove: number[];
+  subImageUrlsToAdd: string[];
+  scheduleIdsToRemove: number[];
 }
 
 export interface MyActivitiesByDate {

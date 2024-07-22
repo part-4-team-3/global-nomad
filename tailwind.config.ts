@@ -30,6 +30,12 @@ const config = {
         return acc;
       }, {}),
     },
+    lineHeight: {
+      ...range(1, 51).reduce<Record<string, string>>((acc, px) => {
+        acc[`${px}pxr`] = pxToRem(px);
+        return acc;
+      }, {}),
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -108,7 +114,10 @@ const config = {
         unset: 'unset',
       },
       boxShadow: {
-        custom: '0 10px 20px rgba(0, 0, 0, 0.15)',
+        custom: '0 0 20px rgba(0, 0, 0, 0.05);',
+      },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
       },
     },
   },

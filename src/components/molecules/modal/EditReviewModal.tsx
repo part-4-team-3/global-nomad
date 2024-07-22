@@ -50,22 +50,25 @@ export default function EditReviewModal({ id, src, title, date, price }: Props) 
   };
 
   return (
-    <Modal modalKey={`editReviewModal-${id}`}>
-      <div className="h-777pxr w-375pxr px-[24px] pb-[46px] pt-[28px] md:h-750pxr md:w-480pxr">
-        <div className="mb-[41px] flex items-center justify-between">
+    <Modal modalKey={`editReviewModal-${id}`} className="!rounded-none md:!rounded-[8px]">
+      <div className="flex h-[100vh] w-[100vw] flex-col items-center overflow-scroll px-[24px] pb-[46px] pt-[28px] md:h-750pxr md:w-480pxr md:overflow-hidden">
+        <div className="mb-[41px] flex w-full items-center justify-between">
           <h1 className="text-28pxr font-bold">후기 작성</h1>{' '}
           <button onClick={closeModal}>
             <Image src="/close.svg" width={40} height={40} alt="close modal" />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-24pxr">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full flex-col gap-12pxr md:gap-24pxr"
+        >
           <div className="flex gap-8pxr md:gap-24pxr">
             <CardImage variant="modal" src={src} />
-            <div className="flex flex-col gap-12pxr">
-              <div className="text-20pxr font-bold">{title}</div>
-              <div className="text-18pxr">{date}</div>
+            <div className="flex flex-col gap-6pxr pb-[5px] md:gap-12pxr md:pb-[0px]">
+              <div className="leading-26pxr text-16pxr font-bold md:text-20pxr">{title}</div>
+              <div className="leading-24pxr py-[1px] text-14pxr md:text-18pxr">{date}</div>
               <div className="border-t border-gray-300"></div>
-              <span className="text-32pxr font-bold">{`₩${price.toLocaleString('ko-KR')}`}</span>
+              <span className="leading-24pxr md:leading-38pxr text-20pxr font-bold md:text-32pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
             </div>
           </div>
           <Controller
@@ -84,13 +87,13 @@ export default function EditReviewModal({ id, src, title, date, price }: Props) 
               <textarea
                 {...field}
                 placeholder="후기를 작성해주세요"
-                className="h-346pxr w-343pxr resize-none rounded border border-var-gray2 px-[16px] py-[8px] outline-none md:h-240pxr md:w-432pxr"
+                className="h-346pxr w-full resize-none rounded border border-var-gray2 px-[16px] pb-[8px] pt-[16px] outline-none md:h-240pxr md:w-432pxr"
               />
             )}
           />
           <Button
             type="submit"
-            className="h-48pxr w-full md:h-56pxr"
+            className="mt-12pxr h-48pxr w-full md:mt-[0px] md:h-56pxr"
             text="작성하기"
             color="black"
           />

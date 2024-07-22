@@ -1,3 +1,5 @@
+import { ReservationStatus } from '@/types/reservation';
+
 export const reservationsKeys = {
-  getMyReservations: (cursorId: number | null, size: number) => ['reservation', cursorId],
+  getMyReservations: (status: ReservationStatus | null) => ['reservation', status],
 };

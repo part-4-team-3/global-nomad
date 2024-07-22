@@ -7,15 +7,15 @@ interface Props {
 
 export default function ReviewList({ reviews }: Props) {
   return (
-    <div className="w-full">
+    <ul className="w-full">
       {reviews.map((review, index) => (
-        <div
+        <li
           key={review.id}
           className={`border-b ${index === reviews.length - 1 ? '' : 'border-var-gray4'}`}
         >
           <ReviewCard review={review} />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

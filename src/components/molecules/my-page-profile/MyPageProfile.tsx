@@ -8,16 +8,18 @@ export default function MyPageProfile() {
   const pathname = usePathname();
   return (
     <div className="relative flex items-center justify-center pb-[24px]">
-      <div className="relative size-160pxr overflow-hidden rounded-full">
+      <div className="relative">
         {user && user.profileImageUrl ? (
-          <Image fill src={user.profileImageUrl} alt="프로필 사진" />
+          <div className="relative size-160pxr overflow-hidden rounded-full">
+            <Image fill src={user.profileImageUrl} alt="프로필 사진" />
+          </div>
         ) : (
           <div className="flex size-160pxr items-center justify-center rounded-[50%] bg-var-gray1 text-80pxr text-white">
             {user && user.nickname.slice(0, 1)}
           </div>
         )}
+        <EditProfileImage />
       </div>
-      <EditProfileImage />
     </div>
   );
 }

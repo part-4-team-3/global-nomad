@@ -8,7 +8,10 @@ const useTimeSlot = () => {
   const [selectedDay, setSelectedDay] = useState<string>('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [timeSlots, setTimeSlots] = useState<TimeSlotData[]>([]);
+  const [schedules, setSchedules] = useState<TimeSlotData[] | []>([]);
+  const [addschedules, setAddSchedules] = useState<TimeSlotData[] | []>([]);
+  const [scheduleIds, setScheduleIds] = useState<number[]>([]);
+  const [deletedSchedule, setDeletedschedule] = useState<number[]>([]);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
   /** Calender 열기 */
@@ -24,10 +27,11 @@ const useTimeSlot = () => {
   };
 
   /** 예약 시간대 추가 */
-  const handleAddTimeSlot = () => {
+  const handleAddSchedules = () => {
     if (date && startTime && endTime) {
       const newTimeSlot = { date, startTime, endTime };
-      setTimeSlots((prevSlots) => [...prevSlots, newTimeSlot]);
+      setSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
+      setAddSchedules((prevSlots) => [...prevSlots, newTimeSlot]);
       setDate('');
       setSelectedDay('');
       setStartTime('');
@@ -38,9 +42,16 @@ const useTimeSlot = () => {
     }
   };
 
-  /** 이미지 삭제 처리 */
-  const handleDeleteTimeSlot = (index: number) => {
-    setTimeSlots((prev) => prev.filter((_, idx) => idx !== index));
+  /** 시간대 삭제 처리 */
+  const handleDeleteSchedules = (index: number) => {
+    const deletedScheduleId = schedules[index]?.id;
+    setSchedules((prev) => prev.filter((_, idx) => idx !== index));
+    setAddSchedules((prev) => prev.filter((_, idx) => idx !== index));
+    if (deletedScheduleId !== undefined) {
+      setDeletedschedule((prev) => [...prev, deletedScheduleId]);
+    }
+
+    setScheduleIds((prev) => prev.filter((id) => id !== deletedScheduleId));
   };
 
   return {
@@ -51,12 +62,17 @@ const useTimeSlot = () => {
     setStartTime,
     endTime,
     setEndTime,
-    timeSlots,
+    schedules,
+    setSchedules,
+    addschedules,
+    deletedSchedule,
+    scheduleIds,
+    setScheduleIds,
     isCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,
-    handleAddTimeSlot,
-    handleDeleteTimeSlot,
+    handleAddSchedules,
+    handleDeleteSchedules,
   };
 };
 

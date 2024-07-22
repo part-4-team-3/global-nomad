@@ -3,21 +3,30 @@ import Image from 'next/image';
 interface Props {
   rating: number;
   reviewCount: number;
-  color?: 'white' | 'gray';
+  color: 'white' | 'gray' | 'black';
+  className?: string;
 }
 
-export default function ReviewRating({ rating, reviewCount, color }: Props) {
+const SCORE = {
+  white: 'text-white font-[600]',
+  gray: 'font-[500]',
+  black: 'font-[500]',
+};
+
+const COUNT = {
+  white: '',
+  gray: 'text-var-gray9',
+  black: '',
+};
+
+export default function ReviewRating({ rating, reviewCount, color, className }: Props) {
   const imageSrc = !color ? '/star-icon.svg' : '/star-bold.svg';
   return (
-    <div className="flex items-center gap-[5px]">
+    <div className={`flex items-center gap-[5px] ${className}`}>
       <Image src={imageSrc} width={18} height={18} alt="별" />
-      <span
-        className={`text-14pxr md:text-16pxr ${color === 'white' ? 'text-14pxr font-[600] text-white' : color === 'gray' ? 'font-[500]' : 'font-[400]'}`}
-      >
+      <span className={`text-14pxr md:text-16pxr ${SCORE[color]}`}>
         {rating ? rating : 0}{' '}
-        <span className={color === 'gray' ? 'text-var-gray9' : ''}>
-          ({reviewCount ? reviewCount : 0})
-        </span>
+        <span className={COUNT[color]}>({reviewCount ? reviewCount : 0})</span>
       </span>
     </div>
   );

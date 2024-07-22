@@ -16,7 +16,7 @@ export default function SideNavigationMenu() {
   const activeMenuStyle = 'text-var-green-dark bg-var-green2 rounded-[12px]';
 
   return (
-    <div className="flex hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl p-[24px] shadow-md md:block">
+    <div className="hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl bg-white p-[24px] shadow-md md:flex">
       <MyPageProfile />
       <nav className="mt-4">
         <ul>
@@ -24,7 +24,7 @@ export default function SideNavigationMenu() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`${menuStyle} ${pathname === item.href ? activeMenuStyle : ''}`}
+                className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}
                 onMouseEnter={() => setHoveredItem(item.text)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
@@ -32,7 +32,7 @@ export default function SideNavigationMenu() {
                   <Image
                     fill
                     src={
-                      pathname === item.href || hoveredItem === item.text
+                      pathname.includes(item.href) || hoveredItem === item.text
                         ? item.activeImg
                         : item.defaultImg
                     }

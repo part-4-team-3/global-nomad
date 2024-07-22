@@ -23,7 +23,10 @@ export const useImageUploader = () => {
   const profileMutation = useMutation(submitProfileImageMutationOptions);
   const updateProfileMutation = useMutation(updateProfileImageMutationOptions);
   const [bannerImage, setBannerImage] = useState<string>('');
+  const [subImages, setSubImages] = useState<{ url: string; id: number }[]>([]);
+  const [deletedImages, setDeletedImages] = useState<number[]>([]);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [addImages, setAddImages] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>(''); //초기값 수정 예정
   const { setIsClose } = useModal();
   const { user, setUser } = useUser.getState();
@@ -52,6 +55,7 @@ export const useImageUploader = () => {
         setBannerImage(imageUrl.activityImageUrl);
       } else if (title === 'intro') {
         if (uploadedImages.length < 4) {
+          setAddImages((prevImages) => [...prevImages, imageUrl.activityImageUrl]);
           setUploadedImages((prevImages) => [...prevImages, imageUrl.activityImageUrl]);
         } else {
           alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
@@ -83,11 +87,17 @@ export const useImageUploader = () => {
   };
 
   /** 이미지 삭제 처리 */
-  const handleDeleteImage = (title: 'banner' | 'intro', index: number) => {
+  const handleDeleteImage = (title: 'banner' | 'intro', imageUrl: string) => {
     if (title === 'banner') {
       setBannerImage('');
     } else {
-      setUploadedImages((prevImages) => prevImages.filter((_, idx) => idx !== index));
+      const imageToDelete = subImages.find((img) => img.url === imageUrl);
+      if (imageToDelete) {
+        setDeletedImages((prevDeleted) => [...prevDeleted, imageToDelete.id]);
+      }
+      setAddImages((prevImages) => prevImages.filter((image) => image !== imageUrl));
+      setUploadedImages((prevImages) => prevImages.filter((image) => image !== imageUrl));
+      setSubImages((prevImages) => prevImages.filter((img) => img.url !== imageUrl));
     }
   };
 
@@ -108,7 +118,13 @@ export const useImageUploader = () => {
   return {
     profileImage,
     bannerImage,
+    setBannerImage,
     uploadedImages,
+    subImages,
+    setSubImages,
+    deletedImages,
+    addImages,
+    setUploadedImages,
     handleUploadImage,
     handleEditProfileImage,
     handleDeleteImage,

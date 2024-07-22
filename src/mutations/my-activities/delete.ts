@@ -7,6 +7,10 @@ interface Body {
   activityId: number;
 }
 
+interface Response {
+  message: string;
+}
+
 const deleteActivity = async ({ activityId }: Body) => {
   const instance = getInstance();
   const res = await instance.delete(`/my-activities/${activityId}`);

@@ -29,11 +29,11 @@ export default function Kebab({ children, className }: Props) {
 
   return (
     <div className="relative" ref={menuRef}>
-      <button onClick={toggleMenu}>
+      <button className={className} onClick={toggleMenu}>
         <Image src="/kebab.png" width={40} height={40} alt="kebab" />
       </button>
       {isOpen && (
-        <div className={`absolute right-[30px] rounded-lg bg-white shadow-lg ${className}`}>
+        <div className={`absolute right-[30px] rounded-lg bg-white shadow-lg`}>
           <div className="flex flex-col">{children}</div>
         </div>
       )}

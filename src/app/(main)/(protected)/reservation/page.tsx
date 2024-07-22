@@ -9,7 +9,7 @@ export default function ReservationList() {
   const [status, setStatus] = useState<ReservationStatus | null>(null);
 
   return (
-    <div className="flex flex-col gap-16pxr">
+    <div className="flex flex-col gap-16pxr lg:gap-24pxr">
       <Header setStatus={setStatus} />
       <Main status={status} />
     </div>
