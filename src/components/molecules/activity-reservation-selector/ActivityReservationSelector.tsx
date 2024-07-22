@@ -36,7 +36,7 @@ export function ActivityReservationSelector({
   };
 
   return (
-    <div className="fixed right-[0px] top-[0px] z-20 flex h-screen w-screen flex-col justify-between bg-white px-24pxr py-32pxr md:top-[30vh] md:h-700pxr md:w-480pxr md:rounded-[24px] md:shadow">
+    <div className="fixed right-[0px] top-[0px] z-20 flex h-screen w-screen flex-col justify-between bg-white px-24pxr py-32pxr md:top-[0vh] md:h-700pxr md:w-480pxr md:rounded-[24px] md:shadow">
       <div className="flex w-full flex-col gap-24pxr">
         <div className="flex w-full items-center justify-between">
           {' '}
