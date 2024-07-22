@@ -3,15 +3,13 @@
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { patchMutationOptions, submitMutationOptions } from '@/mutations/activity/submit-activity';
-import { ActivityEditData } from '@/types/activity';
+import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams, useRouter } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
-import { act, useEffect, useState } from 'react';
-import { stat } from 'fs';
+import { useEffect, useState } from 'react';
 
 export default function ActivityEditForm() {
   const router = useRouter();
@@ -26,6 +24,9 @@ export default function ActivityEditForm() {
   };
 
   useEffect(() => {
+    {
+      /* useQuery 추가 예정 */
+    }
     const fetchActivityDetails = async () => {
       try {
         const data = await getActivityDetails(activityId);
@@ -40,6 +41,7 @@ export default function ActivityEditForm() {
     }
   }, []);
 
+  console.log(stateData);
   const mutation = useMutation({
     ...patchMutationOptions,
     onSuccess: () => {

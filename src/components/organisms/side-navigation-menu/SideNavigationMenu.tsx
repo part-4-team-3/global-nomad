@@ -24,7 +24,7 @@ export default function SideNavigationMenu() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`${menuStyle} ${pathname === item.href ? activeMenuStyle : ''}`}
+                className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}
                 onMouseEnter={() => setHoveredItem(item.text)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
@@ -32,7 +32,7 @@ export default function SideNavigationMenu() {
                   <Image
                     fill
                     src={
-                      pathname === item.href || hoveredItem === item.text
+                      pathname.includes(item.href) || hoveredItem === item.text
                         ? item.activeImg
                         : item.defaultImg
                     }

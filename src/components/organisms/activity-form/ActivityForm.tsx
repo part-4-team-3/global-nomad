@@ -73,7 +73,9 @@ export default function ActivityForm({ stateData }: Props) {
       setUploadedImages(imgs);
       setSubImages(imagesWithIds);
     }
-  }, [stateData]);
+  }, [stateData, setSchedules, setScheduleIds, setBannerImage, setUploadedImages, setSubImages]);
+
+  console.log(schedules);
 
   return (
     <>

@@ -38,6 +38,7 @@ export interface MyActivityList {
 }
 
 export interface TimeSlotData {
+  id?: number;
   date: string;
   startTime: string;
   endTime: string;
