@@ -9,7 +9,6 @@ import FORM_OPTIONS from '@/constant/form-option';
 import Button from '@/components/atoms/button/Button';
 import { loginMutationOptions } from '@/mutations/auth/login';
 import useUser from '@/store/useUser';
-import { cookie } from '@/lib/cookie';
 import { revalidate } from '@/lib/revalidate';
 
 interface LoginData {
