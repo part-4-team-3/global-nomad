@@ -1,29 +1,16 @@
 'use client';
-import { menuItems } from '@/constant/my-page-menu';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Profile from '@/components/atoms/profile/Profile';
 import useUser from '@/store/useUser';
-import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
-import { useRouter } from 'next/navigation';
+import HamburgerMenuItem from './HamburgerMenuItem';
 
 export default function HamburgerMenu() {
-  const router = useRouter();
-  const { user, clearUser } = useUser();
-  const pathname = usePathname();
+  const { user } = useUser();
   const [isActive, setIsActive] = useState(false);
-  const menuStyle =
-    'flex w-full gap-[14px] py-[24px] px-[16px] text-[16pxr] font-bold text-var-gray3';
-  const activeMenuStyle = 'text-var-green-dark  bg-var-green2 rounded-[12px]';
-
-  /** 로그아웃 로직 */
-  const handleLogout = () => {
-    deleteCookie('userId');
-    clearUser();
-    router.push('/signin');
-  };
+  const menuRef = useRef<HTMLUListElement>(null);
 
   /** 햄버거메뉴 활성화시 스크롤 불가 */
   useEffect(() => {
@@ -61,33 +48,8 @@ export default function HamburgerMenu() {
             </Link>
           </li>
         )}
-        {isActive &&
-          menuItems.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={`${menuStyle} ${pathname === item.href ? activeMenuStyle : ''}`}
-              >
-                <div className="relative size-[24px]">
-                  <Image
-                    fill
-                    src={pathname === item.href ? item.activeImg : item.defaultImg}
-                    alt={item.alt}
-                  />
-                </div>
-                {item.text}
-              </Link>
-            </li>
-          ))}
-        {user && (
-          <div className="mt-auto flex justify-end p-[16px]">
-            <button
-              className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3"
-              onClick={handleLogout}
-            >
-              로그아웃
-            </button>
-          </div>
+        {isActive && (
+          <HamburgerMenuItem isActive={isActive} setIsActive={setIsActive} menuRef={menuRef} />
         )}
       </ul>
     </div>

@@ -2,6 +2,7 @@
 
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import Profile from '@/components/atoms/profile/Profile';
+import HamburgerMenu from '@/components/organisms/hambuger-menu/HamburgerMenu';
 import useUser from '@/store/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,7 +35,13 @@ export default function Header() {
                 <Image src="/bell.svg" alt="알림" width={20} height={20} />
               </button>
               <div className="h-22pxr w-1pxr bg-var-gray6" />
-              <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
+              {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
+              <div className="hidden md:flex">
+                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
+              </div>
+              <div className="block md:hidden">
+                <HamburgerMenu />
+              </div>
             </ul>
           ) : (
             <ul className="flex gap-25pxr">
