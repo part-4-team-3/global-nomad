@@ -48,6 +48,22 @@ export default function ActivityEditForm() {
 
   const submit = () => {
     const formValues = methods.getValues();
+
+    if (!formValues.bannerImageUrl) {
+      alert('배너 이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.subImageUrls || formValues.subImageUrls.length === 0) {
+      alert('소개이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.schedules || formValues.schedules.length === 0) {
+      alert('스케줄을 등록해주세요');
+      return;
+    }
+
     const body = {
       title: formValues.title,
       category: formValues.category,
