@@ -1,5 +1,8 @@
+'use client';
+
 import { isWordAtPositionFromEnd, splitStringByPositionFromEnd } from '@/lib/find-word';
 import { formatDateAgo } from '@/lib/formatDate';
+import { deleteNotification } from '@/queries/my-notifications/delete-notification';
 import { Notification } from '@/types/notification';
 import Image from 'next/image';
 
@@ -9,12 +12,15 @@ interface Props {
 
 export default function AlertCard({ notification }: Props) {
   const isApprove = isWordAtPositionFromEnd(notification.content, 7, '승인');
-
   const content = splitStringByPositionFromEnd(notification.content, 7, 2);
+
+  const handleDelete = async () => {
+    await deleteNotification(notification.id);
+  };
 
   return (
     <div className="relative rounded-[5px] border border-var-gray5 bg-white px-[12px] pb-[16px] pt-[20px]">
-      <button className="absolute right-[12px] top-[16px]">
+      <button onClick={handleDelete} className="absolute right-[12px] top-[16px]">
         <Image src="close-gray.svg" alt="X" width={24} height={24} />
       </button>
       <div>
