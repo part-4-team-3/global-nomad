@@ -1,14 +1,14 @@
-// 'use client';
-
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import Image from 'next/image';
 import Link from 'next/link';
 import AlertModal from './AlertModal';
 import { getCookie } from '@/app/(action)/(cookie)/cookie';
 import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
+import { getMyNotifications } from '@/queries/my-notifications/get-my-notifications';
 
 export default async function Header() {
   const userId = await getCookie('userId');
+  const notificationData = await getMyNotifications();
 
   const navList = [
     {
@@ -20,6 +20,7 @@ export default async function Header() {
       link: '/signup',
     },
   ];
+
   return (
     <header className="z-10 border-b border-var-gray6 bg-white">
       <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
@@ -36,7 +37,7 @@ export default async function Header() {
               </button>
               <div className="h-22pxr w-1pxr bg-var-gray6" />
               <HeaderProfile />
-              <AlertModal />
+              <AlertModal notificationData={notificationData} />
             </div>
           ) : (
             <ul className="flex gap-25pxr">
