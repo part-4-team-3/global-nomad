@@ -39,13 +39,13 @@ export default function ActivityReservationFormPC({
   const formattedDate = date ? format(date, 'yyyy-MM-dd') : '';
   const message = date ? '해당 날짜에 가능한 스케줄이 없습니다' : '날짜를 선택해주세요';
   return (
-    <div className="sticky top-[20vh] h-fit">
+    <div className="h-fit">
       <div className="hidden h-fit w-384pxr shrink-0 flex-col rounded-[8px] border border-var-gray6 shadow md:hidden lg:flex">
         <div className="flex items-center gap-[4px] p-[24px] pb-[16px]">
           <PriceDisplay price={price} fontSize={24} />
           <span className="text-var-gray1">/ 인</span>
         </div>
-        <div className="flex flex-col gap-[32px] border-b border-t border-var-gray6 px-[24px] pb-[24px] pt-[16px]">
+        <div className="flex flex-col gap-[16px] border-b border-t border-var-gray6 px-[24px] pb-[24px] pt-[16px]">
           <div className="flex flex-col gap-[8px]">
             <span className="text-20pxr font-[700]">날짜</span>
           </div>
@@ -62,7 +62,7 @@ export default function ActivityReservationFormPC({
 
           <p className="text-18pxr font-[700]">예약 가능한 시간</p>
           {formattedDate != '' && scheduleHash[formattedDate] ? (
-            <div className="flex gap-12pxr">
+            <div className="flex flex-wrap gap-12pxr">
               {scheduleHash[formattedDate].map((schedule) => (
                 <ScheduleButton
                   key={schedule.id}

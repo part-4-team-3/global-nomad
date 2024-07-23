@@ -1,14 +1,19 @@
-'use client';
-
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import Profile from '@/components/atoms/profile/Profile';
 import HamburgerMenu from '@/components/organisms/hambuger-menu/HamburgerMenu';
 import useUser from '@/store/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCookie } from '@/app/(action)/(cookie)/cookie';
+import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
+import { getMyNotifications } from '@/queries/my-notifications/get-my-notifications';
+import { useModal } from '@/store/useModal';
+import NotificationModal from './NotificationModal';
+import NotificationButton from '@/components/atoms/button/NotificationButton';
 
-export default function Header() {
-  const { user } = useUser();
+export default async function Header() {
+  const userId = await getCookie('userId');
+  const notificationData = await getMyNotifications();
 
   const navList = [
     {
@@ -20,20 +25,19 @@ export default function Header() {
       link: '/signup',
     },
   ];
+
   return (
-    <header className="border-b border-var-gray6 bg-white">
-      <InnerLayout mobilePx="keep" className="flex items-center justify-between py-19pxr">
+    <header className="z-10 border-b border-var-gray6 bg-white">
+      <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
         <h1>
           <Link href="/">
             <Image src="/logo.svg" width={165.5} height={28} alt="GlobalNomad logo" />
           </Link>
         </h1>
         <nav>
-          {user ? (
+          {userId ? (
             <ul className="flex items-center gap-12pxr md:gap-25pxr">
-              <button>
-                <Image src="/bell.svg" alt="알림" width={20} height={20} />
-              </button>
+              <NotificationButton notificationData={notificationData} />
               <div className="h-22pxr w-1pxr bg-var-gray6" />
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
