@@ -1,4 +1,7 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
+import Profile from '@/components/atoms/profile/Profile';
+import HamburgerMenu from '@/components/organisms/hambuger-menu/HamburgerMenu';
+import useUser from '@/store/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCookie } from '@/app/(action)/(cookie)/cookie';
@@ -35,8 +38,13 @@ export default async function Header() {
           {userId ? (
             <div className="flex items-center gap-12pxr md:gap-25pxr">
               <NotificationButton notificationData={notificationData} />
-              <div className="h-22pxr w-1pxr bg-var-gray6" />
-              <HeaderProfile />
+              {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
+              <div className="hidden md:flex">
+                <HeaderProfile />
+              </div>
+              <div className="block md:hidden">
+                <HamburgerMenu />
+              </div>
             </div>
           ) : (
             <ul className="flex gap-25pxr">

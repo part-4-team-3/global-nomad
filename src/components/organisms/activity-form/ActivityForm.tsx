@@ -7,13 +7,19 @@ import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
 import { useEffect } from 'react';
 import { DetailActivityData } from '@/types/activity';
+import { ReactNode } from 'react';
 
 interface Props {
   stateData?: DetailActivityData;
 }
 
 export default function ActivityForm({ stateData }: Props) {
-  const { register, control, setValue } = useFormContext();
+  const {
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
   const {
     selectedDay,
     startTime,
@@ -30,6 +36,8 @@ export default function ActivityForm({ stateData }: Props) {
     handleFormatDayClick,
     handleAddSchedules,
     handleDeleteSchedules,
+    handleStartTimeChange,
+    handleEndTimeChange,
   } = useTimeSlot();
   const {
     uploadedImages,
@@ -77,9 +85,23 @@ export default function ActivityForm({ stateData }: Props) {
 
   console.log(schedules);
 
+  const getErrorMessage = (error: any): ReactNode => {
+    return error ? <span className="text-red-500">{error.message}</span> : null;
+  };
+
   return (
     <>
-      <Input size="full" placeholder="제목" {...register('title')} />
+      <Input
+        size="full"
+        placeholder="제목"
+        {...register('title', {
+          maxLength: {
+            value: 20,
+            message: '제목은 최대 20자까지 입력할 수 있습니다.',
+          },
+        })}
+      />
+      {getErrorMessage(errors.title)}
       <Controller
         name="category"
         control={control}
@@ -101,10 +123,20 @@ export default function ActivityForm({ stateData }: Props) {
           placeholder="가격"
           {...register('price', {
             setValueAs: (value) => parseFloat(value),
+            min: {
+              value: 0,
+              message: '가격은 0보다 커야 합니다.',
+            },
+            max: {
+              value: 999999999,
+              message: '가격은 999,999,999보다 작아야 합니다.',
+            },
           })}
         />
+        {getErrorMessage(errors.price)}
       </div>
       <div className={containerClass}>
+        {/* 주소찾기 api 추가 예정 */}
         <label className={inputTitleClass}>주소</label>
         <Input size="full" placeholder="주소를 입력해주세요" {...register('address')} />
       </div>
@@ -122,6 +154,8 @@ export default function ActivityForm({ stateData }: Props) {
           handleAddTimeSlot={handleAddSchedules}
           handleDeleteTimeSlot={handleDeleteSchedules}
           handleCalendarOpen={handleCalendarOpen}
+          handleStartTimeChange={handleStartTimeChange}
+          handleEndTimeChange={handleEndTimeChange}
         />
       </div>
       <div className={containerClass}>

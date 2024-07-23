@@ -108,6 +108,9 @@ export const useImageUploader = () => {
     };
     try {
       const response = await updateProfileMutation.mutateAsync(data);
+      if (user && profileImage) {
+        setUser({ ...user, profileImageUrl: profileImage });
+      }
       alert('프로필 변경에 성공했습니다!');
       closeModal();
     } catch (error) {

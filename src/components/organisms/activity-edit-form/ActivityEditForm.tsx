@@ -2,17 +2,16 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import AlertModal from '@/components/molecules/modal/AlertModal';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { useEffect, useState } from 'react';
 
 export default function ActivityEditForm() {
-  const router = useRouter();
   const params = useParams();
   const activityId = Number(params.id);
   const [stateData, setStateData] = useState<any>();
@@ -24,9 +23,6 @@ export default function ActivityEditForm() {
   };
 
   useEffect(() => {
-    {
-      /* useQuery 추가 예정 */
-    }
     const fetchActivityDetails = async () => {
       try {
         const data = await getActivityDetails(activityId);
@@ -36,22 +32,38 @@ export default function ActivityEditForm() {
         alert('요청에 실패했습니다.');
       }
     };
+
     if (activityId) {
       fetchActivityDetails();
     }
-  }, []);
+  }, [activityId]);
 
   console.log(stateData);
   const mutation = useMutation({
     ...patchMutationOptions,
     onSuccess: () => {
       openModal('alertMessage');
-      router.push('/myactivity');
     },
   });
 
   const submit = () => {
     const formValues = methods.getValues();
+
+    if (!formValues.bannerImageUrl) {
+      alert('배너 이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.subImageUrls || formValues.subImageUrls.length === 0) {
+      alert('소개이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.schedules || formValues.schedules.length === 0) {
+      alert('스케줄을 등록해주세요');
+      return;
+    }
+
     const body = {
       title: formValues.title,
       category: formValues.category,
@@ -68,17 +80,19 @@ export default function ActivityEditForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(submit)}>
-        <div className="flex flex-col gap-24pxr">
-          <div className="flex items-center justify-between">
-            <h1 className="text-32pxr font-bold">내 체험 수정</h1>
-            <Button text="수정하기" color="black" size="s" type="submit" />
+    <>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(submit)}>
+          <div className="flex flex-col gap-24pxr">
+            <div className="flex items-center justify-between">
+              <h1 className="text-32pxr font-bold">내 체험 수정</h1>
+              <Button text="수정하기" color="black" size="s" type="submit" />
+            </div>
+            <ActivityForm stateData={stateData} />
           </div>
-          <ActivityForm stateData={stateData} />
-        </div>
-      </form>
+        </form>
+      </FormProvider>
       <AlertModal text="체험수정이 완료되었습니다." />
-    </FormProvider>
+    </>
   );
 }

@@ -7,11 +7,9 @@ import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
-import { useRouter } from 'next/navigation';
 import AlertModal from '@/components/molecules/modal/AlertModal';
 
 export default function ActivityRegistrationForm() {
-  const router = useRouter();
   const methods = useForm<ActivitySettingData>({
     defaultValues: {
       title: '',
@@ -34,11 +32,26 @@ export default function ActivityRegistrationForm() {
     ...submitMutationOptions,
     onSuccess: () => {
       openModal('alertMessage');
-      router.push('/myactivity');
     },
   });
 
   const submit = (data: ActivitySettingData) => {
+    const formValues = methods.getValues();
+
+    if (!formValues.bannerImageUrl) {
+      alert('배너 이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.subImageUrls || formValues.subImageUrls.length === 0) {
+      alert('소개이미지를 등록해주세요');
+      return;
+    }
+
+    if (!formValues.schedules || formValues.schedules.length === 0) {
+      alert('스케줄을 등록해주세요');
+      return;
+    }
     mutation.mutate({
       ...data,
       schedules: methods.getValues('schedules'),
