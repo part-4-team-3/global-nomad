@@ -9,14 +9,16 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen flex-col bg-var-gray8">
+    <div className="flex h-screen flex-col">
       <Header />
-      <InnerLayout>
-        <div className="flex py-[72px] md:gap-[16px] lg:gap-[24px]">
-          <SideNavigationMenu />
-          <div className="w-full">{children}</div>
-        </div>
-      </InnerLayout>
+      <div className="flex flex-1 bg-var-gray8">
+        <InnerLayout>
+          <div className="flex py-[72px] md:gap-[16px] lg:gap-[24px]">
+            <SideNavigationMenu />
+            <div className="flex-1">{children}</div>
+          </div>
+        </InnerLayout>
+      </div>
       <Footer />
     </div>
   );
