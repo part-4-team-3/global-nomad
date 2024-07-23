@@ -12,10 +12,9 @@ import { RefObject, useEffect } from 'react';
 interface Props {
   isActive: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-  menuRef: RefObject<HTMLUListElement>;
 }
 
-export default function HamburgerMenuItem({ isActive, setIsActive, menuRef }: Props) {
+export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const { user, clearUser } = useUser();
@@ -30,28 +29,8 @@ export default function HamburgerMenuItem({ isActive, setIsActive, menuRef }: Pr
     router.push('/signin');
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsActive(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isActive) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isActive]);
-
   return (
-    <ul
-      ref={menuRef}
-      className={`absolute right-[0px] top-[67px] z-10 flex h-[calc(100vh-67px)] w-228pxr list-none flex-col border-r-2 border-gray-200 bg-white p-[8px] ${isActive ? 'block' : 'hidden'}`}
-    >
+    <>
       {isActive &&
         menuItems.map((item) => (
           <li key={item.href}>
@@ -80,6 +59,6 @@ export default function HamburgerMenuItem({ isActive, setIsActive, menuRef }: Pr
           </button>
         </div>
       )}
-    </ul>
+    </>
   );
 }
