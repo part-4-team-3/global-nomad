@@ -49,7 +49,7 @@ export default function MyPageForm() {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <div className="mb-24pxr flex items-start justify-between">
+      <div className="mb-24pxr flex h-48pxr items-start justify-between overflow-hidden text-ellipsis">
         <h1 className="text-32pxr font-bold">내 정보</h1>
         <Button className="h-48pxr w-120pxr" type="submit" text="저장하기" color="black" />
       </div>
