@@ -38,10 +38,9 @@ export default async function Header() {
           {userId ? (
             <div className="flex items-center gap-12pxr md:gap-25pxr">
               <NotificationButton notificationData={notificationData} />
-              <div className="h-22pxr w-1pxr bg-var-gray6" />
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
-                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
+                <HeaderProfile />
               </div>
               <div className="block md:hidden">
                 <HamburgerMenu />
