@@ -10,7 +10,7 @@ interface Props {
   notification: Notification;
 }
 
-export default function AlertCard({ notification }: Props) {
+export default function NotificationCard({ notification }: Props) {
   const isApprove = isWordAtPositionFromEnd(notification.content, 7, '승인');
   const content = splitStringByPositionFromEnd(notification.content, 7, 2);
 

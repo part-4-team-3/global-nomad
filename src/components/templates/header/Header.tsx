@@ -1,10 +1,12 @@
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
 import Image from 'next/image';
 import Link from 'next/link';
-import AlertModal from './AlertModal';
 import { getCookie } from '@/app/(action)/(cookie)/cookie';
 import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
 import { getMyNotifications } from '@/queries/my-notifications/get-my-notifications';
+import { useModal } from '@/store/useModal';
+import NotificationModal from './NotificationModal';
+import NotificationButton from '@/components/atoms/button/NotificationButton';
 
 export default async function Header() {
   const userId = await getCookie('userId');
@@ -32,12 +34,9 @@ export default async function Header() {
         <nav>
           {userId ? (
             <div className="flex items-center gap-12pxr md:gap-25pxr">
-              <button>
-                <Image src="/bell.svg" alt="알림" width={20} height={20} />
-              </button>
+              <NotificationButton notificationData={notificationData} />
               <div className="h-22pxr w-1pxr bg-var-gray6" />
               <HeaderProfile />
-              <AlertModal notificationData={notificationData} />
             </div>
           ) : (
             <ul className="flex gap-25pxr">
