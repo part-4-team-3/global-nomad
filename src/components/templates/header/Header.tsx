@@ -36,7 +36,7 @@ export default async function Header() {
         </h1>
         <nav>
           {userId ? (
-            <ul className="flex items-center gap-12pxr md:gap-25pxr">
+            <div className="flex items-center gap-12pxr md:gap-25pxr">
               <NotificationButton notificationData={notificationData} />
               <div className="h-22pxr w-1pxr bg-var-gray6" />
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
@@ -46,7 +46,7 @@ export default async function Header() {
               <div className="block md:hidden">
                 <HamburgerMenu />
               </div>
-            </ul>
+            </div>
           ) : (
             <ul className="flex gap-25pxr">
               {navList.map((nav) => (
