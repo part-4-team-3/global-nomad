@@ -66,19 +66,21 @@ export default function ActivityForm({ stateData }: Props) {
 
   /* 서버에서 받아온 데이터 state에 저장 */
   useEffect(() => {
+    const timeIds = stateData?.schedules.map((time) => time.id);
     const ids = stateData?.subImages.map((image) => image.id);
     const imgs = stateData?.subImages.map((image) => image.imageUrl);
-    const timeIds = stateData?.schedules.map((time) => time.id);
 
-    if (ids?.length && timeIds?.length && imgs?.length) {
+    if (timeIds) {
+      setBannerImage(stateData?.bannerImageUrl || '');
+      setSchedules(stateData?.schedules || []);
+      setScheduleIds(timeIds);
+    }
+
+    if (ids?.length && imgs?.length) {
       const imagesWithIds = imgs.map((url, index) => ({
         url,
         id: ids[index],
       }));
-
-      setSchedules(stateData?.schedules || []);
-      setScheduleIds(timeIds);
-      setBannerImage(stateData?.bannerImageUrl || '');
       setUploadedImages(imgs);
       setSubImages(imagesWithIds);
     }

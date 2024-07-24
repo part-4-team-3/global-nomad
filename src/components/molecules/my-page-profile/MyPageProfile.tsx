@@ -6,7 +6,7 @@ import useUser from '@/store/useUser';
 export default function MyPageProfile() {
   const { user } = useUser();
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <div className="relative flex items-center justify-center pb-[24px]">
       <div className="relative">
