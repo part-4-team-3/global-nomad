@@ -37,6 +37,9 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
             <Link
               href={item.href}
               className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}
+              onClick={() => {
+                setIsActive(false);
+              }}
             >
               <div className="relative size-[24px]">
                 <Image
