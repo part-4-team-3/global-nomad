@@ -25,7 +25,7 @@ const config = {
       }, {}),
     },
     fontSize: {
-      ...range(12, 81).reduce<Record<string, string>>((acc, px) => {
+      ...range(8, 81).reduce<Record<string, string>>((acc, px) => {
         acc[`${px}pxr`] = pxToRem(px);
         return acc;
       }, {}),
