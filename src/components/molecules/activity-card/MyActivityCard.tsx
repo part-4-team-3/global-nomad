@@ -10,7 +10,9 @@ import { deleteActivityMutationOptions } from './../../../mutations/my-activitie
 import { toast } from 'react-toastify';
 import afterDelete from '@/models/my-activities/update-cache';
 
-interface Props extends Activity {}
+interface Props extends Activity {
+  isLast: boolean;
+}
 
 export default function MyActivityCard({
   id,
@@ -19,6 +21,7 @@ export default function MyActivityCard({
   rating,
   reviewCount,
   price,
+  isLast,
 }: Props) {
   const queryClient = useQueryClient();
 
@@ -41,12 +44,12 @@ export default function MyActivityCard({
           className="h-17pxr md:h-19pxr"
         />
         <div className="flex min-h-81pxr flex-col justify-between md:min-h-107pxr lg:min-h-137pxr">
-          <div className="leading-26pxr mb-12pxr text-14pxr font-bold md:text-18pxr lg:text-20pxr">
+          <div className="mb-12pxr text-14pxr font-bold leading-26pxr md:text-18pxr lg:text-20pxr">
             {title}
           </div>
           <div className="flex h-32pxr w-full items-center justify-between md:h-40pxr">
-            <span className="leading-19pxr md:leading-24pxr lg:leading-29pxr text-16pxr md:text-20pxr lg:text-24pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
-            <Kebab className="w-32pxr md:w-40pxr">
+            <span className="text-16pxr leading-19pxr md:text-20pxr md:leading-24pxr lg:text-24pxr lg:leading-29pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
+            <Kebab className="w-32pxr md:w-40pxr" isLast={isLast}>
               <Link href={`/myactivity/${id}/edit`}>
                 <button className="h-58pxr w-160pxr hover:bg-gray-100">수정하기</button>
               </Link>

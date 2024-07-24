@@ -65,7 +65,7 @@ export default function Main({ status }: Props) {
   if (isError) return <div>error</div>;
 
   return (
-    <div className="h-[calc(100vh-406px)] overflow-y-scroll scrollbar-hide">
+    <div className="h-1200pxr overflow-y-scroll scrollbar-hide">
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.reservations.map((reservation: Reservation) => (
@@ -75,11 +75,11 @@ export default function Main({ status }: Props) {
           ))}
         </div>
       ))}
-      {hasNextPage && !isFetchingNextPage && (
-        <div ref={ref} className="h-1pxr"></div> // 숨겨진 div, 무한 스크롤 트리거
-      )}
+      {hasNextPage && !isFetchingNextPage && <div ref={ref} className="h-1pxr"></div>}
       {isFetchingNextPage && (
-        <div>Loading more...</div> // 무한 스크롤 로딩 표시
+        <div className="flex w-full justify-center">
+          <LoadingSpinner />
+        </div>
       )}
     </div>
   );
