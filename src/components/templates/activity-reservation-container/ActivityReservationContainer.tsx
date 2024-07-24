@@ -8,6 +8,7 @@ import { ReservationFormProps } from '@/types/reservation-form-props';
 import useUser from '@/store/useUser';
 import postReservation from '@/queries/reservations/post-reservation';
 import { toast } from 'react-toastify';
+import LogInCover from '@/components/molecules/log-in-cover/LogInCover';
 interface Props extends ReservationFormProps {
   creatorId: number;
 }
@@ -20,13 +21,15 @@ export default function ActivityReservationContainer({
   creatorId,
 }: Props) {
   const { user } = useUser();
+  const isNotLoggedIn = !user;
   const isNotMyActivity = creatorId !== user?.id;
 
   return (
     <>
       {isNotMyActivity && (
         <ReservationProvider>
-          <>
+          <div className="relative h-fit">
+            {isNotLoggedIn && <LogInCover />}
             <ActivityReservationBar
               price={price}
               scheduleHash={scheduleHash}
@@ -45,7 +48,7 @@ export default function ActivityReservationContainer({
               scheduledDates={scheduledDates}
               activityId={activityId}
             />
-          </>
+          </div>
         </ReservationProvider>
       )}
     </>
