@@ -1,30 +1,27 @@
+'use client';
+
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
-import Profile from '@/components/atoms/profile/Profile';
 import HamburgerMenu from '@/components/organisms/hambuger-menu/HamburgerMenu';
-import useUser from '@/store/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCookie } from '@/app/(action)/(cookie)/cookie';
-import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
-import { getMyNotifications } from '@/queries/my-notifications/get-my-notifications';
-import { useModal } from '@/store/useModal';
-import NotificationModal from './NotificationModal';
 import NotificationButton from '@/components/atoms/button/NotificationButton';
+import useUser from '@/store/useUser';
+import Profile from '@/components/atoms/profile/Profile';
+import { NotificationProvider } from '@/models/header/notification-context';
 
-export default async function Header() {
-  const userId = await getCookie('userId');
-  const notificationData = await getMyNotifications();
+const navList = [
+  {
+    text: '로그인',
+    link: '/signin',
+  },
+  {
+    text: '회원가입',
+    link: '/signup',
+  },
+];
 
-  const navList = [
-    {
-      text: '로그인',
-      link: '/signin',
-    },
-    {
-      text: '회원가입',
-      link: '/signup',
-    },
-  ];
+export default function Header() {
+  const { user } = useUser();
 
   return (
     <header className="z-10 border-b border-var-gray6 bg-white">
@@ -35,12 +32,14 @@ export default async function Header() {
           </Link>
         </h1>
         <nav>
-          {userId ? (
+          {user ? (
             <div className="flex items-center gap-12pxr md:gap-25pxr">
-              <NotificationButton notificationData={notificationData} />
+              <NotificationProvider>
+                <NotificationButton />
+              </NotificationProvider>
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
-                <HeaderProfile />
+                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />;
               </div>
               <div className="block md:hidden">
                 <HamburgerMenu />
