@@ -2,6 +2,7 @@
 
 import { isWordAtPositionFromEnd, splitStringByPositionFromEnd } from '@/lib/find-word';
 import { formatDateAgo } from '@/lib/formatDate';
+import { useNotification } from '@/models/header/notification-context';
 import { deleteNotification } from '@/queries/my-notifications/delete-notification';
 import { Notification } from '@/types/notification';
 import Image from 'next/image';
@@ -11,10 +12,21 @@ interface Props {
 }
 
 export default function NotificationCard({ notification }: Props) {
+  const { notificationData, setNotificationData } = useNotification();
+
   const isApprove = isWordAtPositionFromEnd(notification.content, 7, '승인');
   const content = splitStringByPositionFromEnd(notification.content, 7, 2);
 
   const handleDelete = async () => {
+    if (notificationData) {
+      setNotificationData({
+        ...notificationData,
+        totalCount: notificationData?.totalCount - 1,
+        notifications: notificationData?.notifications.filter(
+          (item) => item.id !== notification.id,
+        ),
+      });
+    }
     await deleteNotification(notification.id);
   };
 
