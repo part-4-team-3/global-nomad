@@ -13,15 +13,15 @@ export const useUpdateReservationStatus = (activityId: number, reservationId: nu
     },
     onSuccess: () => {
       toast('요청이 성공적으로 처리되었습니다.');
-      router.push('/calendar');
+      location.reload();
     },
     onError: (err) => {
       toast('요청에 실패했습니다.', {
         onClose: () => {
-          router.push('/calendar');
+          location.reload();
         },
         onClick: () => {
-          router.push('/calendar');
+          location.reload();
         },
       });
     },

@@ -7,7 +7,7 @@ import { useGetReservationByDate } from '@/queries/myActivities/get-reservation-
 import { useGetScheduleByDate } from '@/queries/myActivities/get-schedule-date';
 import { useModal } from '@/store/useModal';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface Props {
   activityId: number;
@@ -22,11 +22,15 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
 
   const { data: myScheduleByDate } = useGetScheduleByDate(activityId, date);
   const { scheduleTimeList } = useScheduleTimeMapping(myScheduleByDate?.data);
-  const [selectedScheduleTime, setSelectedScheduleTime] = useState<string>(scheduleTimeList[0]);
+  const [selectedScheduleTime, setSelectedScheduleTime] = useState('');
   const { selectedSchedule } = useHandleSelectedSchedule(
     myScheduleByDate?.data ?? null,
     selectedScheduleTime,
   );
+
+  useEffect(() => {
+    setSelectedScheduleTime('');
+  }, [date]);
 
   const { data: myReservationByTime } = useGetReservationByDate(
     activityId,
@@ -36,11 +40,27 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
     status,
   );
 
-  const { statusCount } = useHandleStatusCount(selectedSchedule ?? null);
+  const totalStatus = useMemo(
+    () =>
+      myScheduleByDate?.data
+        .flatMap((schedule) => schedule.count)
+        .reduce(
+          (acc, cur) => {
+            acc.declined += cur.declined;
+            acc.confirmed += cur.confirmed;
+            acc.pending += cur.pending;
+            return acc;
+          },
+          { declined: 0, confirmed: 0, pending: 0 },
+        ),
+    [myScheduleByDate],
+  );
+
+  const { statusCount } = useHandleStatusCount(selectedSchedule ?? null, totalStatus || null);
 
   const newDate = new Date(date);
   const newDateStr = `${newDate.getFullYear()}년 ${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
-  console.log(selectedSchedule);
+
   return (
     <>
       {isSelected && (
@@ -89,9 +109,11 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
 
           <div className="mt-32pxr flex flex-col justify-center">
             <p className="mb-16pxr text-20pxr font-[600]">예약 내역</p>
-            {myReservationByTime?.data && (
-              <ReservationCardList reservationList={myReservationByTime?.data} status={status} />
-            )}
+            <div className="w-full lg:h-270pxr lg:overflow-y-scroll">
+              {myReservationByTime?.data && (
+                <ReservationCardList reservationList={myReservationByTime?.data} status={status} />
+              )}
+            </div>
           </div>
         </div>
       )}

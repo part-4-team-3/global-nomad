@@ -22,6 +22,8 @@ export default function ReservationCalendar({ activityId, isOpen }: Props) {
     (date?.getMonth()! + 1).toString()!,
   );
 
+  console.log(myActivitiesByMonth?.data);
+
   return (
     <div className="relative">
       <UIReservationCalendar
@@ -34,7 +36,7 @@ export default function ReservationCalendar({ activityId, isOpen }: Props) {
       />
 
       {isOpen && (
-        <div className="h-full w-full px-[-16px] md:mt-100pxr lg:absolute lg:right-[0] lg:top-[22px] lg:h-627pxr lg:w-429pxr">
+        <div className="h-full w-full px-[-16px] md:mt-100pxr lg:absolute lg:right-[0] lg:top-[22px] lg:h-670pxr lg:w-429pxr">
           <ReservationInfoModal activityId={activityId} date={formatDateYYYYMMDD(date!)} />
         </div>
       )}

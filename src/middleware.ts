@@ -10,5 +10,5 @@ export function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/activity/:path*', '/reservation'],
+  matcher: ['/activity/:path*', '/reservation', '/calendar'],
 };
