@@ -4,9 +4,10 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 interface Props {
   children: ReactNode;
   className?: string;
+  isLast?: boolean;
 }
 
-export default function Kebab({ children, className }: Props) {
+export default function Kebab({ children, className, isLast }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +34,9 @@ export default function Kebab({ children, className }: Props) {
         <Image src="/kebab.png" width={40} height={40} alt="kebab" />
       </button>
       {isOpen && (
-        <div className={`absolute right-[30px] rounded-lg bg-white shadow-lg`}>
+        <div
+          className={`absolute right-[30px] rounded-lg bg-white shadow-lg ${isLast ? 'bottom-[30px]' : ''}`}
+        >
           <div className="flex flex-col">{children}</div>
         </div>
       )}

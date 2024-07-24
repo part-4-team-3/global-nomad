@@ -50,21 +50,28 @@ export default function Main() {
   if (isError) return <div>error</div>;
 
   return (
-    <div className="h-[calc(100vh-406px)] overflow-y-scroll scrollbar-hide">
+    <div className="h-1200pxr overflow-y-scroll scrollbar-hide">
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
-          {page.data.activities.map((activity: Activity) => (
+          {page.data.activities.map((activity: Activity, index) => (
             <div key={activity.id} className="mb-[16px] lg:mb-[24px]">
-              <MyActivityCard {...activity} />
+              <MyActivityCard
+                {...activity}
+                isLast={
+                  pageIndex === data.pages.length - 1 && index === page.data.activities.length - 1
+                    ? true
+                    : false
+                }
+              />
             </div>
           ))}
         </div>
       ))}
-      {hasNextPage && !isFetchingNextPage && (
-        <div ref={ref} className="h-1pxr"></div> // 숨겨진 div, 무한 스크롤 트리거
-      )}
+      {hasNextPage && !isFetchingNextPage && <div ref={ref} className="h-1pxr"></div>}
       {isFetchingNextPage && (
-        <div>Loading more...</div> // 무한 스크롤 로딩 표시
+        <div className="flex w-full justify-center">
+          <LoadingSpinner />
+        </div>
       )}
     </div>
   );

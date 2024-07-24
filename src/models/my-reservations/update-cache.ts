@@ -1,5 +1,5 @@
 import { reservationsKeys } from '@/queries/reservations/query-keys';
-import { Reservation } from '@/types/reservation';
+import { Reservation, ReservationStatus } from '@/types/reservation';
 import { InfiniteData, QueryClient } from '@tanstack/react-query';
 
 type ReservationsPage = {
@@ -7,7 +7,7 @@ type ReservationsPage = {
   cursorId: number | null;
 };
 
-export default function afterCancel(queryClient: QueryClient, reservationId: number) {
+export function afterCancel(queryClient: QueryClient, reservationId: number) {
   let target: Reservation;
   [null, 'pending', 'canceled'].forEach((status) => {
     if (status === null) {
@@ -69,5 +69,35 @@ export default function afterCancel(queryClient: QueryClient, reservationId: num
         );
       }
     }
+  });
+}
+
+export function afterReview(queryClient: QueryClient, reservationId: number) {
+  const reservationStatuses: (ReservationStatus | null)[] = [
+    null,
+    'pending',
+    'confirmed',
+    'declined',
+    'canceled',
+    'completed',
+  ];
+  reservationStatuses.forEach((status) => {
+    queryClient.setQueryData<InfiniteData<ReservationsPage>>(
+      reservationsKeys.getMyReservations(status),
+      (oldData) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            reservations: page.reservations.map((reservation) => {
+              if (reservation.id === reservationId) {
+                return { ...reservation, reviewSubmitted: true };
+              } else return reservation;
+            }),
+          })),
+        };
+      },
+    );
   });
 }
