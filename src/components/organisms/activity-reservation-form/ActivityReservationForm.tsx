@@ -39,7 +39,7 @@ export default function ActivityReservationForm({
     ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
     : '날짜 선택하기';
   return (
-    <div className="sticky top-[0px] h-fit">
+    <div className="h-fit">
       <div className="relative hidden h-fit w-250pxr shrink-0 flex-col rounded-[8px] border border-var-gray6 md:flex lg:hidden">
         <div className="flex items-center gap-[4px] p-[24px] pb-[16px]">
           <PriceDisplay price={price} fontSize={24} />
