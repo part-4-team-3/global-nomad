@@ -27,7 +27,6 @@ export default function ActivityEditForm() {
     const fetchActivityDetails = async () => {
       try {
         const data: DetailActivityData = await getActivityDetails(activityId);
-        console.log(data);
         methods.reset(data);
         setStateData(data);
       } catch (err) {
@@ -40,7 +39,6 @@ export default function ActivityEditForm() {
     }
   }, [activityId]);
 
-  console.log(stateData);
   const mutation = useMutation({
     ...patchMutationOptions,
     onSuccess: () => {

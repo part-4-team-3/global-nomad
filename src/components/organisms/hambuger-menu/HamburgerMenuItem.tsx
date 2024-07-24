@@ -32,8 +32,8 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
   return (
     <>
       {isActive &&
-        menuItems.map((item) => (
-          <li key={item.href}>
+        menuItems.map((item, index) => (
+          <li key={index}>
             <Link
               href={item.href}
               className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}

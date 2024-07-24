@@ -86,8 +86,6 @@ export default function ActivityForm({ stateData }: Props) {
     }
   }, [stateData, setSchedules, setScheduleIds, setBannerImage, setUploadedImages, setSubImages]);
 
-  console.log(schedules);
-
   const getErrorMessage = (error: any): ReactNode => {
     return error ? <span className="text-red-500">{error.message}</span> : null;
   };
@@ -179,6 +177,9 @@ export default function ActivityForm({ stateData }: Props) {
           handleDeleteImage={handleDeleteImage}
         />
       </div>
+      <p className="text-18pxr font-normal text-var-gray1">
+        *이미지는 최대 4개까지 등록 가능합니다.
+      </p>
     </>
   );
 }
