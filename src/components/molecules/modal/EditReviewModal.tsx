@@ -1,13 +1,16 @@
+'use client';
+
 import Image from 'next/image';
 import Modal from './Modal';
 import Button from '@/components/atoms/button/Button';
 import { useModal } from '@/store/useModal';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, QueryClient } from '@tanstack/react-query';
 import { reviewReservationMutationOptions } from './../../../mutations/my-reservations/review';
 import StarRating from '../star-rating/starRating';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import CardImage from '@/components/atoms/card-image/CardImage';
+import { afterReview } from '@/models/my-reservations/update-cache';
 
 interface Props {
   id: number;
@@ -15,6 +18,7 @@ interface Props {
   title: string;
   date: string;
   price: number;
+  queryClient: QueryClient;
 }
 
 interface FormData {
@@ -22,7 +26,7 @@ interface FormData {
   content: string;
 }
 
-export default function EditReviewModal({ id, src, title, date, price }: Props) {
+export default function EditReviewModal({ id, src, title, date, price, queryClient }: Props) {
   const { setIsClose } = useModal();
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -43,6 +47,7 @@ export default function EditReviewModal({ id, src, title, date, price }: Props) 
       {
         onSuccess: () => {
           toast('후기가 작성되었습니다.');
+          afterReview(queryClient, id);
           closeModal();
         },
       },
@@ -65,10 +70,10 @@ export default function EditReviewModal({ id, src, title, date, price }: Props) 
           <div className="flex gap-8pxr md:gap-24pxr">
             <CardImage variant="modal" src={src} />
             <div className="flex flex-col gap-6pxr pb-[5px] md:gap-12pxr md:pb-[0px]">
-              <div className="leading-26pxr text-16pxr font-bold md:text-20pxr">{title}</div>
-              <div className="leading-24pxr py-[1px] text-14pxr md:text-18pxr">{date}</div>
+              <div className="text-16pxr font-bold leading-26pxr md:text-20pxr">{title}</div>
+              <div className="py-[1px] text-14pxr leading-24pxr md:text-18pxr">{date}</div>
               <div className="border-t border-gray-300"></div>
-              <span className="leading-24pxr md:leading-38pxr text-20pxr font-bold md:text-32pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
+              <span className="text-20pxr font-bold leading-24pxr md:text-32pxr md:leading-38pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
             </div>
           </div>
           <Controller
