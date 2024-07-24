@@ -17,7 +17,7 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
     setOptionOpen((prev) => !prev);
   };
   const handleDelete = async () => {
-    const message: any = await deleteActivity(activityId);
+    const message = await deleteActivity(activityId);
 
     if (message === '삭제가 완료되었습니다') {
       await revalidate('/');
