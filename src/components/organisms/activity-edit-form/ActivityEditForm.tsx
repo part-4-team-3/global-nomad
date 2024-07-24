@@ -10,11 +10,12 @@ import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { useEffect, useState } from 'react';
+import { DetailActivityData } from '@/types/activity';
 
 export default function ActivityEditForm() {
   const params = useParams();
   const activityId = Number(params.id);
-  const [stateData, setStateData] = useState<any>();
+  const [stateData, setStateData] = useState<DetailActivityData>();
   const methods = useForm();
   const { setIsOpen } = useModal();
 
@@ -25,7 +26,8 @@ export default function ActivityEditForm() {
   useEffect(() => {
     const fetchActivityDetails = async () => {
       try {
-        const data = await getActivityDetails(activityId);
+        const data: DetailActivityData = await getActivityDetails(activityId);
+        console.log(data);
         methods.reset(data);
         setStateData(data);
       } catch (err) {

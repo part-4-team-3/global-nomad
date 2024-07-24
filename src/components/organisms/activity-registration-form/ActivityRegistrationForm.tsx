@@ -35,7 +35,7 @@ export default function ActivityRegistrationForm() {
     },
   });
 
-  const submit = (data: ActivitySettingData) => {
+  const submit = () => {
     const formValues = methods.getValues();
 
     if (!formValues.bannerImageUrl) {
@@ -52,12 +52,18 @@ export default function ActivityRegistrationForm() {
       alert('스케줄을 등록해주세요');
       return;
     }
-    mutation.mutate({
-      ...data,
+
+    const body: ActivitySettingData = {
+      title: formValues.title,
+      category: formValues.category,
+      description: formValues.description,
+      price: formValues.price,
+      address: formValues.address,
       schedules: methods.getValues('schedules'),
       bannerImageUrl: methods.getValues('bannerImageUrl'),
       subImageUrls: methods.getValues('subImageUrls'),
-    });
+    };
+    mutation.mutate(body);
   };
 
   return (

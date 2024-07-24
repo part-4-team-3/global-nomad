@@ -13,6 +13,10 @@ interface Props {
   stateData?: DetailActivityData;
 }
 
+const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+const containerClass = 'flex flex-col gap-[.75rem] md:gap-[1rem] lg:gap-[1.5rem]';
+const inputTitleClass = 'text-var-black text-1.25remr font-bold leading-[1.625rem] md:text-1.5remr';
+
 export default function ActivityForm({ stateData }: Props) {
   const {
     register,
@@ -51,9 +55,6 @@ export default function ActivityForm({ stateData }: Props) {
     handleUploadImage,
     handleDeleteImage,
   } = useImageUploader();
-  const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
-  const containerClass = 'flex flex-col gap-[12px] md:gap-[16px] lg:gap-[24px]';
-  const inputTitleClass = 'text-var-black text-20pxr font-bold leading-[26px] md:text-24pxr';
 
   setValue('schedules', schedules);
   setValue('bannerImageUrl', bannerImage);
