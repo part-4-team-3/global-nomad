@@ -23,7 +23,7 @@ export function ActivityReservationSelector({
   onClose,
   onSelect,
 }: Props) {
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date>();
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | undefined>();
 
   const formattedDate = date ? format(date, 'yyyy-MM-dd') : '';
