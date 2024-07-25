@@ -18,7 +18,7 @@ export default function NotificationModal({ modalKey, isLoading, fetchNextPage }
   return (
     <>
       {isOpen && isSelected && (
-        <div className="absolute right-[24px] top-[82px] z-[80] flex w-[90%] max-w-368pxr flex-col gap-[16px] rounded-[10px] border border-var-gray5 bg-var-green2 p-[20px] shadow-[0_2px_8px_0_rgba(120,116,134,0.25)]">
+        <div className="fixed left-[0] top-[0] z-[80] flex w-full flex-col gap-[16px] border border-var-gray5 bg-var-green2 p-[20px] shadow-[0_2px_8px_0_rgba(120,116,134,0.25)] md:absolute md:left-unset md:right-[24px] md:top-[82px] md:w-[90%] md:max-w-368pxr md:rounded-[10px]">
           <div className="flex items-center justify-between">
             <h2 className="text-20pxr font-[700]">알림 {totalCount}개</h2>
             <button onClick={setIsClose}>
