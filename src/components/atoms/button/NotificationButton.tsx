@@ -1,23 +1,29 @@
 'use client';
 
 import NotificationModal from '@/components/templates/header/NotificationModal';
-import { NotificationProvider, useNotification } from '@/models/header/notification-context';
+import { useNotification } from '@/models/header/notification-context';
 import { useGetMyNotifications } from '@/queries/my-notifications/get-my-notifications';
 import { useModal } from '@/store/useModal';
 import Image from 'next/image';
 import { useEffect } from 'react';
 
+const PAGE_SIZE = 4;
+
 export default function NotificationButton() {
   const { isOpen, setIsOpen } = useModal();
   const { notificationData, setNotificationData } = useNotification();
 
-  const notificationResponse = useGetMyNotifications();
+  const {
+    data: notificationResponse,
+    isLoading,
+    fetchNextPage,
+  } = useGetMyNotifications({ size: PAGE_SIZE, cursorId: null });
 
   useEffect(() => {
-    if (notificationResponse.data) {
-      setNotificationData(notificationResponse.data);
+    if (notificationResponse) {
+      setNotificationData(notificationResponse.pages[0].data);
     }
-  }, [notificationResponse.data, setNotificationData]);
+  }, [notificationResponse, setNotificationData]);
 
   return (
     <>
@@ -27,7 +33,13 @@ export default function NotificationButton() {
           {notificationData?.totalCount}
         </div>
       </button>
-      {isOpen && <NotificationModal modalKey="notification" />}
+      {isOpen && (
+        <NotificationModal
+          modalKey="notification"
+          isLoading={isLoading}
+          fetchNextPage={fetchNextPage}
+        />
+      )}
     </>
   );
 }

@@ -1,17 +1,17 @@
 import NotificationList from '@/components/organisms/notification-list/NotificationList';
 import { useNotification } from '@/models/header/notification-context';
-import { GetMyNotificationsResponse } from '@/queries/my-notifications/get-my-notifications';
 import { useModal } from '@/store/useModal';
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   modalKey: string;
+  isLoading: boolean;
+  fetchNextPage: () => void;
 }
 
-export default function NotificationModal({ modalKey }: Props) {
+export default function NotificationModal({ modalKey, isLoading, fetchNextPage }: Props) {
   const { key, isOpen, setIsClose } = useModal();
-  const { notificationData, setNotificationData } = useNotification();
+  const { notificationData } = useNotification();
 
   const isSelected = key === modalKey;
 
@@ -25,7 +25,7 @@ export default function NotificationModal({ modalKey }: Props) {
               <Image src="close-bold.svg" alt="X" width={24} height={24} />
             </button>
           </div>
-          <NotificationList />
+          <NotificationList isLoading={isLoading} fetchNextPage={fetchNextPage} />
         </div>
       )}
     </>

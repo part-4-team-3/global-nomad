@@ -1,9 +1,10 @@
 import { GetMyNotificationsResponse } from '@/queries/my-notifications/get-my-notifications';
+import { NotificationsData } from '@/types/notification';
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react';
 
 interface NotificationContextValue {
-  notificationData: GetMyNotificationsResponse | undefined;
-  setNotificationData: Dispatch<SetStateAction<GetMyNotificationsResponse | undefined>>;
+  notificationData: NotificationsData | undefined;
+  setNotificationData: Dispatch<SetStateAction<NotificationsData | undefined>>;
 }
 
 const NotificationContext = createContext<NotificationContextValue>({
@@ -16,7 +17,7 @@ interface Props {
 }
 
 export function NotificationProvider({ children }: Props) {
-  const [notificationData, setNotificationData] = useState<GetMyNotificationsResponse | undefined>(
+  const [notificationData, setNotificationData] = useState<NotificationsData | undefined>(
     undefined,
   );
 

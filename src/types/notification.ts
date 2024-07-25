@@ -7,3 +7,9 @@ export interface Notification {
   updatedAt: Date;
   deletedAt: Date | null;
 }
+
+export interface NotificationsData {
+  cursorId: number;
+  notifications: Notification[];
+  totalCount: number;
+}
