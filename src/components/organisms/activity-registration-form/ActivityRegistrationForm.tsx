@@ -8,6 +8,7 @@ import { ActivitySettingData } from '@/types/activity';
 import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import AlertModal from '@/components/molecules/modal/AlertModal';
+import { toast } from 'react-toastify';
 
 export default function ActivityRegistrationForm() {
   const methods = useForm<ActivitySettingData>({
@@ -39,12 +40,12 @@ export default function ActivityRegistrationForm() {
     const formValues = methods.getValues();
 
     if (!formValues.bannerImageUrl) {
-      alert('배너 이미지를 등록해주세요');
+      toast('배너 이미지를 등록해주세요.');
       return;
     }
 
     if (!formValues.schedules || formValues.schedules.length === 0) {
-      alert('스케줄을 등록해주세요');
+      toast('스케줄을 등록해주세요.');
       return;
     }
 

@@ -39,7 +39,7 @@ export default function Header() {
               </NotificationProvider>
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
-                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />;
+                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
               </div>
               <div className="block md:hidden">
                 <HamburgerMenu />

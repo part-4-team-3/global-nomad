@@ -115,7 +115,11 @@ export default function ActivityForm({ stateData }: Props) {
           />
         )}
       />
-      <Input size="full" placeholder="설명" {...register('description')} />
+      <textarea
+        {...register('description')}
+        placeholder="설명"
+        className="h-200pxr rounded-md border border-var-gray2 px-20pxr py-16pxr"
+      />
       <div className={containerClass}>
         <label className={inputTitleClass}>가격</label>
         <Input
