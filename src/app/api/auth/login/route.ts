@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
     // await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
     // await redis.expire(user.id.toString(), 100000000000);
     setCookieDB(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
-    console.log(cookieDB);
 
     const res = NextResponse.json(response.data, { status: response.status });
     res.cookies.set('accessToken', accessToken, {

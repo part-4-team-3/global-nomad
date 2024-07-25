@@ -15,14 +15,11 @@ export const axiosByServer = axios.create({
 axiosByServer.interceptors.request.use(async (config) => {
   // 쿠키에서 userId를 가져옵니다.
   const userId = await getCookie('userId');
-  console.log(userId);
-  console.log(cookieDB);
+
   if (userId) {
     // redis에서 userId를 키로하여 accessToken을 가져옵니다.
     // const usersToken = await redis.get(userId!);
     const usersToken = getCookieDB(userId!);
-    console.log(usersToken);
-
     // accessToken을 헤더에 추가합니다.
     const accessToken = JSON.parse(usersToken!).accessToken;
     config.headers.Authorization = `Bearer ${accessToken}`;

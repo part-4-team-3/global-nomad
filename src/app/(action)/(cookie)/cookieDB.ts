@@ -16,10 +16,18 @@ function saveCookieDB() {
 }
 
 export function setCookieDB(key: string, value: string) {
+  deleteCookieDB(key);
   cookieDB[key] = value;
   saveCookieDB();
 }
 
 export function getCookieDB(key: string): string | undefined {
   return cookieDB[key];
+}
+
+export function deleteCookieDB(key: string): void {
+  if (key in cookieDB) {
+    delete cookieDB[key];
+    saveCookieDB();
+  }
 }
