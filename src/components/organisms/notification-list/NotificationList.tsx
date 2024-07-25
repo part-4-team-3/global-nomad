@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function NotificationList({ isLoading, fetchNextPage }: Props) {
-  const { notificationData } = useNotification();
+  const { notificationList } = useNotification();
   const divRef = useRef<HTMLDivElement | null>(null);
   const [observeRef, setObserveRef] = useState<HTMLDivElement | null>(null);
 
@@ -25,10 +25,10 @@ export default function NotificationList({ isLoading, fetchNextPage }: Props) {
     fetchNextPage,
   });
 
-  if (!notificationData?.notifications.length) return <p>알림이 없습니다.</p>;
+  if (!notificationList?.length) return <p>알림이 없습니다.</p>;
   return (
     <ol className="flex max-h-[50vh] flex-col gap-[8px] overflow-auto">
-      {notificationData?.notifications.map((notification) => (
+      {notificationList?.map((notification) => (
         <NotificationCard key={notification.id} notification={notification} />
       ))}
       <div className="h-1pxr" ref={divRef} />

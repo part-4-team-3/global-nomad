@@ -1,15 +1,19 @@
 import { GetMyNotificationsResponse } from '@/queries/my-notifications/get-my-notifications';
-import { NotificationsData } from '@/types/notification';
+import { Notification, NotificationsData } from '@/types/notification';
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from 'react';
 
 interface NotificationContextValue {
-  notificationData: NotificationsData | undefined;
-  setNotificationData: Dispatch<SetStateAction<NotificationsData | undefined>>;
+  totalCount: number | undefined;
+  setTotalCount: Dispatch<SetStateAction<number | undefined>>;
+  notificationList: Notification[] | undefined;
+  setNotificationList: Dispatch<SetStateAction<Notification[] | undefined>>;
 }
 
 const NotificationContext = createContext<NotificationContextValue>({
-  notificationData: undefined,
-  setNotificationData: () => {},
+  totalCount: undefined,
+  setTotalCount: () => {},
+  notificationList: undefined,
+  setNotificationList: () => {},
 });
 
 interface Props {
@@ -17,19 +21,21 @@ interface Props {
 }
 
 export function NotificationProvider({ children }: Props) {
-  const [notificationData, setNotificationData] = useState<NotificationsData | undefined>(
-    undefined,
-  );
+  const [notificationList, setNotificationList] = useState<Notification[] | undefined>(undefined);
+  const [totalCount, setTotalCount] = useState<number | undefined>(undefined);
 
   return (
-    <NotificationContext.Provider value={{ notificationData, setNotificationData }}>
+    <NotificationContext.Provider
+      value={{ totalCount, setTotalCount, notificationList, setNotificationList }}
+    >
       {children}
     </NotificationContext.Provider>
   );
 }
 
 export function useNotification() {
-  const { notificationData, setNotificationData } = useContext(NotificationContext);
+  const { totalCount, setTotalCount, notificationList, setNotificationList } =
+    useContext(NotificationContext);
 
-  return { notificationData, setNotificationData };
+  return { totalCount, setTotalCount, notificationList, setNotificationList };
 }
