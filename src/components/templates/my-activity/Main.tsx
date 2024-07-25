@@ -49,20 +49,17 @@ export default function Main() {
 
   if (isError) return <div>error</div>;
 
+  const firstDataCount = data?.pages[0].data.totalCount ?? 0;
+  const height =
+    firstDataCount > 3 ? 'h-1200pxr' : firstDataCount > 1 ? 'h-800pxr' : 'h-[calc(100vh-410px)]';
+
   return (
-    <div className="h-1200pxr overflow-y-scroll scrollbar-hide">
+    <div className={`${height} overflow-y-scroll scrollbar-hide`}>
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.data.activities.map((activity: Activity, index) => (
             <div key={activity.id} className="mb-[16px] lg:mb-[24px]">
-              <MyActivityCard
-                {...activity}
-                isLast={
-                  pageIndex === data.pages.length - 1 && index === page.data.activities.length - 1
-                    ? true
-                    : false
-                }
-              />
+              <MyActivityCard {...activity} />
             </div>
           ))}
         </div>

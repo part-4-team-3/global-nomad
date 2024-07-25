@@ -1,3 +1,4 @@
+import KebabMenu from '@/components/atoms/kebab-menu/KebabMenu';
 import Image from 'next/image';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
@@ -7,16 +8,16 @@ interface Props {
   isLast?: boolean;
 }
 
-export default function Kebab({ children, className, isLast }: Props) {
+export default function KebabButton({ children, className }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const difRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+    if (difRef.current && !difRef.current.contains(event.target as Node)) {
       setIsOpen(false);
     }
   };
@@ -29,17 +30,11 @@ export default function Kebab({ children, className, isLast }: Props) {
   }, []);
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative" ref={difRef}>
       <button className={className} onClick={toggleMenu}>
         <Image src="/kebab.png" width={40} height={40} alt="kebab" />
       </button>
-      {isOpen && (
-        <div
-          className={`absolute right-[30px] rounded-lg bg-white shadow-lg ${isLast ? 'bottom-[30px]' : ''}`}
-        >
-          <div className="flex flex-col">{children}</div>
-        </div>
-      )}
+      {isOpen && <KebabMenu>{children}</KebabMenu>}
     </div>
   );
 }

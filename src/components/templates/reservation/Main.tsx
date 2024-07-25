@@ -64,8 +64,12 @@ export default function Main({ status }: Props) {
 
   if (isError) return <div>error</div>;
 
+  const firstDataCount = data?.pages[0].totalCount ?? 0;
+  const height =
+    firstDataCount > 3 ? 'h-1200pxr' : firstDataCount > 1 ? 'h-800pxr' : 'h-[calc(100vh-410px)]';
+
   return (
-    <div className="h-1200pxr overflow-y-scroll scrollbar-hide">
+    <div className={`${height} overflow-y-scroll scrollbar-hide`}>
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.reservations.map((reservation: Reservation) => (
