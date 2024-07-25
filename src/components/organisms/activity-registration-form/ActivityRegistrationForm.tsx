@@ -35,7 +35,7 @@ export default function ActivityRegistrationForm() {
     },
   });
 
-  const submit = (data: ActivitySettingData) => {
+  const submit = () => {
     const formValues = methods.getValues();
 
     if (!formValues.bannerImageUrl) {
@@ -43,21 +43,22 @@ export default function ActivityRegistrationForm() {
       return;
     }
 
-    if (!formValues.subImageUrls || formValues.subImageUrls.length === 0) {
-      alert('소개이미지를 등록해주세요');
-      return;
-    }
-
     if (!formValues.schedules || formValues.schedules.length === 0) {
       alert('스케줄을 등록해주세요');
       return;
     }
-    mutation.mutate({
-      ...data,
+
+    const body: ActivitySettingData = {
+      title: formValues.title,
+      category: formValues.category,
+      description: formValues.description,
+      price: formValues.price,
+      address: formValues.address,
       schedules: methods.getValues('schedules'),
       bannerImageUrl: methods.getValues('bannerImageUrl'),
       subImageUrls: methods.getValues('subImageUrls'),
-    });
+    };
+    mutation.mutate(body);
   };
 
   return (

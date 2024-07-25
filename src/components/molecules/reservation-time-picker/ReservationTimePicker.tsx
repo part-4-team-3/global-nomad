@@ -1,7 +1,5 @@
 import { Calendar } from '@/components/ui/calendar';
-import Input from '@/components/atoms/input/Input';
 import Image from 'next/image';
-import useTimeSlot from '@/models/activity/use-time-slot';
 import TimeSlotList from './TimeSlotList';
 import { TimeSlotData } from '@/types/activity';
 import TimeSlotInput from '@/components/atoms/input/TimeSlotInput';

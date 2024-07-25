@@ -13,6 +13,10 @@ interface Props {
   stateData?: DetailActivityData;
 }
 
+const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+const containerClass = 'flex flex-col gap-[.75rem] md:gap-[1rem] lg:gap-[1.5rem]';
+const inputTitleClass = 'text-var-black text-1.25remr font-bold leading-[1.625rem] md:text-1.5remr';
+
 export default function ActivityForm({ stateData }: Props) {
   const {
     register,
@@ -51,9 +55,6 @@ export default function ActivityForm({ stateData }: Props) {
     handleUploadImage,
     handleDeleteImage,
   } = useImageUploader();
-  const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
-  const containerClass = 'flex flex-col gap-[12px] md:gap-[16px] lg:gap-[24px]';
-  const inputTitleClass = 'text-var-black text-20pxr font-bold leading-[26px] md:text-24pxr';
 
   setValue('schedules', schedules);
   setValue('bannerImageUrl', bannerImage);
@@ -65,25 +66,25 @@ export default function ActivityForm({ stateData }: Props) {
 
   /* 서버에서 받아온 데이터 state에 저장 */
   useEffect(() => {
+    const timeIds = stateData?.schedules.map((time) => time.id);
     const ids = stateData?.subImages.map((image) => image.id);
     const imgs = stateData?.subImages.map((image) => image.imageUrl);
-    const timeIds = stateData?.schedules.map((time) => time.id);
 
-    if (ids?.length && timeIds?.length && imgs?.length) {
+    if (timeIds) {
+      setBannerImage(stateData?.bannerImageUrl || '');
+      setSchedules(stateData?.schedules || []);
+      setScheduleIds(timeIds);
+    }
+
+    if (ids?.length && imgs?.length) {
       const imagesWithIds = imgs.map((url, index) => ({
         url,
         id: ids[index],
       }));
-
-      setSchedules(stateData?.schedules || []);
-      setScheduleIds(timeIds);
-      setBannerImage(stateData?.bannerImageUrl || '');
       setUploadedImages(imgs);
       setSubImages(imagesWithIds);
     }
   }, [stateData, setSchedules, setScheduleIds, setBannerImage, setUploadedImages, setSubImages]);
-
-  console.log(schedules);
 
   const getErrorMessage = (error: any): ReactNode => {
     return error ? <span className="text-red-500">{error.message}</span> : null;
@@ -176,6 +177,9 @@ export default function ActivityForm({ stateData }: Props) {
           handleDeleteImage={handleDeleteImage}
         />
       </div>
+      <p className="text-18pxr font-normal text-var-gray1">
+        *이미지는 최대 4개까지 등록 가능합니다.
+      </p>
     </>
   );
 }

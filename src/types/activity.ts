@@ -56,13 +56,12 @@ export interface DetailActivityData {
   reviewCount: number;
   createdAt: string;
   updatedAt: string;
-  subImages: [
-    {
-      imageUrl: string;
-      id: number;
-    },
-  ];
-  schedules: [{ id: number; endTime: string; startTime: string; date: string }];
+  subImages: {
+    id: number;
+    imageUrl: string;
+  }[];
+
+  schedules: { id: number; endTime: string; startTime: string; date: string }[];
 }
 export interface ActivitySettingData {
   title: string;

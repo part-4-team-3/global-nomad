@@ -10,11 +10,12 @@ import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { useEffect, useState } from 'react';
+import { DetailActivityData } from '@/types/activity';
 
 export default function ActivityEditForm() {
   const params = useParams();
   const activityId = Number(params.id);
-  const [stateData, setStateData] = useState<any>();
+  const [stateData, setStateData] = useState<DetailActivityData>();
   const methods = useForm();
   const { setIsOpen } = useModal();
 
@@ -25,7 +26,7 @@ export default function ActivityEditForm() {
   useEffect(() => {
     const fetchActivityDetails = async () => {
       try {
-        const data = await getActivityDetails(activityId);
+        const data: DetailActivityData = await getActivityDetails(activityId);
         methods.reset(data);
         setStateData(data);
       } catch (err) {
@@ -38,7 +39,6 @@ export default function ActivityEditForm() {
     }
   }, [activityId]);
 
-  console.log(stateData);
   const mutation = useMutation({
     ...patchMutationOptions,
     onSuccess: () => {
@@ -51,11 +51,6 @@ export default function ActivityEditForm() {
 
     if (!formValues.bannerImageUrl) {
       alert('배너 이미지를 등록해주세요');
-      return;
-    }
-
-    if (!formValues.subImageUrls || formValues.subImageUrls.length === 0) {
-      alert('소개이미지를 등록해주세요');
       return;
     }
 
