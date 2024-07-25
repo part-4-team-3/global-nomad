@@ -50,11 +50,11 @@ export default function Main() {
   if (isError) return <div>error</div>;
 
   const firstDataCount = data?.pages[0].data.totalCount ?? 0;
+  const height =
+    firstDataCount > 3 ? 'h-1200pxr' : firstDataCount > 1 ? 'h-800pxr' : 'h-[calc(100vh-410px)]';
 
   return (
-    <div
-      className={`${firstDataCount > 3 ? 'h-1200pxr' : 'h-[calc(100vh-410px)]'} overflow-y-scroll scrollbar-hide`}
-    >
+    <div className={`${height} overflow-y-scroll scrollbar-hide`}>
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.data.activities.map((activity: Activity, index) => (
