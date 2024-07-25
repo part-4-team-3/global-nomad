@@ -2,7 +2,7 @@
 
 import fs from 'fs/promises';
 
-const cookieDBPath = './cookieDB.json'; // cookieDBPath 변수 정의
+const cookieDBPath = './tmp/cookieDB.json'; // cookieDBPath 변수 정의
 
 let cookieDB: { [key: string]: string } = {};
 
