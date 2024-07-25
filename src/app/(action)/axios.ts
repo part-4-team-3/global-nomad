@@ -1,9 +1,9 @@
 'use server';
 
-import redis from '@/lib/redis';
 import axios, { AxiosError } from 'axios';
 import { getCookie } from './(cookie)/cookie';
 import { NextResponse } from 'next/server';
+import { cookieDB, getCookieDB, setCookieDB } from './(cookie)/cookieDB';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -18,8 +18,8 @@ axiosByServer.interceptors.request.use(async (config) => {
 
   if (userId) {
     // redis에서 userId를 키로하여 accessToken을 가져옵니다.
-    const usersToken = await redis.get(userId!);
-
+    // const usersToken = await redis.get(userId!);
+    const usersToken = getCookieDB(userId!);
     // accessToken을 헤더에 추가합니다.
     const accessToken = JSON.parse(usersToken!).accessToken;
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -43,7 +43,8 @@ axiosByServer.interceptors.response.use(
       const userId = await getCookie('userId');
 
       // redis에서 userId를 키로하여 refreshToken
-      const usersToken = await redis.get(userId!);
+      // const usersToken = await redis.get(userId!);
+      const usersToken = getCookieDB(userId!);
 
       if (!usersToken) throw error;
 
@@ -57,11 +58,15 @@ axiosByServer.interceptors.response.use(
 
       // 새로운 accessToken과 refreshToken을 redis에 저장합니다.
       const { accessToken: newAccessToken, refreshToken: newRefreshToken } = data;
-      await redis.set(
+      // await redis.set(
+      //   userId!,
+      //   JSON.stringify({ accessToken: newAccessToken, refreshToken: newRefreshToken }),
+      // );
+      // await redis.expire(userId!.toString(), 100000000000);
+      setCookieDB(
         userId!,
         JSON.stringify({ accessToken: newAccessToken, refreshToken: newRefreshToken }),
       );
-      await redis.expire(userId!.toString(), 100000000000);
 
       // 새로운 accessToken을 헤더에 추가하여 요청을 재시도합니다.
       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
