@@ -13,11 +13,7 @@ export default function NotificationButton() {
   const { isOpen, setIsOpen, setIsClose } = useModal();
   const { totalCount, setTotalCount, setNotificationList } = useNotification();
 
-  const {
-    data: notificationResponse,
-    isLoading,
-    fetchNextPage,
-  } = useGetMyNotifications({ size: PAGE_SIZE, cursorId: null });
+  const { data: notificationResponse, isLoading, fetchNextPage } = useGetMyNotifications(PAGE_SIZE);
 
   const handleClick = () => {
     if (isOpen) {

@@ -12,9 +12,7 @@ export interface GetMyNotificationsResponse {
   data: NotificationsData;
 }
 
-export const useGetMyNotifications = (data: GetMyNotificationsData) => {
-  const { size, cursorId } = data;
-
+export const useGetMyNotifications = (size: number) => {
   return useInfiniteQuery<GetMyNotificationsResponse>({
     queryKey: notificationsKeys.getMyNotifications,
     queryFn: ({ pageParam }) => {
