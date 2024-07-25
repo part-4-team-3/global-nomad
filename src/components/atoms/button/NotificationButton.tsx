@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 const PAGE_SIZE = 4;
 
 export default function NotificationButton() {
-  const { isOpen, setIsOpen } = useModal();
+  const { isOpen, setIsOpen, setIsClose } = useModal();
   const { notificationData, setNotificationData } = useNotification();
 
   const {
@@ -18,6 +18,14 @@ export default function NotificationButton() {
     isLoading,
     fetchNextPage,
   } = useGetMyNotifications({ size: PAGE_SIZE, cursorId: null });
+
+  const handleClick = () => {
+    if (isOpen) {
+      setIsClose();
+    } else {
+      setIsOpen('notification');
+    }
+  };
 
   useEffect(() => {
     if (notificationResponse) {
@@ -27,7 +35,7 @@ export default function NotificationButton() {
 
   return (
     <>
-      <button onClick={() => setIsOpen('notification')} className="relative">
+      <button onClick={handleClick} className="relative">
         <Image src="/bell.svg" alt="알림" width={20} height={20} />
         <div className="absolute right-[-2px] top-[0px] size-10pxr rounded-[50%] bg-var-red-dark text-8pxr text-white">
           {notificationData?.totalCount}

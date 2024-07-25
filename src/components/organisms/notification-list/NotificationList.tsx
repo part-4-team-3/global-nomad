@@ -27,7 +27,7 @@ export default function NotificationList({ isLoading, fetchNextPage }: Props) {
 
   if (!notificationData?.notifications.length) return <p>알림이 없습니다.</p>;
   return (
-    <ol className="flex flex-col gap-[8px]">
+    <ol className="flex max-h-[50vh] flex-col gap-[8px] overflow-auto">
       {notificationData?.notifications.map((notification) => (
         <NotificationCard key={notification.id} notification={notification} />
       ))}
