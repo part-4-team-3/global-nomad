@@ -22,10 +22,9 @@ axiosByServer.interceptors.request.use(async (config) => {
     const usersToken = await getCookieDB(userId!);
 
     // accessToken을 헤더에 추가합니다.
-
     if (usersToken) {
       const accessToken = JSON.parse(usersToken!).accessToken;
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${'asdasd'}`;
     }
   }
 
