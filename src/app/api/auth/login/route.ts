@@ -1,5 +1,5 @@
-import { cookieDB, setCookieDB } from '@/app/(action)/(cookie)/cookieDB';
 // import redis from '@/lib/redis';
+import { setCookieDB } from '@/lib/cookieDB';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
     // await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
     // await redis.expire(user.id.toString(), 100000000000);
-    setCookieDB(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
+    await setCookieDB(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
 
     const res = NextResponse.json(response.data, { status: response.status });
     res.cookies.set('accessToken', accessToken, {
