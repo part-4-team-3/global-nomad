@@ -62,7 +62,9 @@ export default async function FilteredActivities({ searchParams }: Props) {
         </DropdownMenu>
       </div>
       <h2 className="mt-[22px] text-18pxr font-[700] md:mt-[40px] md:text-36pxr">
-        {searchParams.category ? searchParams.category : '🛼 모든 체험'}
+        {searchParams.category === '모든 체험' || !searchParams.category
+          ? '🛼 모든 체험'
+          : searchParams.category}
       </h2>
       <ActivityCardList activityList={activities} />
       {!totalCount ? (
