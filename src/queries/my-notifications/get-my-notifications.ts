@@ -3,11 +3,6 @@ import { NotificationsData } from '@/types/notification';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { notificationsKeys } from './query-keys';
 
-interface GetMyNotificationsData {
-  size: number;
-  cursorId: number | null;
-}
-
 export interface GetMyNotificationsResponse {
   data: NotificationsData;
 }
