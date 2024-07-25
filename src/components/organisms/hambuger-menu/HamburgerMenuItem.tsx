@@ -8,7 +8,7 @@ import useUser from '@/store/useUser';
 
 import { useRouter } from 'next/navigation';
 import { RefObject, useEffect } from 'react';
-import { deleteCookieDB } from '@/app/(action)/(cookie)/cookieDB';
+import { deleteCookieDB } from '@/lib/cookieDB';
 
 interface Props {
   isActive: boolean;
@@ -24,8 +24,8 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
   const activeMenuStyle = 'text-var-green-dark  bg-var-green2 rounded-[12px]';
 
   /** 로그아웃 로직 */
-  const handleLogout = () => {
-    deleteCookieDB('userId');
+  const handleLogout = async () => {
+    await deleteCookieDB('userId');
     clearUser();
     router.push('/signin');
   };
