@@ -61,6 +61,7 @@ export function ActivityReservationSelector({
             {scheduleHash[formattedDate].map((schedule) => (
               <ScheduleButton
                 key={schedule.id}
+                isSelected={selectedSchedule?.id === schedule.id}
                 onClick={() => setSelectedSchedule({ ...schedule, date: formattedDate })}
               >
                 {schedule.startTime}~{schedule.endTime}
