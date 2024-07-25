@@ -4,15 +4,13 @@ import CardImage from '@/components/atoms/card-image/CardImage';
 import { Activity } from '@/types/activity';
 import ReviewRating from '@/components/atoms/review-rating/ReviewRating';
 import Link from 'next/link';
-import Kebab from '@/components/atoms/kebab/Kebab';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteActivityMutationOptions } from './../../../mutations/my-activities/delete';
 import { toast } from 'react-toastify';
 import afterDelete from '@/models/my-activities/update-cache';
+import KebabButton from '../kebab-button/KebabButton';
 
-interface Props extends Activity {
-  isLast: boolean;
-}
+interface Props extends Activity {}
 
 export default function MyActivityCard({
   id,
@@ -21,7 +19,6 @@ export default function MyActivityCard({
   rating,
   reviewCount,
   price,
-  isLast,
 }: Props) {
   const queryClient = useQueryClient();
 
@@ -49,7 +46,7 @@ export default function MyActivityCard({
           </div>
           <div className="flex h-32pxr w-full items-center justify-between md:h-40pxr">
             <span className="text-16pxr leading-19pxr md:text-20pxr md:leading-24pxr lg:text-24pxr lg:leading-29pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
-            <Kebab className="w-32pxr md:w-40pxr" isLast={isLast}>
+            <KebabButton className="w-32pxr md:w-40pxr">
               <Link href={`/myactivity/${id}/edit`}>
                 <button className="h-58pxr w-160pxr hover:bg-gray-100">수정하기</button>
               </Link>
@@ -61,7 +58,7 @@ export default function MyActivityCard({
               >
                 삭제하기
               </button>
-            </Kebab>
+            </KebabButton>
           </div>
         </div>
       </div>
