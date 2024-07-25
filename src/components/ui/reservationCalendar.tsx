@@ -91,7 +91,6 @@ function ReservationCalendar({
         ),
         Day: ({ date, ...props }) => {
           const onClickDay = () => {
-            console.log('clicked');
             setDate(date);
             setIsOpen('reservation-info');
           };

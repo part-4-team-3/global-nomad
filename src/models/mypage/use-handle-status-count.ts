@@ -20,12 +20,13 @@ interface ScheduleStatus {
  * - `statusCount`: 각 상태(`pending`, `confirmed`, `declined`)별 카운트를 포함하는 `ScheduleStatus` 객체입니다.
  *                  예를 들어, `statusCount.pending`은 대기 중인 예약의 수를 나타냅니다.
  */
-export const useHandleStatusCount = (selectedSchedule: ReservedSchedule | null) => {
-  const [statusCount, setStatusCount] = useState<ScheduleStatus>({
-    pending: 0,
-    confirmed: 0,
-    declined: 0,
-  });
+export const useHandleStatusCount = (
+  selectedSchedule: ReservedSchedule | null,
+  totalStatus: { pending: number; confirmed: number; declined: number } | null,
+) => {
+  const [statusCount, setStatusCount] = useState<ScheduleStatus>(
+    totalStatus || { pending: 0, confirmed: 0, declined: 0 },
+  );
 
   const handleChangeStatusCount = ({ declined, confirmed, pending }: ScheduleStatus) => {
     setStatusCount((prev) => {
@@ -39,8 +40,10 @@ export const useHandleStatusCount = (selectedSchedule: ReservedSchedule | null) 
   };
 
   useEffect(() => {
-    handleChangeStatusCount(selectedSchedule?.count ?? { declined: 0, confirmed: 0, pending: 0 });
-  }, [selectedSchedule]);
+    handleChangeStatusCount(
+      selectedSchedule?.count || totalStatus || { pending: 0, confirmed: 0, declined: 0 },
+    );
+  }, [selectedSchedule, totalStatus]);
 
   return { statusCount };
 };
