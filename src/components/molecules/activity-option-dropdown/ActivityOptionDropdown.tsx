@@ -13,7 +13,7 @@ interface Props {
 export default function ActivityOptionDropdown({ activityId }: Props) {
   const [optionOpen, setOptionOpen] = useState(false);
   const router = useRouter();
-  const handleOptionClick = () => {
+  const handleToggleClick = () => {
     setOptionOpen((prev) => !prev);
   };
   const handleDelete = async () => {
@@ -29,7 +29,7 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
   };
   return (
     <div className="flex items-center justify-center">
-      <button onClick={handleOptionClick}>
+      <button onClick={handleToggleClick}>
         <Image src="/meatball-icon.svg" width={40} height={40} alt="options" />
       </button>
       <div className="h-1pxr w-1pxr">
