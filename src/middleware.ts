@@ -7,17 +7,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/signin', req.url));
   }
 
-  // Fetch the request to check for 401 status
-  const response = await fetch(req.url, {
-    headers: req.headers,
-    method: req.method,
-    body: req.body,
-  });
-
-  if (response.status === 401) {
-    return NextResponse.redirect(new URL('/signin', req.url));
-  }
-
   return NextResponse.next();
 }
 
