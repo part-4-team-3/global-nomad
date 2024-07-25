@@ -54,26 +54,28 @@ export default function ActivityReservationBar({
     : '날짜 선택하기';
 
   return (
-    <div className="fixed bottom-[0px] left-[0px] right-[0px] z-10 flex w-screen justify-between border-t border-[#a1a1a1] bg-white p-[16px] md:hidden lg:hidden">
-      <form onSubmit={handleSubmit(handleReservation)} className="flex flex-col gap-8pxr">
-        <div className="flex gap-6pxr font-[500]">
-          <PriceDisplay price={price * watch('participants')} />
-          <span className="text-20pxr font-[600]">/</span>
+    <div className="fixed bottom-[0px] left-[0px] right-[0px] z-10 w-screen border-t border-[#a1a1a1] bg-white p-[16px] md:hidden lg:hidden">
+      <form onSubmit={handleSubmit(handleReservation)} className="flex w-full justify-between">
+        <div className="flex flex-col gap-[8px]">
+          <div className="flex gap-6pxr font-[500]">
+            <PriceDisplay price={price * watch('participants')} />
+            <span className="text-20pxr font-[600]">/</span>
+            <button
+              type="button"
+              className="text-18pxr text-var-green-dark underline"
+              onClick={() => setIsParticipantSelectorOpen(true)}
+            >
+              {watch('participants')}명
+            </button>
+          </div>
           <button
             type="button"
-            className="text-18pxr text-var-green-dark underline"
-            onClick={() => setIsParticipantSelectorOpen(true)}
+            className="w-fit text-14pxr font-[600] text-var-green-dark underline"
+            onClick={() => setIsScheduleSelectorOpen(true)}
           >
-            {watch('participants')}명
+            {dateButtonText}
           </button>
         </div>
-        <button
-          type="button"
-          className="w-fit text-14pxr font-[600] text-var-green-dark underline"
-          onClick={() => setIsScheduleSelectorOpen(true)}
-        >
-          {dateButtonText}
-        </button>
 
         <Button
           text="예약하기"
