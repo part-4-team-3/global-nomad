@@ -38,7 +38,6 @@ export async function POST(req: NextRequest) {
 
     return res;
   } catch (err) {
-    console.log(err);
     if (err instanceof AxiosError) {
       return NextResponse.json(err, { status: err.response?.status });
     }

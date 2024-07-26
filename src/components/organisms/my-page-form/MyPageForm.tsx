@@ -9,6 +9,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { updateUserMutationOptions } from './../../../mutations/users/update-user';
 import { toast } from 'react-toastify';
 
+interface Props {
+  password: string;
+}
+
 interface Data {
   nickname: string;
   newPassword: string;
@@ -18,7 +22,7 @@ interface Data {
 const containerStyle = 'flex flex-col gap-4pxr';
 const labelStyle = 'text-24pxr font-bold mb-12pxr';
 
-export default function MyPageForm() {
+export default function MyPageForm({ password }: Props) {
   const { user, setUser } = useUser();
 
   const {
@@ -30,8 +34,8 @@ export default function MyPageForm() {
     mode: 'onChange',
     defaultValues: {
       nickname: user?.nickname,
-      newPassword: '',
-      newPasswordCheck: '',
+      newPassword: password,
+      newPasswordCheck: password,
     },
   });
 

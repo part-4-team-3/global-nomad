@@ -1,5 +1,5 @@
-import MyPageForm from '@/components/organisms/my-page-form/MyPageForm';
+import MyPageForms from '@/components/templates/my-page/MyPageForms';
 
 export default function MyPage() {
-  return <MyPageForm />;
+  return <MyPageForms />;
 }
