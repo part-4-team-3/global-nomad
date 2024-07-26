@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { TimeSlotData } from '@/types/activity';
+import { toast } from 'react-toastify';
 
 const useTimeSlot = () => {
   const [date, setDate] = useState<string>();
@@ -29,7 +30,7 @@ const useTimeSlot = () => {
       setDate(selectedDate);
       setIsCalendarOpen(false);
     } else {
-      alert('선택된 날짜는 오늘 이후여야 합니다.');
+      toast('선택된 날짜는 오늘 이후여야 합니다.');
     }
   };
 
@@ -44,7 +45,7 @@ const useTimeSlot = () => {
     if (isValidTimeRange(newStartTime, endTime) || endTime === '') {
       setStartTime(newStartTime);
     } else {
-      alert('시작 시간은 종료 시간보다 이전이어야 합니다.');
+      toast('시작 시간은 종료 시간보다 이전이어야 합니다.');
     }
   };
 
@@ -54,7 +55,7 @@ const useTimeSlot = () => {
     if (isValidTimeRange(startTime, newEndTime) || startTime === '') {
       setEndTime(newEndTime);
     } else {
-      alert('종료 시간은 시작 시간보다 이후이어야 합니다.');
+      toast('종료 시간은 시작 시간보다 이후이어야 합니다.');
     }
   };
 
@@ -70,7 +71,7 @@ const useTimeSlot = () => {
       setEndTime('');
       setIsCalendarOpen(false);
     } else {
-      alert('모든 필드를 채워주세요.');
+      toast('모든 필드를 채워주세요.');
     }
   };
 

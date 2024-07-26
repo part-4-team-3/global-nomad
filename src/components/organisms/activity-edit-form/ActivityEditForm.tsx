@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation';
 import { getActivityDetails } from '@/queries/activities/get-activity-details';
 import { useEffect, useState } from 'react';
 import { DetailActivityData } from '@/types/activity';
+import { toast } from 'react-toastify';
 
 export default function ActivityEditForm() {
   const params = useParams();
@@ -37,7 +38,7 @@ export default function ActivityEditForm() {
     if (activityId) {
       fetchActivityDetails();
     }
-  }, [activityId]);
+  }, [activityId, methods]);
 
   const mutation = useMutation({
     ...patchMutationOptions,
@@ -50,12 +51,12 @@ export default function ActivityEditForm() {
     const formValues = methods.getValues();
 
     if (!formValues.bannerImageUrl) {
-      alert('배너 이미지를 등록해주세요');
+      toast('배너 이미지를 등록해주세요.');
       return;
     }
 
     if (!formValues.schedules || formValues.schedules.length === 0) {
-      alert('스케줄을 등록해주세요');
+      toast('스케줄을 등록해주세요.');
       return;
     }
 

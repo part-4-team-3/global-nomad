@@ -49,7 +49,7 @@ export default function Profile({ nickname, imageUrl }: Props) {
 
       <ul
         ref={menuRef}
-        className={`absolute right-[0px] top-[71px] z-10 flex h-[calc(100vh-67px)] w-228pxr list-none flex-col bg-white p-[8px] ${isActive ? 'block' : 'hidden'}`}
+        className={`absolute right-[0px] top-[71px] z-10 flex w-228pxr list-none flex-col rounded-b-lg bg-white p-[8px] ${isActive ? 'block' : 'hidden'}`}
       >
         {isActive && <HamburgerMenuItem isActive={isActive} setIsActive={setIsActive} />}
       </ul>

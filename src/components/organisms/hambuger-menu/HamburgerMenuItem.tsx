@@ -7,6 +7,7 @@ import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
 
 import { useRouter } from 'next/navigation';
+import { Cookies } from 'react-cookie';
 import { RefObject, useEffect } from 'react';
 import { deleteCookieDB } from '@/lib/cookieDB';
 import redis from '@/lib/redis';
