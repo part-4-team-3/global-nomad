@@ -1,4 +1,5 @@
-import redis from '@/lib/redis';
+// import redis from '@/lib/redis';
+import { setCookieDB } from '@/lib/cookieDB';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
@@ -14,8 +15,9 @@ export async function POST(req: NextRequest) {
 
     const { accessToken, refreshToken, user } = response.data;
 
-    await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
-    await redis.expire(user.id.toString(), 100000000000);
+    // await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
+    // await redis.expire(user.id.toString(), 100000000000);
+    await setCookieDB(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
 
     const res = NextResponse.json(response.data, { status: response.status });
     res.cookies.set('accessToken', accessToken, {
@@ -36,6 +38,7 @@ export async function POST(req: NextRequest) {
 
     return res;
   } catch (err) {
+    console.log(err);
     if (err instanceof AxiosError) {
       return NextResponse.json(err, { status: err.response?.status });
     }

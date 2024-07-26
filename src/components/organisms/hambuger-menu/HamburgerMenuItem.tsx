@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
-import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
+
 import { useRouter } from 'next/navigation';
 import { Cookies } from 'react-cookie';
+import { RefObject, useEffect } from 'react';
+import { deleteCookieDB } from '@/lib/cookieDB';
 
 interface Props {
   isActive: boolean;
@@ -23,8 +25,8 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
   const activeMenuStyle = 'text-var-green-dark  bg-var-green2 rounded-[12px]';
 
   /** 로그아웃 로직 */
-  const handleLogout = () => {
-    deleteCookie('userId');
+  const handleLogout = async () => {
+    await deleteCookieDB('userId');
     clearUser();
     router.push('/signin');
   };
