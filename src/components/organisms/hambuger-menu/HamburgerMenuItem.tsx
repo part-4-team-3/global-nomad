@@ -7,7 +7,7 @@ import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
 import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
 import { useRouter } from 'next/navigation';
-import { RefObject, useEffect } from 'react';
+import { Cookies } from 'react-cookie';
 
 interface Props {
   isActive: boolean;

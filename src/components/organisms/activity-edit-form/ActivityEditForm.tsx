@@ -38,7 +38,7 @@ export default function ActivityEditForm() {
     if (activityId) {
       fetchActivityDetails();
     }
-  }, [activityId]);
+  }, [activityId, methods]);
 
   const mutation = useMutation({
     ...patchMutationOptions,
