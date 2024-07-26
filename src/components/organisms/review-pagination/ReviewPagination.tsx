@@ -14,10 +14,10 @@ export default function ReviewPagination({ currentPage, activityId, totalPage }:
     <div className="flex h-fit items-center gap-[10px]">
       <ReviewPrevButton
         currentPage={currentPage}
-        href={`/activity/${activityId}?page=${currentPage - 1}`}
+        href={`/activity/${activityId}?page=${currentPage - 1}#review`}
       />
       {numbers.map((number) => (
-        <Link href={`/activity/${activityId}?page=${number}`} key={number} scroll={false}>
+        <Link href={`/activity/${activityId}?page=${number}#review`} key={number}>
           <button
             className={`py-17 text-base size-40pxr items-center justify-center rounded-2xl border-[1px] border-var-green-dark text-[18pxr] text-var-green-dark ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
           >
@@ -28,7 +28,7 @@ export default function ReviewPagination({ currentPage, activityId, totalPage }:
       <ReviewNextButton
         currentPage={currentPage}
         totalPage={totalPage}
-        href={`/activity/${activityId}?page=${currentPage + 1}`}
+        href={`/activity/${activityId}?page=${currentPage + 1}#review`}
       />
     </div>
   );
