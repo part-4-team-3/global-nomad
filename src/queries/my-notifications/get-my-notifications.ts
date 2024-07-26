@@ -1,21 +1,25 @@
 import { getInstance } from '@/lib/axios';
-import { Notification } from '@/types/notification';
-import { useQuery } from '@tanstack/react-query';
+import { NotificationsData } from '@/types/notification';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { notificationsKeys } from './query-keys';
 
 export interface GetMyNotificationsResponse {
-  cursorId: number;
-  notifications: Notification[];
-  totalCount: number;
+  data: NotificationsData;
 }
 
-export const useGetMyNotifications = () => {
-  return useQuery<GetMyNotificationsResponse>({
-    queryKey: notificationsKeys.getMyNotifications(null, 5),
-    queryFn: async () => {
+export const useGetMyNotifications = (size: number) => {
+  return useInfiniteQuery<GetMyNotificationsResponse>({
+    queryKey: notificationsKeys.getMyNotifications,
+    queryFn: ({ pageParam }) => {
       const apiInstance = getInstance();
-      const response = await apiInstance.get<GetMyNotificationsResponse>('my-notifications');
-      return response.data;
+      const url = pageParam
+        ? `my-notifications?size=${size}&cursorId=${pageParam}`
+        : `my-notifications?size=${size}`;
+      return apiInstance.get(url);
+    },
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => {
+      return lastPage?.data.cursorId ? lastPage?.data.cursorId : null;
     },
   });
 };

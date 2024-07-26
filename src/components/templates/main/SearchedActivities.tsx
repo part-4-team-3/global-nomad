@@ -29,7 +29,7 @@ export default async function SearchedActivities({ searchParams }: Props) {
       ) : (
         <div className="mt-[72px] flex justify-center">
           <Pagination
-            totalPage={Math.ceil(totalCount / 8)}
+            totalPage={Math.ceil(totalCount / 16)}
             currentPage={searchParams.page ? Number(searchParams.page) : 1}
             searchParams={searchParams}
           />
