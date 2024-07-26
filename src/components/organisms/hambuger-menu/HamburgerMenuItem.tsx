@@ -9,6 +9,7 @@ import useUser from '@/store/useUser';
 import { useRouter } from 'next/navigation';
 import { RefObject, useEffect } from 'react';
 import { deleteCookieDB } from '@/lib/cookieDB';
+import redis from '@/lib/redis';
 
 interface Props {
   isActive: boolean;
@@ -25,7 +26,6 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
 
   /** 로그아웃 로직 */
   const handleLogout = async () => {
-    await deleteCookieDB('userId');
     clearUser();
     router.push('/signin');
   };
