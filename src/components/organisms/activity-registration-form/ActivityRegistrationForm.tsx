@@ -5,9 +5,8 @@ import Button from '@/components/atoms/button/Button';
 import { useMutation } from '@tanstack/react-query';
 import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
-import { useModal } from '@/store/useModal';
+import { useRouter } from 'next/navigation';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
-import AlertModal from '@/components/molecules/modal/AlertModal';
 import { toast } from 'react-toastify';
 
 export default function ActivityRegistrationForm() {
@@ -23,16 +22,13 @@ export default function ActivityRegistrationForm() {
       subImageUrls: [],
     },
   });
-  const { setIsOpen } = useModal();
-
-  const openModal = (modalKey: string) => {
-    setIsOpen(modalKey);
-  };
+  const router = useRouter();
 
   const mutation = useMutation({
     ...submitMutationOptions,
     onSuccess: () => {
-      openModal('alertMessage');
+      toast('체험수정이 완료되었습니다.');
+      router.push('/myactivity');
     },
   });
 
@@ -73,7 +69,6 @@ export default function ActivityRegistrationForm() {
           <ActivityForm />
         </div>
       </form>
-      <AlertModal text="체험등록이 완료되었습니다." />
     </FormProvider>
   );
 }

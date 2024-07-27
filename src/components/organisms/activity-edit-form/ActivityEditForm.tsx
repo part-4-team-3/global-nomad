@@ -4,46 +4,34 @@ import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
 import { useMutation } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
-import { useModal } from '@/store/useModal';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
-import AlertModal from '@/components/molecules/modal/AlertModal';
 import { useParams } from 'next/navigation';
-import { getActivityDetails } from '@/queries/activities/get-activity-details';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { DetailActivityData } from '@/types/activity';
 import { toast } from 'react-toastify';
 
-export default function ActivityEditForm() {
-  const params = useParams();
-  const activityId = Number(params.id);
-  const [stateData, setStateData] = useState<DetailActivityData>();
-  const methods = useForm();
-  const { setIsOpen } = useModal();
+interface Props {
+  stateData: DetailActivityData;
+}
 
-  const openModal = (modalKey: string) => {
-    setIsOpen(modalKey);
-  };
+export default function ActivityEditForm({ stateData }: Props) {
+  const params = useParams();
+  const router = useRouter();
+  const activityId = Number(params.id);
+  const methods = useForm();
 
   useEffect(() => {
-    const fetchActivityDetails = async () => {
-      try {
-        const data: DetailActivityData = await getActivityDetails(activityId);
-        methods.reset(data);
-        setStateData(data);
-      } catch (err) {
-        alert('요청에 실패했습니다.');
-      }
-    };
-
-    if (activityId) {
-      fetchActivityDetails();
+    if (stateData) {
+      methods.reset(stateData);
     }
-  }, [activityId, methods]);
+  }, [stateData, methods]);
 
   const mutation = useMutation({
     ...patchMutationOptions,
     onSuccess: () => {
-      openModal('alertMessage');
+      toast('체험수정이 완료되었습니다.');
+      router.push('/myactivity');
     },
   });
 
@@ -88,7 +76,6 @@ export default function ActivityEditForm() {
           </div>
         </form>
       </FormProvider>
-      <AlertModal text="체험수정이 완료되었습니다." />
     </>
   );
 }
