@@ -9,11 +9,32 @@ import { ActivityCategory, ActivitySort } from '@/types/activity';
 import Link from 'next/link';
 import React from 'react';
 
+const sortList = [
+  {
+    title: '최신 순',
+    query: 'latest',
+  },
+  {
+    title: '가격이 낮은 순',
+    query: 'price_asc',
+  },
+  {
+    title: '가격이 높은 순',
+    query: 'price_desc',
+  },
+  {
+    title: '댓글 많은 순',
+    query: 'most_reviewed',
+  },
+];
+
 interface Props {
   searchParams: { category: ActivityCategory | '모든 체험'; sort: ActivitySort; page: number };
 }
 
 export default async function FilteredActivities({ searchParams }: Props) {
+  const sortMethod = searchParams.sort ? searchParams.sort : 'latest';
+
   const { activities, totalCount } = await getActivities({
     method: 'offset',
     size: 8,
@@ -22,24 +43,10 @@ export default async function FilteredActivities({ searchParams }: Props) {
     page: searchParams.page ? searchParams.page : 1,
   });
 
-  const sortList = [
-    {
-      title: '가격이 낮은 순',
-      query: 'price_asc',
-    },
-    {
-      title: '가격이 높은 순',
-      query: 'price_desc',
-    },
-    {
-      title: '댓글 많은 순',
-      query: 'most_reviewed',
-    },
-    {
-      title: '최신 순',
-      query: 'latest',
-    },
-  ];
+  const getDropDownTitleByQuery = (queryString: string) => {
+    const result = sortList.find((sort) => sort.query === queryString);
+    return result ? result.title : '최신 순';
+  };
 
   return (
     <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
@@ -48,7 +55,10 @@ export default async function FilteredActivities({ searchParams }: Props) {
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
         />
-        <DropdownMenu text="정렬" className="!w-90pxr shrink-0 md:!w-127pxr">
+        <DropdownMenu
+          text={getDropDownTitleByQuery(sortMethod)}
+          className="!w-90pxr shrink-0 md:!w-fit"
+        >
           {sortList.map((sort) => (
             <Link
               key={sort.query}
