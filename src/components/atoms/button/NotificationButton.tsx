@@ -34,9 +34,11 @@ export default function NotificationButton() {
     <>
       <button onClick={handleClick} className="relative">
         <Image src="/bell.svg" alt="알림" width={20} height={20} />
-        <div className="absolute right-[-2px] top-[0px] size-10pxr rounded-[50%] bg-var-red-dark text-8pxr text-white">
-          {totalCount}
-        </div>
+        {totalCount !== 0 && (
+          <div className="absolute right-[-2px] top-[0px] size-10pxr rounded-[50%] bg-var-red-dark text-8pxr text-white">
+            {totalCount}
+          </div>
+        )}
       </button>
       {isOpen && (
         <NotificationModal
