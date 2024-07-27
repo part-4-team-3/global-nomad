@@ -1,31 +1,21 @@
 'use client';
 
-import page from '@/app/(main)/(protected)/calendar/page';
 import InfinitySelect from '@/components/molecules/select/InfinityScrollSelect';
-import Select from '@/components/molecules/select/Select';
 import ReservationCalendar from '@/components/organisms/calendar/ReservationCalendar';
 import { cn } from '@/lib/tailwind-utils';
 import { useHandleIsSelectdActivity } from '@/models/mypage/use-handle-selected-activity';
-import { useGetMyActivityList } from '@/queries/myActivities/get-myactivities';
 import { useModal } from '@/store/useModal';
+import { MyActivityList } from '@/types/activity';
 
-const GET_SIZE = 5;
+interface Props {
+  myActivityList: MyActivityList;
+}
 
-export default function MyReservation() {
+export default function MyReservation({ myActivityList }: Props) {
   const { isOpen } = useModal();
-  const {
-    data: myActivityResponse,
-    isLoading,
-    fetchNextPage,
-  } = useGetMyActivityList({
-    size: GET_SIZE,
-    cursorId: null,
-  });
-
-  const myActivityList = myActivityResponse?.pages.flatMap((page) => page.data.activities);
 
   const { activityName, activityNameList, selectedActivity, setActivityName } =
-    useHandleIsSelectdActivity(myActivityList);
+    useHandleIsSelectdActivity(myActivityList.activities);
 
   return (
     <div
@@ -41,8 +31,6 @@ export default function MyReservation() {
             체험명
           </p>
           <InfinitySelect
-            isLoading={isLoading}
-            fetchNextPage={fetchNextPage}
             options={activityNameList ? activityNameList : []}
             value={activityName}
             onChange={setActivityName}
