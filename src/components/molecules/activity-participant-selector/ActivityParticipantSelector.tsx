@@ -32,10 +32,7 @@ export function ActivityParticipantSelector({ initialValue, onClose, onSelect }:
 
         <div className="flex flex-col gap-[24px]">
           <p className="text-20pxr font-[500]">예약할 인원을 선택해주세요</p>
-          <ParticipantCounter
-            value={value}
-            onChange={(diff: number) => setValue((prev) => prev + diff)}
-          />
+          <ParticipantCounter value={value} onChange={(value: number) => setValue(value)} />
         </div>
       </div>
       <Button text="확인" color="black" onClick={handleAccept} className="py-15pxr" />

@@ -20,15 +20,14 @@ export default function ActivityReservationFormPC({
   scheduledDates,
   activityId,
 }: ReservationFormProps) {
-  const { setSelectedSchedule, participants, setParticipants } = useReservation();
+  const { setSelectedSchedule, participants, setParticipants, selectedSchedule } = useReservation();
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [selectedSchedule, updateSelectedSchedule] = useState<Schedule | undefined>(undefined);
 
   const {
     control,
     handleSubmit,
     setValue,
-    watch,
+
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -48,11 +47,12 @@ export default function ActivityReservationFormPC({
       return;
     }
     toast('예약에 성공했습니다');
+    setSelectedSchedule(undefined);
+    setParticipants(1);
   };
 
   const handleScheduleSelect = (schedule: Schedule) => {
     const newSchedule = schedule;
-    updateSelectedSchedule(newSchedule);
     setSelectedSchedule(newSchedule);
     setValue('selectedSchedule', newSchedule);
   };
@@ -114,8 +114,11 @@ export default function ActivityReservationFormPC({
               rules={{ validate: (value) => value >= 1 || 'Participants must be at least 1' }}
               render={({ field }) => (
                 <ParticipantCounter
-                  value={field.value}
-                  onChange={(diff: number) => setValue('participants', field.value + diff)}
+                  value={participants}
+                  onChange={(value: number) => {
+                    setValue('participants', value);
+                    setParticipants(value);
+                  }}
                 />
               )}
             />
@@ -126,13 +129,13 @@ export default function ActivityReservationFormPC({
             text="예약하기"
             color="black"
             className="rounded-[4px] px-24pxr py-14pxr disabled:bg-var-gray3"
-            disabled={!watch('selectedSchedule')}
+            disabled={!selectedSchedule}
           ></Button>
         </form>
 
         <div className="flex justify-between p-[24px]">
           <span className="text-20pxr font-[700]">총 합계</span>
-          <PriceDisplay price={watch('participants') * price} />
+          <PriceDisplay price={participants * price} />
         </div>
       </div>
     </div>

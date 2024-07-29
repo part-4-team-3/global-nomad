@@ -6,8 +6,6 @@ import ActivityReservationForm from '@/components/organisms/activity-reservation
 import ActivityReservationFormPC from '@/components/organisms/activity-reservation-form/ActivityReservationFormPC';
 import { ReservationFormProps } from '@/types/reservation-form-props';
 import useUser from '@/store/useUser';
-import postReservation from '@/queries/reservations/post-reservation';
-import { toast } from 'react-toastify';
 import LogInCover from '@/components/molecules/log-in-cover/LogInCover';
 interface Props extends ReservationFormProps {
   creatorId: number;

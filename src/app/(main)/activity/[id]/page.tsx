@@ -8,9 +8,25 @@ import Map from '@/components/molecules/map/Map';
 import ActivityDescription from '@/components/molecules/activity-description/ActivityDescription';
 import ActivityReservationContainer from '@/components/templates/activity-reservation-container/ActivityReservationContainer';
 import { getActivityReviews } from '@/queries/activities/get-activity-reviews';
+import type { Metadata } from 'next';
 interface Props {
   params: { id: number };
   searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const product = await getActivityDetails(params.id);
+  return {
+    title: `${product.title} | Global Nomad`,
+    openGraph: {
+      images: [
+        {
+          url: product.bannerImageUrl,
+          alt: `${product.title} image`,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({ params, searchParams }: Props) {
@@ -27,16 +43,18 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <main>
       <div className="m-auto lg:max-w-1200pxr">
-        <ActivityHeader
-          category={data.category}
-          title={data.title}
-          rating={data.rating}
-          address={data.address}
-          reviewCount={data.reviewCount}
-          activityId={params.id}
-          creatorId={data.userId}
-        />
-        <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
+        <section id="overview">
+          <ActivityHeader
+            category={data.category}
+            title={data.title}
+            rating={data.rating}
+            address={data.address}
+            reviewCount={data.reviewCount}
+            activityId={params.id}
+            creatorId={data.userId}
+          />
+          <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
+        </section>
         <div className="relative flex lg:gap-[24px]">
           <div className="flex flex-grow flex-col">
             <ActivityDescription description={data.description} />
