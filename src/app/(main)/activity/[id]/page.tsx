@@ -8,9 +8,25 @@ import Map from '@/components/molecules/map/Map';
 import ActivityDescription from '@/components/molecules/activity-description/ActivityDescription';
 import ActivityReservationContainer from '@/components/templates/activity-reservation-container/ActivityReservationContainer';
 import { getActivityReviews } from '@/queries/activities/get-activity-reviews';
+import type { Metadata } from 'next';
 interface Props {
   params: { id: number };
   searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const product = await getActivityDetails(params.id);
+  return {
+    title: `${product.title} | Global Nomad`,
+    openGraph: {
+      images: [
+        {
+          url: product.bannerImageUrl,
+          alt: `${product.title} image`,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({ params, searchParams }: Props) {
