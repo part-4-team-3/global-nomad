@@ -60,9 +60,9 @@ export default function Banner({ activities }: Props) {
     <div className="relative h-240pxr w-full overflow-hidden bg-black md:h-550pxr">
       <div
         ref={slideRef}
-        className={`h-full flex-col transition-transform duration-1000 ease-in-out`}
+        className={`flex h-full transition-transform duration-1000 ease-in-out`}
         style={{
-          transform: `translateY(-${currentIndex * 100}%)`,
+          transform: `translateX(-${currentIndex * 100}%)`,
         }}
       >
         {slideArr.map((activity, index) => (
@@ -74,7 +74,13 @@ export default function Banner({ activities }: Props) {
               className="absolute left-[0] top-[0] h-full w-full object-cover"
               alt="메인 배너"
             />
-            <div className="relative h-full bg-gradient-to-r from-black to-transparent">
+            <div
+              className="relative h-full"
+              style={{
+                background:
+                  'linear-gradient(90deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.40) 100%)',
+              }}
+            >
               <InnerLayout
                 mobilePx="keep"
                 className="flex h-full flex-col justify-center gap-5pxr font-[700] text-white lg:gap-15pxr"
