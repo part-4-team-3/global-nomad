@@ -47,6 +47,8 @@ export default function ActivityReservationFormPC({
       return;
     }
     toast('예약에 성공했습니다');
+    setSelectedSchedule(undefined);
+    setParticipants(1);
   };
 
   const handleScheduleSelect = (schedule: Schedule) => {

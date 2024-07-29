@@ -28,7 +28,6 @@ export default function ActivityReservationForm({
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -48,6 +47,8 @@ export default function ActivityReservationForm({
       return;
     }
     toast('예약에 성공했습니다');
+    setSelectedSchedule(undefined);
+    setParticipants(1);
   };
 
   const dateButtonText = selectedSchedule

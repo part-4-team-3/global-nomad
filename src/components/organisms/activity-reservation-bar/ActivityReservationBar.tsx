@@ -27,7 +27,6 @@ export default function ActivityReservationBar({
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -47,6 +46,8 @@ export default function ActivityReservationBar({
       return;
     }
     toast('예약에 성공했습니다');
+    setSelectedSchedule(undefined);
+    setParticipants(1);
   };
 
   const dateButtonText = selectedSchedule
