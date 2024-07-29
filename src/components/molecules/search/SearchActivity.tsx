@@ -28,6 +28,7 @@ export default function SearchActivity() {
             color="black"
             type="submit"
             className="h-56pxr shrink-0 !rounded-[4px] px-[20px] md:px-[40px]"
+            disabled={!text}
           />
         </form>
       </div>
