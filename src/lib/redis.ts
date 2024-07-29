@@ -5,6 +5,7 @@ const redis = new Redis({
   port: 10728,
   username: process.env.REDIS_USERNAME,
   password: process.env.REDIS_PASSWORD,
+  sentinelMaxConnections: 10000,
 });
 
 export default redis;
