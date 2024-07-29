@@ -50,7 +50,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
 
   return (
     <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
-      <div className="flex justify-between gap-[10px]">
+      <div className="flex justify-between gap-[30px]">
         <FilteredNavList
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
