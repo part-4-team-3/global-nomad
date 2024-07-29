@@ -32,13 +32,15 @@ export default function FilteredNavList({
       }
     };
 
-    if (navRef.current) {
+    const navElement = navRef.current;
+
+    if (navElement) {
       navRef.current.addEventListener('scroll', handleScroll);
     }
 
     return () => {
-      if (navRef.current) {
-        navRef.current.removeEventListener('scroll', handleScroll);
+      if (navElement) {
+        navElement.removeEventListener('scroll', handleScroll);
       }
     };
   }, []);
