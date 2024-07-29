@@ -43,8 +43,6 @@ export default function FilteredNavList({
     };
   }, []);
 
-  console.log(navRef?.current?.scrollLeft);
-
   return (
     <div className="relative w-[calc(100%-300px)] grow">
       {!hideLeftGradient && (

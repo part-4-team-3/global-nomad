@@ -28,7 +28,13 @@ export default function Header() {
       <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
         <h1>
           <Link href="/">
-            <Image src="/logo.svg" width={165.5} height={28} alt="GlobalNomad logo" />
+            <Image
+              src="/logo.svg"
+              width={165}
+              height={28}
+              className="h-28pxr w-165pxr"
+              alt="GlobalNomad logo"
+            />
           </Link>
         </h1>
         <nav>
