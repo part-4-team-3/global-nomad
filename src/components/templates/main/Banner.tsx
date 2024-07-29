@@ -60,9 +60,9 @@ export default function Banner({ activities }: Props) {
     <div className="relative h-240pxr w-full overflow-hidden bg-black md:h-550pxr">
       <div
         ref={slideRef}
-        className={`flex h-full transition-transform duration-1000 ease-in-out`}
+        className={`h-full flex-col transition-transform duration-1000 ease-in-out`}
         style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
+          transform: `translateY(-${currentIndex * 100}%)`,
         }}
       >
         {slideArr.map((activity, index) => (
