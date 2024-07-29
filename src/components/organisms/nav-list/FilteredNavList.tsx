@@ -1,5 +1,5 @@
 import Button from '@/components/atoms/button/Button';
-import { addSearchParam } from '@/lib/query-string';
+import makeQueryString from '@/lib/query-string';
 import { ActivityCategory } from '@/types/activity';
 
 interface Props {
@@ -24,8 +24,8 @@ export default function FilteredNavList({
               className={`w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
               link={
                 category === '모든 체험'
-                  ? addSearchParam({ category: '모든 체험' }, searchParamsSort)
-                  : addSearchParam({ category }, searchParamsSort)
+                  ? makeQueryString({ category: '모든 체험', sort: searchParamsSort })
+                  : makeQueryString({ category, sort: searchParamsSort })
               }
             />
           </li>
