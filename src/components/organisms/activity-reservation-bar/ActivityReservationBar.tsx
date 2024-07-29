@@ -58,14 +58,14 @@ export default function ActivityReservationBar({
       <form onSubmit={handleSubmit(handleReservation)} className="flex w-full justify-between">
         <div className="flex flex-col gap-[8px]">
           <div className="flex gap-6pxr font-[500]">
-            <PriceDisplay price={price * watch('participants')} />
+            <PriceDisplay price={price * participants} />
             <span className="text-20pxr font-[600]">/</span>
             <button
               type="button"
               className="text-18pxr text-var-green-dark underline"
               onClick={() => setIsParticipantSelectorOpen(true)}
             >
-              {watch('participants')}명
+              {participants}명
             </button>
           </div>
           <button
@@ -81,7 +81,7 @@ export default function ActivityReservationBar({
           text="예약하기"
           color="black"
           className="px-24pxr py-14pxr disabled:bg-var-gray3"
-          disabled={!watch('selectedSchedule')}
+          disabled={!selectedSchedule}
         ></Button>
 
         {isScheduleSelectorOpen && (
@@ -98,7 +98,7 @@ export default function ActivityReservationBar({
 
         {isParticipantSelectorOpen && (
           <ActivityParticipantSelector
-            initialValue={watch('participants')}
+            initialValue={participants}
             onClose={() => setIsParticipantSelectorOpen(false)}
             onSelect={(value) => {
               setValue('participants', value);
