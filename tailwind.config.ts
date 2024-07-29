@@ -119,6 +119,11 @@ const config = {
       animation: {
         'spin-slow': 'spin 2s linear infinite',
       },
+      transitionDuration: {
+        '3000': '3000ms',
+        '5000': '5000ms',
+        '7000': '7000ms',
+      },
     },
   },
   plugins: [

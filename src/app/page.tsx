@@ -22,7 +22,7 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <Header />
-      <Banner activity={bestActivitiesData.activities[0]} />
+      <Banner activities={bestActivitiesData.activities.slice(0, 3)} />
       <SearchActivity />
       {searchParams.keyword ? (
         <SearchedActivities searchParams={searchParams} />
