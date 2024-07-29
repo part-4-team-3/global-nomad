@@ -82,7 +82,9 @@ export default function Banner({ activities }: Props) {
                 <h2 className="max-w-[90%] break-keep text-24pxr leading-[120%] md:text-54pxr lg:text-68pxr">
                   {activity.title}
                 </h2>
-                <p className="text-14pxr md:text-20pxr lg:text-24pxr">인기 경험 BEST 🔥</p>
+                <p className="text-14pxr md:text-20pxr lg:text-24pxr">
+                  인기 경험 BEST {activities.map((item, i) => item.id === activity.id && i + 1)} 🔥
+                </p>
               </InnerLayout>
             </div>
           </div>
