@@ -43,16 +43,18 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <main>
       <div className="m-auto lg:max-w-1200pxr">
-        <ActivityHeader
-          category={data.category}
-          title={data.title}
-          rating={data.rating}
-          address={data.address}
-          reviewCount={data.reviewCount}
-          activityId={params.id}
-          creatorId={data.userId}
-        />
-        <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
+        <section id="overview">
+          <ActivityHeader
+            category={data.category}
+            title={data.title}
+            rating={data.rating}
+            address={data.address}
+            reviewCount={data.reviewCount}
+            activityId={params.id}
+            creatorId={data.userId}
+          />
+          <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
+        </section>
         <div className="relative flex lg:gap-[24px]">
           <div className="flex flex-grow flex-col">
             <ActivityDescription description={data.description} />

@@ -10,7 +10,7 @@ export default function ReviewOverview({ ratings, reviewCount }: Props) {
   const rateText = getRatingDescription(ratings);
   const formattedReviewCount = reviewCount.toLocaleString('en-US');
   return (
-    <div className="flex w-full flex-col gap-[24px] px-[24px]" id="review">
+    <div className="flex w-full flex-col gap-[24px] px-[24px]">
       <span className="text-20pxr font-[700]">후기</span>
       <div className="flex items-center gap-[16px]">
         <data className="text-50pxr font-[600]" value={ratings}>
