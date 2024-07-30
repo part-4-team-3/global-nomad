@@ -37,7 +37,10 @@ export default async function page({ searchParams }: Props) {
       const date = new Date();
       const year = date?.getFullYear().toString();
       const month = (date?.getMonth()! + 1).toString()!.padStart(2, '0');
-      redirect(`/calendar?activityId=${activityId}&year=${year}&month=${month}`);
+      const result = await apiInstance.get(
+        `my-activities/${activityId}?year=${year}&month=${month}`,
+      );
+      myReservationByMonth = result.data;
     } else {
       if (Number(month) < 0 || Number(month) > 12) {
         const date = new Date();
