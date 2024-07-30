@@ -50,15 +50,12 @@ export default async function FilteredActivities({ searchParams }: Props) {
 
   return (
     <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
-      <div className="flex justify-between gap-[10px]">
+      <div className="flex flex-col items-end justify-between gap-[30px] md2:flex-row md2:items-center">
         <FilteredNavList
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
         />
-        <DropdownMenu
-          text={getDropDownTitleByQuery(sortMethod)}
-          className="!w-90pxr shrink-0 md:!w-fit"
-        >
+        <DropdownMenu text={getDropDownTitleByQuery(sortMethod)} className="!w-fit shrink-0">
           {sortList.map((sort) => (
             <Link
               key={sort.query}
@@ -71,7 +68,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
           ))}
         </DropdownMenu>
       </div>
-      <h2 className="mt-[22px] text-18pxr font-[700] md:mt-[40px] md:text-36pxr">
+      <h2 className="-mt-[35px] text-18pxr font-[700] md:-mt-[52px] md:text-36pxr md2:mt-[40px]">
         {searchParams.category === '모든 체험' || !searchParams.category
           ? '🛼 모든 체험'
           : searchParams.category}
