@@ -32,7 +32,7 @@ export default function ActivityForm({ stateData }: Props) {
     setEndTime,
     schedules,
     setSchedules,
-    addschedules,
+    addSchedules,
     deletedSchedule,
     setScheduleIds,
     isCalendarOpen,
@@ -62,7 +62,7 @@ export default function ActivityForm({ stateData }: Props) {
   setValue('subImageUrlsToAdd', addImages);
   setValue('subImageIdsToRemove', deletedImages);
   setValue('scheduleIdsToRemove', deletedSchedule);
-  setValue('schedulesToAdd', addschedules);
+  setValue('schedulesToAdd', addSchedules);
 
   /* 서버에서 받아온 데이터 state에 저장 */
   useEffect(() => {

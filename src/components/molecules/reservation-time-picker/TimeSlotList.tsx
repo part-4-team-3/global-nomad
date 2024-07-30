@@ -4,7 +4,7 @@ import TimeSlotInput from '@/components/atoms/input/TimeSlotInput';
 
 interface Props {
   timeSlots: TimeSlotData[];
-  handleDeleteTimeSlot: (index: number) => void;
+  handleDeleteTimeSlot: (date: string, startTime: string, endTime: string) => void;
 }
 
 export default function TimeSlotList({ timeSlots, handleDeleteTimeSlot }: Props) {
@@ -26,7 +26,7 @@ export default function TimeSlotList({ timeSlots, handleDeleteTimeSlot }: Props)
             </div>
             <button
               className="relative size-[44px] md:size-[56px]"
-              onClick={() => handleDeleteTimeSlot(index)}
+              onClick={() => handleDeleteTimeSlot(slot.date, slot.startTime, slot.endTime)}
               type="button"
             >
               <Image fill src="/delete-activity-button.svg" alt="체험시간 삭제하기" />
