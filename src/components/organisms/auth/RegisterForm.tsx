@@ -67,6 +67,7 @@ export default function RegisterForm() {
                 labelText="이메일"
                 hasError={errors.email !== undefined}
                 placeholder={FORM_OPTIONS.email.placeholder}
+                maxLength={30}
                 {...field}
               />
             )}
@@ -85,6 +86,7 @@ export default function RegisterForm() {
                 labelText="닉네임"
                 hasError={errors.nickName !== undefined}
                 placeholder={FORM_OPTIONS.nickName.placeholder}
+                maxLength={10}
                 {...field}
               />
             )}
@@ -130,7 +132,7 @@ export default function RegisterForm() {
             render={({ field }) => (
               <PasswordInput
                 id={FORM_OPTIONS.passwordCheck.name}
-                isCheck
+                label="비밀번호 확인"
                 hasError={errors.passwordCheck !== undefined}
                 placeholder={FORM_OPTIONS.passwordCheck.placeholder}
                 {...field}

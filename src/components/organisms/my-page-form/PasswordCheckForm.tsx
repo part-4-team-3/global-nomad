@@ -7,6 +7,7 @@ import Button from '@/components/atoms/button/Button';
 import { useMutation } from '@tanstack/react-query';
 import { checkPasswordMutationOptions } from '@/mutations/auth/login';
 import useUser from '@/store/useUser';
+import PasswordInput from '@/components/molecules/input/PasswordInput';
 
 interface Props {
   setPassword: (password: string) => void;
@@ -54,10 +55,12 @@ export default function PasswordCheckForm({ setPassword }: Props) {
         rules={{ required: '비밀번호를 입력해 주세요.' }}
         render={({ field }) => (
           <div>
-            <label className="mb-16pxr block text-24pxr font-bold" htmlFor="password">
-              비밀번호 확인
-            </label>
-            <Input size="full" hasError={errors.password !== undefined} {...field} />
+            <PasswordInput
+              size="full"
+              label="비밀번호 확인"
+              hasError={errors.password !== undefined}
+              {...field}
+            />
             {errors.password && (
               <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
             )}

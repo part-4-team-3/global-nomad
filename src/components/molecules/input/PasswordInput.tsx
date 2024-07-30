@@ -5,21 +5,27 @@ import Image from 'next/image';
 import { forwardRef, useState } from 'react';
 
 interface Props extends InputAttributes {
+  size?: 'authField' | 'full';
+  label?: string;
   hasError?: boolean;
-  isCheck?: boolean;
 }
 
 type passwordType = 'password' | 'text';
 
 const PasswordInput = forwardRef<HTMLInputElement, Props>(
-  ({ hasError = false, isCheck = false, ...rest }, ref) => {
+  ({ size = 'authField', hasError = false, label = '비밀번호', ...rest }, ref) => {
     const [type, setType] = useState<passwordType>('password');
 
     return (
-      <div className="flex w-full flex-col gap-8pxr">
-        <label htmlFor={rest.id}>{isCheck ? '비밀번호 확인' : '비밀번호'}</label>
-        <div className={`relative ${InputStyles.authField}`}>
-          <Input size="authField" hasError={hasError} type={type} ref={ref} {...rest} />
+      <div className="flex w-full flex-col">
+        <label
+          className={size === 'authField' ? 'mb-8pxr block' : 'mb-16pxr block text-24pxr font-bold'}
+          htmlFor={rest.id}
+        >
+          {label}
+        </label>
+        <div className={`relative ${InputStyles[size]}`}>
+          <Input size={size} hasError={hasError} type={type} ref={ref} maxLength={16} {...rest} />
           <button
             type="button"
             onClick={() => {
@@ -32,7 +38,7 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
               src={type === 'password' ? '/visibility-on.png' : '/visibility-off.png'}
               width={24}
               height={24}
-              alt="visibile"
+              alt="visible"
             />
           </button>
         </div>
