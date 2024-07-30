@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
 import { updateUserMutationOptions } from './../../../mutations/users/update-user';
 import { toast } from 'react-toastify';
+import PasswordInput from '@/components/molecules/input/PasswordInput';
 
 interface Props {
   password: string;
@@ -86,11 +87,7 @@ export default function MyPageForm({ password }: Props) {
           rules={FORM_OPTIONS.password.rules}
           render={({ field }) => (
             <div className={containerStyle}>
-              <label htmlFor="newPassword" className={labelStyle}>
-                비밀번호
-              </label>
-              <Input
-                id="newPassword"
+              <PasswordInput
                 size="full"
                 hasError={errors.newPassword !== undefined}
                 placeholder="8자 이상 입력해 주세요"
@@ -119,13 +116,10 @@ export default function MyPageForm({ password }: Props) {
           }}
           render={({ field }) => (
             <div className={containerStyle}>
-              <label htmlFor="newPasswordCheck" className={labelStyle}>
-                비밀번호 재입력
-              </label>
-              <Input
-                id="newPasswordCheck"
+              <PasswordInput
                 size="full"
                 hasError={errors.newPasswordCheck !== undefined}
+                label="비밀번호 재입력"
                 placeholder="비밀번호를 한번 더 입력해 주세요"
                 {...field}
               />

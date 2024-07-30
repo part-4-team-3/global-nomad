@@ -60,6 +60,7 @@ export default function LoginForm() {
                 labelText="이메일"
                 hasError={errors.email !== undefined}
                 placeholder={FORM_OPTIONS.email.placeholder}
+                maxLength={30}
                 {...field}
               />
             )}
