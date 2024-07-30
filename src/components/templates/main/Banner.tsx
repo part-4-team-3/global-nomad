@@ -24,7 +24,7 @@ export default function Banner({ activities }: Props) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => prevIndex + 1);
-    }, 4000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
