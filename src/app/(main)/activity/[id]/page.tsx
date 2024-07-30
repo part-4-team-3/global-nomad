@@ -19,12 +19,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${product.title} | Global Nomad`,
     openGraph: {
+      title: `${product.title} | Global Nomad`,
+      description: product.description,
+      url: `https://glabal-nomad.vercel.app/activity/${params.id}`,
+      type: 'article',
       images: [
         {
           url: product.bannerImageUrl,
           alt: `${product.title} image`,
         },
       ],
+      siteName: 'Global Nomad',
     },
   };
 }
