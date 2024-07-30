@@ -94,7 +94,7 @@ export default function Banner({ activities }: Props) {
                 </p>
                 <Link
                   href={`/activity/${activity.id}`}
-                  className="group mt-[5px] flex w-100pxr items-center justify-between rounded-[40px] bg-white px-[10px] py-[5px] text-14pxr font-[500] text-var-primary duration-200 hover:shadow-[0_4px_14px_0_rgba(17,34,17,0.4)] md:mt-[20px] md:w-200pxr md:px-[20px] md:py-[10px] md:text-16pxr"
+                  className="group mt-[5px] flex w-100pxr items-center justify-between rounded-[40px] bg-white px-[12px] py-[5px] text-12pxr font-[500] text-var-primary duration-200 hover:shadow-[0_4px_14px_0_rgba(17,34,17,0.4)] md:mt-[20px] md:w-200pxr md:px-[20px] md:py-[10px] md:text-16pxr"
                 >
                   바로가기{' '}
                   <Image
@@ -102,7 +102,7 @@ export default function Banner({ activities }: Props) {
                     width={24}
                     height={24}
                     alt="화살표"
-                    className="size-20pxr duration-200 group-hover:translate-x-[3px] md:size-24pxr md:group-hover:translate-x-[5px]"
+                    className="size-20pxr translate-x-[5px] duration-200 group-hover:translate-x-[8px] md:size-24pxr md:group-hover:translate-x-[10px]"
                   />
                 </Link>
               </InnerLayout>
