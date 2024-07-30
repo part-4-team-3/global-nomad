@@ -8,6 +8,8 @@ interface Props {
   activityId: number;
   reservationId: number;
   status: 'pending' | 'confirmed' | 'declined';
+  refetch: () => void;
+  scheduleByDateRefetch: () => void;
 }
 
 export default function ReservationCard({
@@ -16,8 +18,15 @@ export default function ReservationCard({
   activityId,
   reservationId,
   status,
+  refetch,
+  scheduleByDateRefetch,
 }: Props) {
-  const { mutate } = useUpdateReservationStatus(activityId, reservationId);
+  const { mutate } = useUpdateReservationStatus(
+    activityId,
+    reservationId,
+    refetch,
+    scheduleByDateRefetch,
+  );
 
   return (
     <div className="rounded-[4px] border border-var-gray6 p-16pxr">

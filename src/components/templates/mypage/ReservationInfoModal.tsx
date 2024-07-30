@@ -20,7 +20,10 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
 
   const [status, setStatus] = useState<'pending' | 'confirmed' | 'declined'>('pending');
 
-  const { data: myScheduleByDate } = useGetScheduleByDate(activityId, date);
+  const { data: myScheduleByDate, refetch: scheduleByDateRefetch } = useGetScheduleByDate(
+    activityId,
+    date,
+  );
   const { scheduleTimeList } = useScheduleTimeMapping(myScheduleByDate?.data);
   const [selectedScheduleTime, setSelectedScheduleTime] = useState('');
   const { selectedSchedule } = useHandleSelectedSchedule(
@@ -32,7 +35,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
     setSelectedScheduleTime('');
   }, [date]);
 
-  const { data: myReservationByTime } = useGetReservationByDate(
+  const { data: myReservationByTime, refetch } = useGetReservationByDate(
     activityId,
     null,
     10,
@@ -111,7 +114,12 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
             <p className="mb-16pxr text-20pxr font-[600]">예약 내역</p>
             <div className="w-full lg:h-270pxr lg:overflow-y-scroll">
               {myReservationByTime?.data && (
-                <ReservationCardList reservationList={myReservationByTime?.data} status={status} />
+                <ReservationCardList
+                  reservationList={myReservationByTime?.data}
+                  status={status}
+                  refetch={refetch}
+                  scheduleByDateRefetch={scheduleByDateRefetch}
+                />
               )}
             </div>
           </div>

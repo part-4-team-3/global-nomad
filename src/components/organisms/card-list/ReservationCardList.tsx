@@ -4,9 +4,16 @@ import { ReservationListByTime } from '@/types/reservation';
 interface Props {
   reservationList: ReservationListByTime;
   status: 'pending' | 'confirmed' | 'declined';
+  refetch: () => void;
+  scheduleByDateRefetch: () => void;
 }
 
-export default function ReservationCardList({ reservationList, status }: Props) {
+export default function ReservationCardList({
+  scheduleByDateRefetch,
+  reservationList,
+  status,
+  refetch,
+}: Props) {
   return (
     <div className="flex flex-col gap-14pxr">
       {reservationList.reservations.map((reservation) => {
@@ -18,6 +25,8 @@ export default function ReservationCardList({ reservationList, status }: Props) 
             activityId={reservation.activityId}
             reservationId={reservation.id}
             status={status}
+            refetch={refetch}
+            scheduleByDateRefetch={scheduleByDateRefetch}
           />
         );
       })}
