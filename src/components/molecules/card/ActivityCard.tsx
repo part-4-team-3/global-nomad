@@ -17,7 +17,7 @@ export default function ActivityCard({ activity, isBest }: Props) {
   return (
     <Link
       href={`/activity/${activity.id}`}
-      className={`flex flex-none snap-start ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'flex-col gap-[16px]'} `}
+      className={`flex flex-none snap-start duration-300 hover:-translate-y-5pxr ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'flex-col gap-[16px]'} `}
     >
       <Image
         src={isImageError ? defaultImage : activity.bannerImageUrl}

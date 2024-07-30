@@ -34,9 +34,9 @@ export default function NotificationButton() {
     <>
       <button onClick={handleClick} className="relative">
         <Image src="/bell.svg" alt="알림" width={20} height={20} />
-        {totalCount !== 0 && (
-          <div className="absolute right-[-2px] top-[0px] size-10pxr rounded-[50%] bg-var-red-dark text-8pxr text-white">
-            {totalCount}
+        {!!totalCount && (
+          <div className="text-7pxr absolute right-[-2px] top-[0px] size-10pxr rounded-[50%] bg-var-red-dark text-white">
+            {totalCount > 9 ? '+9' : totalCount}
           </div>
         )}
       </button>

@@ -49,7 +49,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
   };
 
   return (
-    <InnerLayout className="mb-[150px] mt-[40px] md:mb-[250px] md:mt-[60px]">
+    <InnerLayout className="mb-[150px] mt-[30px] md:mb-[250px] md:mt-[50px]">
       <div className="flex flex-col items-end justify-between gap-[30px] md2:flex-row md2:items-center">
         <FilteredNavList
           currentCategory={searchParams.category}
@@ -68,7 +68,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
           ))}
         </DropdownMenu>
       </div>
-      <h2 className="-mt-[35px] text-18pxr font-[700] md:-mt-[52px] md:text-36pxr md2:mt-[40px]">
+      <h2 className="-mt-[35px] text-18pxr font-[700] md:-mt-[52px] md:text-36pxr md2:mt-[30px]">
         {searchParams.category === '모든 체험' || !searchParams.category
           ? '🛼 모든 체험'
           : searchParams.category}

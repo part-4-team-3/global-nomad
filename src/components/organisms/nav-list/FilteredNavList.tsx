@@ -63,14 +63,14 @@ export default function FilteredNavList({
       )}
       <ul
         ref={navRef}
-        className="flex w-full gap-[8px] overflow-x-auto scrollbar-hide md:gap-[16px] lg:gap-[24px]"
+        className="flex w-full gap-[8px] overflow-x-auto py-[10px] scrollbar-hide md:gap-[16px] lg:gap-[24px]"
       >
         {categoryList.map((category) => (
           <li key={category}>
             <Button
               text={category}
               color="white"
-              className={`w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
+              className={`hover:shadow-hover w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] duration-100 md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
               link={
                 category === '모든 체험'
                   ? makeQueryString({ category: '모든 체험', sort: searchParamsSort })

@@ -25,7 +25,7 @@ const config = {
       }, {}),
     },
     fontSize: {
-      ...range(8, 81).reduce<Record<string, string>>((acc, px) => {
+      ...range(7, 81).reduce<Record<string, string>>((acc, px) => {
         acc[`${px}pxr`] = pxToRem(px);
         return acc;
       }, {}),
@@ -115,7 +115,7 @@ const config = {
       },
       boxShadow: {
         custom: '0 0 20px rgba(0, 0, 0, 0.05);',
-        hover: '0 4px 14px 0 rgba(17, 34, 17, 0.4)',
+        hover: '0 4px 8px -2px rgba(17, 34, 17, 0.3)',
       },
       animation: {
         'spin-slow': 'spin 2s linear infinite',
