@@ -8,8 +8,8 @@ import { useState } from 'react';
  *
  * @returns date: 현재 날짜, handlePrevMonth: 이전 달로 이동하는 핸들러 함수, handleNextMonth: 다음 달로 이동하는 핸들러 함수
  */
-export function useHandleCalendarDate(curDate: Date) {
-  const [date, setDate] = useState<Date | undefined>(curDate);
+export function useHandleCalendarDate() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
   // 현재 날짜를 이전 달로 이동시키는 함수입니다.
   const handlePrevMonth = () => {

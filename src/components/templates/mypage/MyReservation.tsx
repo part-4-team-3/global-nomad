@@ -3,22 +3,19 @@
 import InfinitySelect from '@/components/molecules/select/InfinityScrollSelect';
 import ReservationCalendar from '@/components/organisms/calendar/ReservationCalendar';
 import { cn } from '@/lib/tailwind-utils';
+import { useHandleIsSelectdActivity } from '@/models/mypage/use-handle-selected-activity';
 import { useModal } from '@/store/useModal';
-import { Activity, MyActivityList } from '@/types/activity';
+import { MyActivityList } from '@/types/activity';
 
 interface Props {
-  myActivityList: MyActivityList | null;
-  activityId: number | null;
-  selectedActivity: Activity | null;
-  myReservationByMonth: any;
+  myActivityList: MyActivityList;
 }
 
-export default function MyReservation({
-  myReservationByMonth,
-  myActivityList,
-  selectedActivity,
-}: Props) {
+export default function MyReservation({ myActivityList }: Props) {
   const { isOpen } = useModal();
+
+  const { activityName, activityNameList, selectedActivity, setActivityName } =
+    useHandleIsSelectdActivity(myActivityList.activities);
 
   return (
     <div
@@ -34,19 +31,15 @@ export default function MyReservation({
             체험명
           </p>
           <InfinitySelect
-            options={myActivityList?.activities ? myActivityList.activities : []}
-            value={selectedActivity?.title || ''}
-            activityId={selectedActivity?.id || ''}
+            options={activityNameList ? activityNameList : []}
+            value={activityName}
+            onChange={setActivityName}
           />
         </div>
       </div>
       <div className={cn('relative mt-30pxr w-full', isOpen && 'mt-[0px]')}>
         {selectedActivity && (
-          <ReservationCalendar
-            activityId={selectedActivity?.id}
-            isOpen={isOpen}
-            myReservationByMonth={myReservationByMonth}
-          />
+          <ReservationCalendar activityId={selectedActivity?.id} isOpen={isOpen} />
         )}
       </div>
     </div>
