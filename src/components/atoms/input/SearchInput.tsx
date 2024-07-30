@@ -12,7 +12,7 @@ export default function SearchInput({ onChange, ...rest }: Props) {
       type="text"
       placeholder="내가 원하는 체험은"
       onChange={onChange}
-      className="h-56pxr w-full shrink grow rounded-[4px] border border-var-gray2 bg-white bg-[url('/bed.svg')] bg-[12px_center] bg-no-repeat p-15pxr pl-48pxr text-14pxr focus:outline-none md:text-16pxr"
+      className="hover:shadow-hover h-56pxr w-full shrink grow rounded-[4px] border border-var-gray2 bg-white bg-[url('/bed.svg')] bg-[12px_center] bg-no-repeat p-15pxr pl-48pxr text-14pxr duration-100 focus:outline-none md:text-16pxr"
       {...rest}
     />
   );
