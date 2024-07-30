@@ -10,7 +10,7 @@ const useTimeSlot = () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [schedules, setSchedules] = useState<TimeSlotData[] | []>([]);
-  const [addschedules, setAddSchedules] = useState<TimeSlotData[] | []>([]);
+  const [addSchedules, setAddSchedules] = useState<TimeSlotData[] | []>([]);
   const [scheduleIds, setScheduleIds] = useState<number[]>([]);
   const [deletedSchedule, setDeletedschedule] = useState<number[]>([]);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
@@ -76,10 +76,23 @@ const useTimeSlot = () => {
   };
 
   /** 시간대 삭제 처리 */
-  const handleDeleteSchedules = (index: number) => {
-    const deletedScheduleId = schedules[index]?.id;
-    setSchedules((prev) => prev.filter((_, idx) => idx !== index));
-    setAddSchedules((prev) => prev.filter((_, idx) => idx !== index));
+  const handleDeleteSchedules = (date: string, startTime: string, endTime: string) => {
+    // schedules에서 해당 date, startTime, endTime에 해당하는 스케줄을 찾습니다.
+    const scheduleIndex = schedules.findIndex(
+      (schedule) =>
+        schedule.date === date && schedule.startTime === startTime && schedule.endTime === endTime,
+    );
+
+    // addSchedules에서 해당 date, startTime, endTime에 해당하는 스케줄을 찾습니다.
+    const addScheduleIndex = addSchedules.findIndex(
+      (schedule) =>
+        schedule.date === date && schedule.startTime === startTime && schedule.endTime === endTime,
+    );
+
+    setSchedules((prev) => prev.filter((_, idx) => idx !== scheduleIndex));
+    setAddSchedules((prev) => prev.filter((_, idx) => idx !== addScheduleIndex));
+    const deletedScheduleId = schedules[scheduleIndex]?.id;
+
     if (deletedScheduleId !== undefined) {
       setDeletedschedule((prev) => [...prev, deletedScheduleId]);
     }
@@ -97,7 +110,7 @@ const useTimeSlot = () => {
     setEndTime,
     schedules,
     setSchedules,
-    addschedules,
+    addSchedules,
     deletedSchedule,
     scheduleIds,
     setScheduleIds,

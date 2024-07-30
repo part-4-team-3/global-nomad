@@ -15,7 +15,7 @@ interface Props {
   setEndTime: React.Dispatch<React.SetStateAction<string>>;
   handleCalendarOpen: () => void;
   handleAddTimeSlot: () => void;
-  handleDeleteTimeSlot: (index: number) => void;
+  handleDeleteTimeSlot: (date: string, startTime: string, endTime: string) => void;
   handleStartTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleEndTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

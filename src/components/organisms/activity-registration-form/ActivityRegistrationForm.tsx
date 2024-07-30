@@ -27,7 +27,7 @@ export default function ActivityRegistrationForm() {
   const mutation = useMutation({
     ...submitMutationOptions,
     onSuccess: () => {
-      toast('체험수정이 완료되었습니다.');
+      toast('체험등록이 완료되었습니다.');
       router.push('/myactivity');
     },
   });

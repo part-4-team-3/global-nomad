@@ -8,6 +8,7 @@ import {
   updateProfileImageMutationOptions,
 } from '@/mutations/users/profile-image-uploader';
 import useUser from '@/store/useUser';
+import { toast } from 'react-toastify';
 
 /** api 응답 인터페이스 */
 interface ActivityImageUrlApiResponse {
@@ -58,7 +59,7 @@ export const useImageUploader = () => {
         setAddImages((prevImages) => [...prevImages, previewUrl]);
         setUploadedImages((prevImages) => [...prevImages, previewUrl]);
       } else {
-        alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
+        toast('이미지는 최대 4개까지만 업로드할 수 있습니다.');
         return;
       }
     }
