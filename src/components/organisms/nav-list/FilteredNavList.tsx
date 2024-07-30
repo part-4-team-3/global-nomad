@@ -17,31 +17,42 @@ export default function FilteredNavList({
   searchParamsSort,
 }: Props) {
   const [hideLeftGradient, setHideLeftGradient] = useState(true);
-  const [hideRightGradient, setHideRightGradient] = useState(false);
+  const [hideRightGradient, setHideRightGradient] = useState(true);
   const navRef = useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (navRef.current) {
-        const isEndReached =
-          navRef.current.scrollWidth - navRef.current.scrollLeft <= navRef.current.clientWidth;
-        setHideRightGradient(isEndReached);
+  const checkScroll = () => {
+    if (navRef.current) {
+      const isScrollable = navRef.current.scrollWidth > navRef.current.clientWidth;
+      const isEndReached =
+        navRef.current.scrollWidth - navRef.current.scrollLeft <= navRef.current.clientWidth;
+      setHideRightGradient(isEndReached || !isScrollable);
 
-        const isStartReached = navRef.current.scrollLeft === 0;
-        setHideLeftGradient(isStartReached);
-      }
+      const isStartReached = navRef.current.scrollLeft === 0;
+      setHideLeftGradient(isStartReached || !isScrollable);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const handleScroll = () => {
+      checkScroll();
+    };
+    const handleResize = () => {
+      checkScroll();
     };
 
     const navElement = navRef.current;
-
     if (navElement) {
       navRef.current.addEventListener('scroll', handleScroll);
     }
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       if (navElement) {
         navElement.removeEventListener('scroll', handleScroll);
       }
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
