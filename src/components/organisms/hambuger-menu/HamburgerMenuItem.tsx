@@ -5,12 +5,9 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
-
 import { useRouter } from 'next/navigation';
-import { Cookies } from 'react-cookie';
-import { RefObject, useEffect } from 'react';
-import { deleteCookieDB } from '@/lib/cookieDB';
-import redis from '@/lib/redis';
+import { useCookies } from 'react-cookie';
+import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
 
 interface Props {
   isActive: boolean;
@@ -20,6 +17,7 @@ interface Props {
 export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
   const router = useRouter();
   const pathname = usePathname();
+  const [, , removeCookie] = useCookies(['userId', 'accessToken', 'refreshToken']);
   const { user, clearUser } = useUser();
   const menuStyle =
     'flex w-full gap-[14px] py-[24px] px-[16px] text-[16pxr] font-bold text-var-gray3';
@@ -27,6 +25,7 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
 
   /** 로그아웃 로직 */
   const handleLogout = async () => {
+    deleteCookie('userId');
     clearUser();
     router.push('/signin');
   };
