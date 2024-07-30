@@ -90,10 +90,6 @@ export default function ActivityForm({ stateData }: Props) {
     return error ? <span className="text-red-500">{error.message}</span> : null;
   };
 
-  console.log(schedules);
-  console.log(addSchedules);
-  console.log(deletedSchedule);
-
   return (
     <>
       <Input
