@@ -3,9 +3,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export const useUpdateReservationStatus = (activityId: number, reservationId: number) => {
-  const router = useRouter();
-
+export const useUpdateReservationStatus = (
+  activityId: number,
+  reservationId: number,
+  refetch: () => void,
+  scheduleByDateRefetch: () => void,
+) => {
   return useMutation({
     mutationFn: (status: string) => {
       const apiInstance = getInstance();
@@ -13,15 +16,18 @@ export const useUpdateReservationStatus = (activityId: number, reservationId: nu
     },
     onSuccess: () => {
       toast('요청이 성공적으로 처리되었습니다.');
-      location.reload();
+      refetch();
+      scheduleByDateRefetch();
     },
     onError: (err) => {
       toast('요청에 실패했습니다.', {
         onClose: () => {
-          location.reload();
+          refetch();
+          scheduleByDateRefetch();
         },
         onClick: () => {
-          location.reload();
+          refetch();
+          scheduleByDateRefetch();
         },
       });
     },

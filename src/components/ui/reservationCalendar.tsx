@@ -11,6 +11,8 @@ import Chip from '../atoms/chip/Chip';
 import { ReservationByMonth } from '@/types/reservation';
 import { MyActivitiesOfMonth } from '@/types/activity';
 import { useModal } from '@/store/useModal';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -18,6 +20,8 @@ interface Props {
   activitiesByMonth: MyActivitiesOfMonth[] | undefined;
   onChangePrevMonth: () => void;
   onChangeNextMonth: () => void;
+  activityId: number;
+  date: Date | undefined;
   setDate: (date: Date) => void;
 }
 
@@ -26,16 +30,23 @@ function ReservationCalendar({
   classNames,
   showOutsideDays = true,
   activitiesByMonth,
+  activityId,
+  date,
   setDate,
   onChangePrevMonth,
   onChangeNextMonth,
   ...props
 }: CalendarProps & Props) {
   const { setIsOpen } = useModal();
+  const curDate = date ? date : new Date();
+  console.log(date);
+  console.log('curDate: ', curDate);
+  // 쿼리 스트링에서 year와 month 값을 가져와 Date 객체로 변환
 
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      month={curDate}
       className={cn('p-3', className)}
       classNames={{
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 w-full h-full',
@@ -72,22 +83,30 @@ function ReservationCalendar({
       }}
       components={{
         IconLeft: ({ ...props }) => (
-          <Image
-            src="/double-arrow-left.svg"
-            alt=""
-            width={24}
-            height={24}
-            onClick={onChangePrevMonth}
-          />
+          <Link
+            href={`/calendar?activityId=${activityId}&year=${curDate.getFullYear().toString()}&month=${curDate.getMonth().toString().padStart(2, '0')}`}
+          >
+            <Image
+              src="/double-arrow-left.svg"
+              alt=""
+              width={24}
+              height={24}
+              onClick={onChangePrevMonth}
+            />
+          </Link>
         ),
         IconRight: ({ ...props }) => (
-          <Image
-            src="/double-arrow-right.svg"
-            alt=""
-            width={24}
-            height={24}
-            onClick={onChangeNextMonth}
-          />
+          <Link
+            href={`/calendar?activityId=${activityId}&year=${curDate.getFullYear()}&month=${(curDate.getMonth() + 2).toString().padStart(2, '0')}`}
+          >
+            <Image
+              src="/double-arrow-right.svg"
+              alt=""
+              width={24}
+              height={24}
+              onClick={onChangeNextMonth}
+            />
+          </Link>
         ),
         Day: ({ date, ...props }) => {
           const onClickDay = () => {

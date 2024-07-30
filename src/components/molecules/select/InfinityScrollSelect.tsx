@@ -4,19 +4,23 @@ import React, { useState, forwardRef, ForwardedRef, useRef, useEffect } from 're
 import Input from '../../atoms/input/Input';
 import Option from './Option';
 import Image from 'next/image';
-import { useObserverByScroll } from '@/models/useObserverByScroll';
+import Link from 'next/link';
+import { Activity, MyActivityList } from '@/types/activity';
 
 interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'> {
-  options: string[];
+  options: Activity[] | [];
+  activityId: number | string;
   onChange?: (value: string) => void;
 }
 
 const InfinitySelect = forwardRef(
-  ({ options, onChange, value, ...rest }: Props, ref: ForwardedRef<HTMLInputElement>) => {
+  (
+    { options, onChange, value, activityId, ...rest }: Props,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
     const [isOpen, setIsOpen] = useState(false);
-
+    console.log('activityId: ', activityId);
     const divRef = useRef<HTMLDivElement | null>(null);
-    const [observeRef, setObserveRef] = useState<HTMLDivElement | null>(null);
 
     return (
       <div className={`relative h-full w-full`}>
@@ -40,17 +44,19 @@ const InfinitySelect = forwardRef(
         />
         {isOpen && (
           <ul className="left-0 absolute top-[calc(100%+8px)] z-10 h-150pxr w-full overflow-scroll rounded-md bg-white p-8pxr shadow-lg ring-1 ring-black ring-opacity-5">
-            {options.map((option) => (
-              <Option
-                key={option}
-                text={option}
-                isSelected={value === option}
-                onChange={() => {
-                  setIsOpen(false);
-                  onChange?.(option);
-                }}
-              />
-            ))}
+            {options.length > 0 &&
+              options.map((option) => (
+                <Link href={`/calendar?activityId=${option.id}`} key={option.title}>
+                  <Option
+                    text={option.title}
+                    isSelected={value === option.title}
+                    onChange={() => {
+                      setIsOpen(false);
+                      onChange?.(option.title);
+                    }}
+                  />
+                </Link>
+              ))}
             <div className="w-pull relative flex h-2pxr rounded-md" ref={divRef} />
           </ul>
         )}
