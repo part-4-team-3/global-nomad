@@ -40,29 +40,55 @@ export const useImageUploader = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     title: 'banner' | 'intro',
   ) => {
-    /* input 요소에서 선택된 파일 추출 */
     const { files } = e.target;
-
-    /* 파일이 없을 시 리턴 */
     if (!files || files.length === 0) return;
 
     const uploadFile = files[0];
     const formData = new FormData();
     formData.append('image', uploadFile);
+
+    // 이미지 미리보기 URL 생성
+    const previewUrl = URL.createObjectURL(uploadFile);
+
+    // 낙관적 업데이트
+    if (title === 'banner') {
+      setBannerImage(previewUrl);
+    } else if (title === 'intro') {
+      if (uploadedImages.length < 4) {
+        setAddImages((prevImages) => [...prevImages, previewUrl]);
+        setUploadedImages((prevImages) => [...prevImages, previewUrl]);
+      } else {
+        alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
+        return;
+      }
+    }
+
     try {
       const imageUrl: ActivityImageUrlApiResponse = await activityMutation.mutateAsync(formData);
+
+      // 서버에서 받은 URL로 업데이트
       if (title === 'banner') {
         setBannerImage(imageUrl.activityImageUrl);
       } else if (title === 'intro') {
-        if (uploadedImages.length < 4) {
-          setAddImages((prevImages) => [...prevImages, imageUrl.activityImageUrl]);
-          setUploadedImages((prevImages) => [...prevImages, imageUrl.activityImageUrl]);
-        } else {
-          alert('이미지는 최대 4개까지만 업로드할 수 있습니다.');
-        }
+        setAddImages((prevImages) =>
+          prevImages.map((img) => (img === previewUrl ? imageUrl.activityImageUrl : img)),
+        );
+        setUploadedImages((prevImages) =>
+          prevImages.map((img) => (img === previewUrl ? imageUrl.activityImageUrl : img)),
+        );
       }
     } catch (error) {
       alert(error);
+      // 에러 발생 시 미리보기 이미지 제거
+      if (title === 'banner') {
+        setBannerImage('');
+      } else if (title === 'intro') {
+        setAddImages((prevImages) => prevImages.filter((img) => img !== previewUrl));
+        setUploadedImages((prevImages) => prevImages.filter((img) => img !== previewUrl));
+      }
+    } finally {
+      // 미리보기 URL을 해제하여 메모리 누수 방지
+      URL.revokeObjectURL(previewUrl);
     }
   };
 
