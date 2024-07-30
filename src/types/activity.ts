@@ -84,6 +84,7 @@ export interface ActivityEditData {
   subImageIdsToRemove: number[];
   subImageUrlsToAdd: string[];
   scheduleIdsToRemove: number[];
+  schedulesToAdd: string[];
 }
 
 export interface MyActivitiesByDate {

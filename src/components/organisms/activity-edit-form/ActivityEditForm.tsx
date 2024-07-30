@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, UseFormReturn } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
 import { useMutation } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
@@ -8,24 +8,25 @@ import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { DetailActivityData } from '@/types/activity';
+import { ActivityEditData, DetailActivityData } from '@/types/activity';
 import { toast } from 'react-toastify';
+import { editActivityForm } from '@/models/activity/form-utils';
 
 interface Props {
-  stateData: DetailActivityData;
+  initActivity: DetailActivityData;
 }
 
-export default function ActivityEditForm({ stateData }: Props) {
+export default function ActivityEditForm({ initActivity }: Props) {
   const params = useParams();
   const router = useRouter();
   const activityId = Number(params.id);
-  const methods = useForm();
+  const methods = useForm<ActivityEditData>();
 
   useEffect(() => {
-    if (stateData) {
-      methods.reset(stateData);
+    if (initActivity) {
+      methods.reset(initActivity);
     }
-  }, [stateData, methods]);
+  }, [initActivity, methods]);
 
   const mutation = useMutation({
     ...patchMutationOptions,
@@ -36,31 +37,11 @@ export default function ActivityEditForm({ stateData }: Props) {
   });
 
   const submit = () => {
-    const formValues = methods.getValues();
+    const body = editActivityForm(methods);
 
-    if (!formValues.bannerImageUrl) {
-      toast('배너 이미지를 등록해주세요.');
-      return;
+    if (body) {
+      mutation.mutate({ activityId, body });
     }
-
-    if (!formValues.schedules || formValues.schedules.length === 0) {
-      toast('스케줄을 등록해주세요.');
-      return;
-    }
-
-    const body = {
-      title: formValues.title,
-      category: formValues.category,
-      description: formValues.description,
-      price: formValues.price,
-      address: formValues.address,
-      bannerImageUrl: formValues.bannerImageUrl,
-      subImageUrlsToAdd: formValues.subImageUrlsToAdd,
-      subImageIdsToRemove: formValues.subImageIdsToRemove,
-      scheduleIdsToRemove: formValues.scheduleIdsToRemove,
-      schedulesToAdd: formValues.schedulesToAdd,
-    };
-    mutation.mutate({ activityId, body });
   };
 
   return (
@@ -72,7 +53,7 @@ export default function ActivityEditForm({ stateData }: Props) {
               <h1 className="text-32pxr font-bold">내 체험 수정</h1>
               <Button text="수정하기" color="black" size="s" type="submit" />
             </div>
-            <ActivityForm stateData={stateData} />
+            <ActivityForm initActivity={initActivity} />
           </div>
         </form>
       </FormProvider>

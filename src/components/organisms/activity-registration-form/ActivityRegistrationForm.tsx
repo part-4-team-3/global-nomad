@@ -8,6 +8,7 @@ import { ActivitySettingData } from '@/types/activity';
 import { useRouter } from 'next/navigation';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { toast } from 'react-toastify';
+import { registerActivityForm } from '@/models/activity/form-utils';
 
 export default function ActivityRegistrationForm() {
   const methods = useForm<ActivitySettingData>({
@@ -33,29 +34,10 @@ export default function ActivityRegistrationForm() {
   });
 
   const submit = () => {
-    const formValues = methods.getValues();
-
-    if (!formValues.bannerImageUrl) {
-      toast('배너 이미지를 등록해주세요.');
-      return;
+    const body = registerActivityForm(methods);
+    if (body) {
+      mutation.mutate(body);
     }
-
-    if (!formValues.schedules || formValues.schedules.length === 0) {
-      toast('스케줄을 등록해주세요.');
-      return;
-    }
-
-    const body: ActivitySettingData = {
-      title: formValues.title,
-      category: formValues.category,
-      description: formValues.description,
-      price: formValues.price,
-      address: formValues.address,
-      schedules: methods.getValues('schedules'),
-      bannerImageUrl: methods.getValues('bannerImageUrl'),
-      subImageUrls: methods.getValues('subImageUrls'),
-    };
-    mutation.mutate(body);
   };
 
   return (
