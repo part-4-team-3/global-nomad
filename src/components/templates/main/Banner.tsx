@@ -6,6 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
+const CIRCLE_LIST = [1, 2, 3];
+
 interface Props {
   activities: Activity[];
 }
@@ -96,7 +98,7 @@ export default function Banner({ activities }: Props) {
                   href={`/activity/${activity.id}`}
                   className="group mt-[5px] flex w-100pxr items-center justify-between rounded-[40px] bg-white px-[12px] py-[5px] text-12pxr font-[500] text-var-primary duration-200 hover:shadow-[0_4px_14px_0_rgba(17,34,17,0.4)] md:mt-[20px] md:w-200pxr md:px-[20px] md:py-[10px] md:text-16pxr"
                 >
-                  바로가기{' '}
+                  바로가기
                   <Image
                     src="arrow-right.svg"
                     width={24}
@@ -108,6 +110,15 @@ export default function Banner({ activities }: Props) {
               </InnerLayout>
             </div>
           </div>
+        ))}
+      </div>
+      <div className="absolute bottom-[80px] left-[50%] flex translate-x-[-50%] gap-[5px]">
+        {CIRCLE_LIST.map((circle) => (
+          <button
+            key={circle}
+            onClick={() => setCurrentIndex(circle)}
+            className={`size-12pxr rounded-[50%] ${currentIndex === circle ? 'bg-white' : 'border border-white'}`}
+          />
         ))}
       </div>
     </div>
