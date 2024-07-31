@@ -1,8 +1,8 @@
 'use client';
 
-import { useForm, FormProvider, UseFormReturn } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { useParams } from 'next/navigation';
@@ -17,11 +17,11 @@ interface Props {
 }
 
 export default function ActivityEditForm({ initActivity }: Props) {
+  const queryClient = useQueryClient();
   const params = useParams();
   const router = useRouter();
   const activityId = Number(params.id);
   const methods = useForm<ActivityEditData>();
-
   useEffect(() => {
     if (initActivity) {
       methods.reset(initActivity);
@@ -32,15 +32,19 @@ export default function ActivityEditForm({ initActivity }: Props) {
     ...patchMutationOptions,
     onSuccess: () => {
       toast('체험수정이 완료되었습니다.');
-      router.push('/myactivity');
+      queryClient.invalidateQueries({
+        queryKey: ['my-activities'],
+        exact: true,
+      });
+      router.refresh();
     },
   });
 
   const submit = () => {
     const body = editActivityForm(methods);
-
     if (body) {
       mutation.mutate({ activityId, body });
+      router.back();
     }
   };
 

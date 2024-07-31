@@ -2,7 +2,7 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { registerActivityForm } from '@/models/activity/form-utils';
 
 export default function ActivityRegistrationForm() {
+  const queryClient = useQueryClient();
   const methods = useForm<ActivitySettingData>({
     defaultValues: {
       title: '',
@@ -29,7 +30,11 @@ export default function ActivityRegistrationForm() {
     ...submitMutationOptions,
     onSuccess: () => {
       toast('체험등록이 완료되었습니다.');
-      router.push('/myactivity');
+      queryClient.invalidateQueries({
+        queryKey: ['my-activities'],
+        exact: true,
+      });
+      router.refresh();
     },
   });
 
@@ -37,6 +42,7 @@ export default function ActivityRegistrationForm() {
     const body = registerActivityForm(methods);
     if (body) {
       mutation.mutate(body);
+      router.back();
     }
   };
 
