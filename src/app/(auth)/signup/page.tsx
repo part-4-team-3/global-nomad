@@ -2,8 +2,8 @@ import RegisterForm from '@/components/organisms/auth/RegisterForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'signUp',
-  description: '회원가입',
+  title: '회원가입 | Global Nomad',
+  description: 'global nomad 회원가입 페이지입니다.',
 };
 
 export default function SignUp() {

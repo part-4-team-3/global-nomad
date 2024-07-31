@@ -3,8 +3,8 @@ import Main from '@/components/templates/my-activity/Main';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'myActivity',
-  description: '내 체험 관리',
+  title: '내 체험 관리 | Global Nomad',
+  description: 'global nomad 내 체험 관리 페이지입니다.',
 };
 
 export default function MyActivity() {
