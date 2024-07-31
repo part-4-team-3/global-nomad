@@ -11,6 +11,7 @@ interface Props {
   reviewCount: number;
   activityId: number;
   creatorId: number;
+  userId?: string | null;
 }
 
 export default async function ActivityHeader({
@@ -21,13 +22,12 @@ export default async function ActivityHeader({
   reviewCount,
   activityId,
   creatorId,
+  userId,
 }: Props) {
-  const userId = await getCookie('userId');
-
-  let createdByMe = false;
+  let isMyActivity = false;
 
   if (userId) {
-    createdByMe = creatorId.toString() === userId;
+    isMyActivity = creatorId.toString() === userId;
   }
 
   return (
@@ -55,7 +55,7 @@ export default async function ActivityHeader({
           <AddressLabel address={address} />
         </div>
       </div>
-      {createdByMe && <ActivityOptionDropdown activityId={activityId} />}
+      {isMyActivity && <ActivityOptionDropdown activityId={activityId} />}
     </div>
   );
 }

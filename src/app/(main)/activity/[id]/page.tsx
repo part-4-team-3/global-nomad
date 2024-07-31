@@ -9,6 +9,7 @@ import ActivityDescription from '@/components/molecules/activity-description/Act
 import ActivityReservationContainer from '@/components/templates/activity-reservation-container/ActivityReservationContainer';
 import { getActivityReviews } from '@/queries/activities/get-activity-reviews';
 import type { Metadata } from 'next';
+import { getCookie } from '@/app/(action)/(cookie)/cookie';
 interface Props {
   params: { id: number };
   searchParams: { [key: string]: string | string[] | undefined };
@@ -45,6 +46,8 @@ export default async function Page({ params, searchParams }: Props) {
 
   const reviewData = await getActivityReviews(params.id, currentPage);
 
+  const userId = await getCookie('userId');
+
   return (
     <main>
       <div className="m-auto lg:max-w-1200pxr">
@@ -57,6 +60,7 @@ export default async function Page({ params, searchParams }: Props) {
             reviewCount={data.reviewCount}
             activityId={params.id}
             creatorId={data.userId}
+            userId={userId}
           />
           <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
         </section>
