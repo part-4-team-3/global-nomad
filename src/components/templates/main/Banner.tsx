@@ -112,12 +112,12 @@ export default function Banner({ activities }: Props) {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-[80px] left-[50%] flex translate-x-[-50%] gap-[5px]">
+      <div className="absolute bottom-[70px] left-[50%] flex translate-x-[-50%] gap-[5px] md:bottom-[80px]">
         {CIRCLE_LIST.map((circle) => (
           <button
             key={circle}
             onClick={() => setCurrentIndex(circle)}
-            className={`size-12pxr rounded-[50%] ${currentIndex === circle ? 'bg-white' : 'border border-white'}`}
+            className={`size-10pxr rounded-[50%] md:size-12pxr ${currentIndex === circle ? 'bg-white' : 'border border-white'}`}
           />
         ))}
       </div>
