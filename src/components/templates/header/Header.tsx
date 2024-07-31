@@ -25,14 +25,17 @@ export default function Header() {
 
   return (
     <header className="sticky left-[0] top-[0] z-[60] border-b border-var-gray6 bg-white">
-      <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
+      <InnerLayout
+        mobilePx="keep"
+        className="relative flex items-center justify-between py-[10px] md:py-[19px]"
+      >
         <h1>
           <Link href="/">
             <Image
               src="/logo.svg"
               width={165}
               height={28}
-              className="h-28pxr w-165pxr"
+              className="w-130pxr md:w-165pxr"
               alt="GlobalNomad logo"
             />
           </Link>
