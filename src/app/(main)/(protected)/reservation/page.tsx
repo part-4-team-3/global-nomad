@@ -2,8 +2,8 @@ import ReservationClient from '@/components/templates/reservation/ReservationCli
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'reservation',
-  description: '예약 내역',
+  title: '예약 내역 | Global Nomad',
+  description: 'global nomad 예약 내역 페이지입니다.',
 };
 
 export default function ReservationList() {

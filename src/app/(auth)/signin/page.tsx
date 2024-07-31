@@ -2,8 +2,8 @@ import LoginForm from '@/components/organisms/auth/LoginForm';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'signIn',
-  description: '로그인',
+  title: '로그인 | Global Nomad',
+  description: 'global nomad 로그인 페이지입니다.',
 };
 
 export default function SignIn() {
