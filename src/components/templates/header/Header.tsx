@@ -24,7 +24,7 @@ export default function Header() {
   const { user } = useUser();
 
   return (
-    <header className="z-[60] border-b border-var-gray6 bg-white">
+    <header className="sticky left-[0] top-[0] z-[60] border-b border-var-gray6 bg-white">
       <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
         <h1>
           <Link href="/">
