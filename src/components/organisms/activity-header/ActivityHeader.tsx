@@ -40,9 +40,15 @@ export default async function ActivityHeader({
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />
             <div className="text-14pxr font-[400]">
               {reviewCount > 0 ? (
-                <Link href="#review" className="text-var-blue underline">
+                <Link href="#review" className="text-var-green-dark">
                   <data value={rating}>{rating} </data>(
-                  <data value={reviewCount}>{reviewCount}</data>)
+                  <data
+                    className="border-b border-var-green-dark leading-[80%]"
+                    value={reviewCount}
+                  >
+                    {reviewCount}
+                  </data>
+                  )
                 </Link>
               ) : (
                 <span>
