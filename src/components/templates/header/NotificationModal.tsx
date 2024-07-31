@@ -22,7 +22,7 @@ export default function NotificationModal({ modalKey, isLoading, fetchNextPage }
           <div className="flex items-center justify-between">
             <h2 className="text-20pxr font-[700]">알림 {totalCount}개</h2>
             <button onClick={setIsClose}>
-              <Image src="close-bold.svg" alt="X" width={24} height={24} />
+              <Image src="/close-bold.svg" alt="X" width={24} height={24} />
             </button>
           </div>
           <NotificationList isLoading={isLoading} fetchNextPage={fetchNextPage} />

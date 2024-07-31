@@ -56,7 +56,7 @@ export default function Banner({ activities }: Props) {
                 >
                   바로가기
                   <Image
-                    src="arrow-right.svg"
+                    src="/arrow-right.svg"
                     width={24}
                     height={24}
                     alt="화살표"
