@@ -2,6 +2,7 @@ import AddressLabel from '@/components/atoms/address-label/AddressLabel';
 import Image from 'next/image';
 import ActivityOptionDropdown from '@/components/molecules/activity-option-dropdown/ActivityOptionDropdown';
 import { getCookie } from '@/app/(action)/(cookie)/cookie';
+import Link from 'next/link';
 interface Props {
   category: string;
   title: string;
@@ -38,7 +39,17 @@ export default async function ActivityHeader({
           <div className="flex items-center gap-6pxr">
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />
             <div className="text-14pxr font-[400]">
-              <data value={rating}>{rating} </data>(<data value={reviewCount}>{reviewCount}</data>)
+              {reviewCount > 0 ? (
+                <Link href="#review" className="text-var-blue underline">
+                  <data value={rating}>{rating} </data>(
+                  <data value={reviewCount}>{reviewCount}</data>)
+                </Link>
+              ) : (
+                <span>
+                  <data value={rating}>{rating} </data>(
+                  <data value={reviewCount}>{reviewCount}</data>)
+                </span>
+              )}
             </div>
           </div>
           <AddressLabel address={address} />
