@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default async function page() {
   const isEqualIpUser = await ipCheck();
   if (isEqualIpUser) {
-    redirect('/calendar');
+    redirect('/signin');
   }
 
   const apiInstance = getInstance();
