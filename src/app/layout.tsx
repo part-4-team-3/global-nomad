@@ -30,10 +30,17 @@ export default async function RootLayout({
   const userCompunter = userInfo.computerName;
 
   const computerName = os.hostname();
-  console.log(computerName);
   const headersList = headers();
   const currentUrl = headersList.get('x-pathname') || '';
 
+  console.log(
+    'userCompunter',
+    userCompunter,
+    'computerName',
+    computerName,
+    'currentUrl',
+    currentUrl,
+  );
   if (userCompunter !== computerName && currentUrl === '/calendar') {
     redirect('/signin');
   }
