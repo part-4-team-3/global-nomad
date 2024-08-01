@@ -20,9 +20,8 @@ export default function HeaderProfile({ nickname, imageUrl }: Props) {
   const { clearUser } = useUser();
 
   const listStyle =
-    'w-full text-start text-14pxr block py-[13px] px-[16px]  hover:bg-var-green2 hover:text-var-green-dark hover:font-[500]';
+    'w-full text-start text-14pxr block py-[13px] px-[16px] hover:bg-var-green2 hover:text-var-green-dark hover:font-[500]';
 
-  /** 로그아웃 로직 */
   const handleLogout = async () => {
     deleteCookie('userId');
     clearUser();

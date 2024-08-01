@@ -45,28 +45,36 @@ export default function PasswordCheckForm({ setPassword }: Props) {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <div className="mb-24pxr flex h-48pxr items-start justify-between overflow-hidden text-ellipsis">
-        <h1 className="text-32pxr font-bold">내 정보 - 비밀번호 확인</h1>
-        <Button className="h-48pxr w-120pxr" type="submit" text="확인" color="black" />
-      </div>
-      <Controller
-        control={control}
-        name="password"
-        rules={{ required: '비밀번호를 입력해 주세요.' }}
-        render={({ field }) => (
-          <div>
-            <PasswordInput
-              size="full"
-              label="비밀번호 확인"
-              hasError={errors.password !== undefined}
-              {...field}
-            />
-            {errors.password && (
-              <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
+      <h1 className="mb-[24px] text-center text-32pxr font-bold md:text-start">비밀번호 확인</h1>
+      <div className="flex h-360pxr flex-col items-center justify-center gap-[10px] rounded-[10px] bg-white px-[20px] shadow-md">
+        <p className="text-center">회원정보 수정을 위한 비밀번호 확인 절차입니다.</p>
+        <div className="mt-[10px] flex w-full max-w-500pxr flex-col gap-[10px] md2:flex-row">
+          <Controller
+            control={control}
+            name="password"
+            rules={{ required: '비밀번호를 입력해 주세요.' }}
+            render={({ field }) => (
+              <div className="w-full grow">
+                <PasswordInput
+                  size="full"
+                  label=""
+                  hasError={errors.password !== undefined}
+                  {...field}
+                />
+                {errors.password && (
+                  <div className={FORM_OPTIONS.errorMsgStyle}>{errors.password.message}</div>
+                )}
+              </div>
             )}
-          </div>
-        )}
-      />
+          />
+          <Button
+            className="mb-[30px] h-54pxr w-full md2:mt-[16px] md2:w-150pxr"
+            type="submit"
+            text="확인"
+            color="black"
+          />
+        </div>
+      </div>
     </form>
   );
 }
