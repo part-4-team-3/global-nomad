@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Activity, MyActivityList } from './../../../types/activity';
 import MyActivityCard from '@/components/molecules/activity-card/MyActivityCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getInstance } from '@/lib/axios';
 import LoadingSpinner from '@/components/atoms/loading-spinner/LoadingSpinner';
+import Button from '@/components/atoms/button/Button';
 
 const PAGE_SIZE = 10;
 
 export default function Main() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError, refetch } =
     useInfiniteQuery({
       queryKey: ['my-activities'],
       queryFn: ({ pageParam }: { pageParam: number | null }) => {
@@ -47,7 +48,13 @@ export default function Main() {
       </div>
     );
 
-  if (isError) return <div>error</div>;
+  if (isError)
+    return (
+      <div className="flex flex-col items-center">
+        <p>알 수 없는 이유로 체험 목록을 불러오지 못하였습니다.</p>
+        <Button className="px-10pxr" text="재시도" color="black" onClick={() => refetch()} />
+      </div>
+    );
 
   const firstDataCount = data?.pages[0].data.totalCount ?? 0;
   const height =
