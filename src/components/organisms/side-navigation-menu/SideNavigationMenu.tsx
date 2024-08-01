@@ -16,7 +16,7 @@ export default function SideNavigationMenu() {
   const activeMenuStyle = 'text-var-green-dark bg-var-green2 rounded-[12px]';
 
   return (
-    <div className="hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl bg-white p-[24px] shadow-md md:flex">
+    <div className="hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl bg-white p-[24px] shadow-md md2:flex">
       <MyPageProfile />
       <nav className="mt-4">
         <ul>

@@ -36,7 +36,7 @@ export default function ReservationCard({
   return (
     <div className="flex h-full min-h-128pxr rounded-[24px] bg-white md:min-h-156pxr lg:min-h-204pxr">
       <CardImage variant="card" src={activity.bannerImageUrl} />
-      <div className="flex w-full flex-col justify-center py-9pxr pl-8pxr shadow-custom md:py-[12px] md:pl-[12px] md:pr-[18px] lg:px-[24px] lg:py-[25.5px]">
+      <div className="flex w-full flex-col justify-center gap-[5px] px-[8px] py-[9px] shadow-custom md:py-[12px] md:pl-[12px] md:pr-[18px] lg:px-[24px] lg:py-[25.5px]">
         <div
           className={`${RESERVATION_COLORS[status]} text-14pxr font-bold md:text-16pxr md:leading-26pxr lg:mb-8pxr`}
         >
@@ -54,7 +54,7 @@ export default function ReservationCard({
             <Button
               text="예약 취소"
               color="white"
-              className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
+              className="h-32pxr w-80pxr text-14pxr md:h-40pxr md:w-112pxr md:text-16pxr lg:w-144pxr"
               onClick={() => {
                 mutation.mutate({ reservationId: id });
               }}
@@ -66,7 +66,7 @@ export default function ReservationCard({
                 text={reviewSubmitted ? '후기 작성 완료' : '후기 작성'}
                 color="black"
                 disabled={reviewSubmitted}
-                className="h-32pxr w-80pxr md:h-40pxr md:w-112pxr lg:w-144pxr"
+                className="w-90pxr p-[3px] text-14pxr md:h-40pxr md:w-112pxr md:p-[8px] md:text-16pxr lg:w-144pxr"
                 onClick={() => {
                   setIsOpen(`editReviewModal-${id}`);
                 }}
