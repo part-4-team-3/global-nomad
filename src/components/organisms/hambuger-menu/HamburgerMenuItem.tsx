@@ -36,29 +36,31 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
 
   return (
     <>
-      {isActive &&
-        menuItems.map((item, index) => (
-          <li key={index}>
-            <Link
-              href={item.href}
-              className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}
-              onClick={() => {
-                setIsActive(false);
-              }}
-            >
-              <div className="relative size-[24px]">
-                <Image
-                  fill
-                  src={pathname.includes(item.href) ? item.activeImg : item.defaultImg}
-                  alt={item.alt}
-                />
-              </div>
-              {item.text}
-            </Link>
-          </li>
-        ))}
+      <ul className="grow flex-col px-[24px] pt-[20px]">
+        {isActive &&
+          menuItems.map((item, index) => (
+            <li key={index}>
+              <Link
+                href={item.href}
+                className={`${menuStyle} ${pathname.includes(item.href) ? activeMenuStyle : ''}`}
+                onClick={() => {
+                  setIsActive(false);
+                }}
+              >
+                <div className="relative size-[24px]">
+                  <Image
+                    fill
+                    src={pathname.includes(item.href) ? item.activeImg : item.defaultImg}
+                    alt={item.alt}
+                  />
+                </div>
+                {item.text}
+              </Link>
+            </li>
+          ))}
+      </ul>
       {user && (
-        <div className="mt-auto flex justify-end p-[16px]">
+        <div className="flex justify-end p-[16px]">
           <button
             className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3"
             onClick={handleLogout}

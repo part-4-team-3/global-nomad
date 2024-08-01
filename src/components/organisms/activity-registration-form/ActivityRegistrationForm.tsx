@@ -2,14 +2,16 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import Button from '@/components/atoms/button/Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { submitMutationOptions } from '@/mutations/activity/submit-activity';
 import { ActivitySettingData } from '@/types/activity';
 import { useRouter } from 'next/navigation';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { toast } from 'react-toastify';
+import { registerActivityForm } from '@/models/activity/form-utils';
 
 export default function ActivityRegistrationForm() {
+  const queryClient = useQueryClient();
   const methods = useForm<ActivitySettingData>({
     defaultValues: {
       title: '',
@@ -28,34 +30,20 @@ export default function ActivityRegistrationForm() {
     ...submitMutationOptions,
     onSuccess: () => {
       toast('체험등록이 완료되었습니다.');
-      router.push('/myactivity');
+      queryClient.invalidateQueries({
+        queryKey: ['my-activities'],
+        exact: true,
+      });
+      router.refresh();
     },
   });
 
   const submit = () => {
-    const formValues = methods.getValues();
-
-    if (!formValues.bannerImageUrl) {
-      toast('배너 이미지를 등록해주세요.');
-      return;
+    const body = registerActivityForm(methods);
+    if (body) {
+      mutation.mutate(body);
+      router.back();
     }
-
-    if (!formValues.schedules || formValues.schedules.length === 0) {
-      toast('스케줄을 등록해주세요.');
-      return;
-    }
-
-    const body: ActivitySettingData = {
-      title: formValues.title,
-      category: formValues.category,
-      description: formValues.description,
-      price: formValues.price,
-      address: formValues.address,
-      schedules: methods.getValues('schedules'),
-      bannerImageUrl: methods.getValues('bannerImageUrl'),
-      subImageUrls: methods.getValues('subImageUrls'),
-    };
-    mutation.mutate(body);
   };
 
   return (

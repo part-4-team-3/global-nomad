@@ -28,6 +28,7 @@ export default function Map({ address }: Props) {
       const geocoder = new window.kakao.maps.services.Geocoder();
 
       geocoder.addressSearch(address, function (result: any, status: any) {
+        console.log(result[0]);
         // 정상적으로 검색이 완료됐으면
         if (status === window.kakao.maps.services.Status.OK) {
           const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
@@ -39,10 +40,12 @@ export default function Map({ address }: Props) {
           });
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
-          const infowindow = new window.kakao.maps.InfoWindow({
-            content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
-          });
-          infowindow.open(map, marker);
+          if (result[0].road_address.building_name !== '') {
+            const infowindow = new window.kakao.maps.InfoWindow({
+              content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
+            });
+            infowindow.open(map, marker);
+          }
 
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
           map.setCenter(coords);

@@ -29,8 +29,8 @@ export default function NotificationCard({ notification }: Props) {
 
   return (
     <div className="relative rounded-[5px] border border-var-gray5 bg-white px-[12px] pb-[16px] pt-[20px]">
-      <button onClick={handleDelete} className="absolute right-[12px] top-[16px]">
-        <Image src="close-gray.svg" alt="X" width={24} height={24} />
+      <button onClick={handleDelete} className="absolute right-[9px] top-[9px]">
+        <Image src="/close-gray.svg" alt="X" width={24} height={24} />
       </button>
       <div>
         <div
@@ -41,7 +41,7 @@ export default function NotificationCard({ notification }: Props) {
           <span className={isApprove ? 'text-var-blue' : 'text-var-red-dark'}>{content[1]}</span>
           {content[2]}
         </p>
-        <time className="mt-[4px] text-12pxr text-var-gray3">
+        <time className="mt-[6px] block text-12pxr text-var-gray3">
           {formatDateAgo(notification.updatedAt)}
         </time>
       </div>

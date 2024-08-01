@@ -1,6 +1,7 @@
 import NotificationCard from '@/components/molecules/card/NotificationCard';
 import { useNotification } from '@/models/header/notification-context';
 import { useObserverByScroll } from '@/models/useObserverByScroll';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -25,9 +26,15 @@ export default function NotificationList({ isLoading, fetchNextPage }: Props) {
     fetchNextPage,
   });
 
-  if (!notificationList?.length) return <p>알림이 없습니다.</p>;
+  if (!notificationList?.length)
+    return (
+      <div className="flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-[10px] pb-[30px] md:h-fit">
+        <Image src="/bell-nothing.svg" width={100} height={100} alt="알림 없음" />
+        <p className="font-[500] text-var-gray9">아직 알림이 없습니다.</p>
+      </div>
+    );
   return (
-    <ol className="flex h-[calc(100vh-88px)] flex-col gap-[8px] overflow-auto md:h-fit md:max-h-[50vh]">
+    <ol className="flex h-[calc(100vh-88px)] flex-col gap-[8px] overflow-auto scrollbar-hide md:h-fit md:max-h-[calc(100vh-250px)]">
       {notificationList?.map((notification) => (
         <NotificationCard key={notification.id} notification={notification} />
       ))}

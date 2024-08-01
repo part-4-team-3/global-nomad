@@ -68,7 +68,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
           ))}
         </DropdownMenu>
       </div>
-      <h2 className="-mt-[35px] text-18pxr font-[700] md:-mt-[52px] md:text-36pxr md2:mt-[40px]">
+      <h2 className="-mt-[35px] text-18pxr font-[700] md:-mt-[54px] md:text-36pxr md2:mt-[40px]">
         {searchParams.category === '모든 체험' || !searchParams.category
           ? '🛼 모든 체험'
           : searchParams.category}
