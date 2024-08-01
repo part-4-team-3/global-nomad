@@ -18,15 +18,6 @@ export default async function page() {
   const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { compunterName: '' };
   const userCompunter = userInfo.computerName;
 
-  const computerName = os.hostname();
-
-  const headersList = headers();
-  const currentUrl = headersList.get('x-pathname') || '';
-
-  if (userCompunter !== computerName && currentUrl === '/calendar') {
-    redirect('/signin');
-  }
-
   const apiInstance = getInstance();
   const myActivtyListResponse = await apiInstance.get(`my-activities`);
   const myActivtyList = myActivtyListResponse.data;

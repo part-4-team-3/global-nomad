@@ -28,8 +28,7 @@ export default async function RootLayout({
   const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { ip: '' };
   const userIp = userInfo.ip;
 
-  const ipResponse = await axios.get('https://api.ipify.org?format=json');
-  const myIp = ipResponse.data.ip;
+  const myIp = headers().get('ip') || '';
 
   const headersList = headers();
   const currentUrl = headersList.get('x-pathname') || '';
