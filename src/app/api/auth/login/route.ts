@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
       body,
     );
 
-    const myIp = headers().get('ip') || '';
-    console.log(myIp);
+    const myIp = req.headers.get('x-forwarded-for');
+    console.log('login ', myIp);
     const { accessToken, refreshToken, user } = response.data;
 
     const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });

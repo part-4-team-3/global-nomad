@@ -7,7 +7,6 @@ export async function middleware(req: NextRequest) {
   const myIp = req.headers.get('x-forwarded-for');
   req.headers.set('x-pathname', pathname);
   req.headers.set('ip', myIp || '');
-
   if (!userId?.value) {
     return NextResponse.redirect(new URL('/signin', req.url));
   }
