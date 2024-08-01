@@ -38,6 +38,9 @@ export default function ActivityEditForm({ initActivity }: Props) {
         exact: true,
       });
       router.refresh();
+      setTimeout(() => {
+        router.back();
+      }, 500);
     },
   });
 
@@ -45,7 +48,6 @@ export default function ActivityEditForm({ initActivity }: Props) {
     const body = editActivityForm(methods);
     if (body) {
       mutation.mutate({ activityId, body });
-      router.back();
     }
   };
 

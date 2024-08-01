@@ -33,14 +33,6 @@ export default function AddressInput({ value, onChange }: Props) {
   const [detailAddress, setDetailAddress] = useState('');
 
   useEffect(() => {
-    if (value) {
-      const parts = value.split(' ');
-      if (parts.length > 0) setAddress(parts[0]);
-      if (parts.length > 1) setExtraAddress(parts.slice(1).join(' '));
-    }
-  }, [value]);
-
-  useEffect(() => {
     const fullAddress = ` ${address} ${extraAddress} ${detailAddress}`.trim();
     onChange(fullAddress);
   }, [address, extraAddress, detailAddress, onChange]);
