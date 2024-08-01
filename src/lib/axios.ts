@@ -1,7 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { cookie } from './cookie';
 import { redirect } from 'next/navigation';
 import { getCookie, setCookie } from '@/app/(action)/(cookie)/cookie';
+import redis from './redis';
 
 const BASE_URL = 'https://sp-globalnomad-api.vercel.app/5-3/';
 export const apiInstance = axios.create({

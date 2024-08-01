@@ -7,7 +7,8 @@ import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
-import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
+import { deleteCookie, getCookie } from '@/app/(action)/(cookie)/cookie';
+import { getInstance } from '@/lib/axios';
 
 interface Props {
   isActive: boolean;
@@ -25,6 +26,9 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
 
   /** 로그아웃 로직 */
   const handleLogout = async () => {
+    const apiInstance = getInstance();
+    const userId = await getCookie('userId');
+    await apiInstance.delete(`auth/logout?userId=${userId}`);
     deleteCookie('userId');
     clearUser();
     router.push('/signin');

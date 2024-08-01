@@ -1,5 +1,4 @@
 // import redis from '@/lib/redis';
-import { setCookieDB } from '@/lib/cookieDB';
 import redis from '@/lib/redis';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
@@ -8,17 +7,19 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
     const response = await axios.post<LoginResponse>(
       `${process.env.NEXT_PUBLIC_API_URL}auth/login`,
       body,
     );
 
+    const ipResponse = await axios.get('https://api.ipify.org?format=json');
+    const myIp = ipResponse.data.ip;
+
     const { accessToken, refreshToken, user } = response.data;
 
-    await redis.set(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
+    const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });
+    await redis.set(user.id.toString(), loginData);
     await redis.expire(user.id.toString(), 100000000000);
-    // await setCookieDB(user.id.toString(), JSON.stringify({ accessToken, refreshToken }));
 
     const res = NextResponse.json(response.data, { status: response.status });
     res.cookies.set('accessToken', accessToken, {
