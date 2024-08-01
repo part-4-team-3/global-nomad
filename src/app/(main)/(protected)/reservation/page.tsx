@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function ReservationList() {
   const isEqualIpUser = await ipCheck();
   if (isEqualIpUser) {
-    redirect('/calendar');
+    redirect('/signin');
   }
 
   return <ReservationClient />;
