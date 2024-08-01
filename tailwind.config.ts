@@ -116,6 +116,7 @@ const config = {
       boxShadow: {
         custom: '0 0 20px rgba(0, 0, 0, 0.05);',
         hover: '0 4px 8px -2px rgba(17, 34, 17, 0.3)',
+        all: '0 4px 8px 0px rgba(17, 34, 17, 0.4)',
       },
       animation: {
         'spin-slow': 'spin 2s linear infinite',

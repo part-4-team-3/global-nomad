@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import NotificationButton from '@/components/atoms/button/NotificationButton';
 import useUser from '@/store/useUser';
-import Profile from '@/components/atoms/profile/Profile';
 import { NotificationProvider } from '@/models/header/notification-context';
+import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
 
 const navList = [
   {
@@ -48,7 +48,7 @@ export default function Header() {
               </NotificationProvider>
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
-                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
+                <HeaderProfile nickname={user.nickname} imageUrl={user.profileImageUrl} />
               </div>
               <div className="block md:hidden">
                 <HamburgerMenu />
