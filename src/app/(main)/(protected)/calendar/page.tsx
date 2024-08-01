@@ -13,11 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-  const userId = cookies().get('userId');
-  const userInfoByRedis = await redis.get(userId?.value || '');
-  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { compunterName: '' };
-  const userCompunter = userInfo.computerName;
-
   const apiInstance = getInstance();
   const myActivtyListResponse = await apiInstance.get(`my-activities`);
   const myActivtyList = myActivtyListResponse.data;

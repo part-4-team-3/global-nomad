@@ -28,10 +28,11 @@ export default async function RootLayout({
   const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { ip: '' };
   const userIp = userInfo.ip;
 
-  const myIp = headers().get('ip') || '';
-
   const headersList = headers();
   const currentUrl = headersList.get('x-pathname') || '';
+  const myIp = headersList.get('ip') || '';
+
+  console.log('ip ', myIp);
 
   if (userIp !== myIp && currentUrl === '/calendar') {
     redirect('/signin');
