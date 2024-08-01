@@ -1,61 +1,19 @@
 'use client';
 
 import InnerLayout from '@/components/atoms/inner-layout/InnerLayout';
+import { useBanner } from '@/store/useBanner';
 import { Activity } from '@/types/activity';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+
+const CIRCLE_LIST = [1, 2, 3];
 
 interface Props {
   activities: Activity[];
 }
 
 export default function Banner({ activities }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const slideRef = useRef<HTMLDivElement>(null);
-
-  const BG_NUM = activities.length;
-  const beforeSlide = activities[BG_NUM - 1];
-  const afterSlide = activities[0];
-
-  let slideArr = [beforeSlide, ...activities, afterSlide];
-  const SLIDE_NUM = slideArr.length;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (currentIndex === SLIDE_NUM - 1) {
-      setTimeout(() => {
-        if (slideRef.current) {
-          slideRef.current.style.transition = 'none';
-          setCurrentIndex(1);
-        }
-        setTimeout(() => {
-          if (slideRef.current) {
-            slideRef.current.style.transition = 'all 1000ms ease-in-out';
-          }
-        }, 100);
-      }, 1000);
-    } else if (currentIndex === 0) {
-      setTimeout(() => {
-        if (slideRef.current) {
-          slideRef.current.style.transition = 'none';
-          setCurrentIndex(BG_NUM);
-        }
-        setTimeout(() => {
-          if (slideRef.current) {
-            slideRef.current.style.transition = 'all 1000ms ease-in-out';
-          }
-        }, 100);
-      }, 1000);
-    }
-  }, [currentIndex, SLIDE_NUM, BG_NUM]);
+  const { currentIndex, slideRef, slideArr, setCurrentIndex } = useBanner(activities);
 
   return (
     <div className="relative h-240pxr w-full overflow-hidden bg-black md:h-550pxr">
@@ -96,9 +54,9 @@ export default function Banner({ activities }: Props) {
                   href={`/activity/${activity.id}`}
                   className="group mt-[5px] flex w-100pxr items-center justify-between rounded-[40px] bg-white px-[12px] py-[5px] text-12pxr font-[500] text-var-primary duration-200 hover:shadow-[0_4px_14px_0_rgba(17,34,17,0.4)] md:mt-[20px] md:w-200pxr md:px-[20px] md:py-[10px] md:text-16pxr"
                 >
-                  바로가기{' '}
+                  바로가기
                   <Image
-                    src="arrow-right.svg"
+                    src="/arrow-right.svg"
                     width={24}
                     height={24}
                     alt="화살표"
@@ -108,6 +66,15 @@ export default function Banner({ activities }: Props) {
               </InnerLayout>
             </div>
           </div>
+        ))}
+      </div>
+      <div className="absolute bottom-[70px] left-[50%] flex translate-x-[-50%] gap-[5px] md:bottom-[80px]">
+        {CIRCLE_LIST.map((circle) => (
+          <button
+            key={circle}
+            onClick={() => setCurrentIndex(circle)}
+            className={`size-10pxr rounded-[50%] md:size-12pxr ${currentIndex === circle ? 'bg-white' : 'border border-white'}`}
+          />
         ))}
       </div>
     </div>

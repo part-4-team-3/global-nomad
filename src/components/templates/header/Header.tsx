@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import NotificationButton from '@/components/atoms/button/NotificationButton';
 import useUser from '@/store/useUser';
-import Profile from '@/components/atoms/profile/Profile';
 import { NotificationProvider } from '@/models/header/notification-context';
+import HeaderProfile from '@/components/molecules/profile/HeaderProfile';
 
 const navList = [
   {
@@ -24,15 +24,18 @@ export default function Header() {
   const { user } = useUser();
 
   return (
-    <header className="z-[60] border-b border-var-gray6 bg-white">
-      <InnerLayout mobilePx="keep" className="relative flex items-center justify-between py-[19px]">
+    <header className="sticky left-[0] top-[0] z-[60] border-b border-var-gray6 bg-white">
+      <InnerLayout
+        mobilePx="keep"
+        className="relative flex items-center justify-between py-[10px] md:py-[19px]"
+      >
         <h1>
           <Link href="/">
             <Image
               src="/logo.svg"
               width={165}
               height={28}
-              className="h-28pxr w-165pxr"
+              className="w-130pxr md:w-165pxr"
               alt="GlobalNomad logo"
             />
           </Link>
@@ -45,7 +48,7 @@ export default function Header() {
               </NotificationProvider>
               {/* 모바일사이즈에서 햄버거 메뉴 태블릿사이즈부터 프로필 */}
               <div className="hidden md:flex">
-                <Profile nickname={user.nickname} imageUrl={user.profileImageUrl} />
+                <HeaderProfile nickname={user.nickname} imageUrl={user.profileImageUrl} />
               </div>
               <div className="block md:hidden">
                 <HamburgerMenu />
