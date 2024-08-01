@@ -8,8 +8,10 @@ import { useEffect, useState } from 'react';
  * @returns activityName: 선택된 activity의 title, setActivityName: activityName을 설정하는 함수, selectedActivity: 선택된 activity의 상태를 반환합니다.
  */
 export function useHandleIsSelectdActivity(myActivityList: Activity[] | undefined) {
-  const [activityName, setActivityName] = useState<string>('');
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [activityName, setActivityName] = useState<string>(myActivityList?.[0].title || '');
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
+    myActivityList?.[0] || null,
+  );
 
   // myActivityList에서 activity의 title만 추출하여 배열로 만듭니다.
   const activityNameList = myActivityList?.map((activity) => activity.title);

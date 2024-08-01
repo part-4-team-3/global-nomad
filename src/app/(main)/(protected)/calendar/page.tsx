@@ -1,3 +1,4 @@
+import { ipCheck } from '@/app/action/ip-check';
 import MyReservation from '@/components/templates/mypage/MyReservation';
 import { getInstance } from '@/lib/axios';
 import redis from '@/lib/redis';
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
+  const isEqualIpUser = await ipCheck();
+  if (isEqualIpUser) {
+    redirect('/calendar');
+  }
+
   const apiInstance = getInstance();
   const myActivtyListResponse = await apiInstance.get(`my-activities`);
   const myActivtyList = myActivtyListResponse.data;

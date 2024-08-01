@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import redis from './lib/redis';
 
 export async function middleware(req: NextRequest) {
   const userId = cookies().get('userId');
