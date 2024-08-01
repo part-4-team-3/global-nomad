@@ -14,8 +14,10 @@ export const ipCheck = async () => {
   const currentUrl = headersList.get('x-pathname') || '';
   const myIp = headersList.get('ip') || '';
 
-  if (userIp === myIp && currentUrl === '/calendar') {
-    return false;
+  const guardPath = ['/mypage', '/calendar', '/myactivity', '/reservation'];
+  console.log('mypage ', currentUrl);
+  if (userIp !== myIp && guardPath.includes(currentUrl)) {
+    return true;
   }
-  return true;
+  return false;
 };
