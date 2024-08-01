@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 interface Props {
   params: { id: number };
 }
+
 export default async function ActivityEditPage({ params }: Props) {
-  const activityData = await getActivityDetails(params.id);
-  return <ActivityEditForm stateData={activityData} />;
+  const initActivity = await getActivityDetails(params.id);
+  return <ActivityEditForm initActivity={initActivity} />;
 }
