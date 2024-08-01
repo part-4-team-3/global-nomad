@@ -5,9 +5,11 @@ import ReservationTimePicker from '../../molecules/reservation-time-picker/Reser
 import ImageUploader from '@/components/organisms/image-uploader/ImageUploader';
 import useTimeSlot from '@/models/activity/use-time-slot';
 import { useImageUploader } from '@/models/uploader/use-image-uploader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DetailActivityData } from '@/types/activity';
 import { ReactNode } from 'react';
+import AddressInput from '@/components/molecules/address-input/AddressInput';
+import Button from '@/components/atoms/button/Button';
 
 interface Props {
   initActivity?: DetailActivityData;
@@ -18,6 +20,7 @@ const containerClass = 'flex flex-col gap-[.75rem] md:gap-[1rem] lg:gap-[1.5rem]
 const inputTitleClass = 'text-var-black text-1.25remr font-bold leading-[1.625rem] md:text-1.5remr';
 
 export default function ActivityForm({ initActivity }: Props) {
+  const [addressOpen, setAddressOpen] = useState<boolean>(false);
   const {
     register,
     control,
@@ -140,9 +143,36 @@ export default function ActivityForm({ initActivity }: Props) {
         {getErrorMessage(errors.price)}
       </div>
       <div className={containerClass}>
-        {/* 주소찾기 api 추가 예정 */}
         <label className={inputTitleClass}>주소</label>
-        <Input size="full" placeholder="주소를 입력해주세요" {...register('address')} />
+        <div className="flex gap-[8px] md:gap-[12px]">
+          <Controller
+            name="address"
+            control={control}
+            render={({ field }) => (
+              <>
+                <Input
+                  size="formField"
+                  readOnly
+                  value={field.value || initActivity?.address || ''}
+                />
+                <Button
+                  className="h-56pxr w-200pxr px-16pxr py-16pxr text-14pxr"
+                  text={addressOpen ? '닫기' : '주소 변경하기'}
+                  color="black"
+                  type="button"
+                  onClick={() => setAddressOpen((prev) => !prev)}
+                />
+              </>
+            )}
+          />
+        </div>
+        {addressOpen && (
+          <Controller
+            name="address"
+            control={control}
+            render={({ field }) => <AddressInput onChange={(address) => field.onChange(address)} />}
+          />
+        )}
       </div>
       <div className={containerClass}>
         <label className={inputTitleClass}>예약 가능한 시간대</label>
