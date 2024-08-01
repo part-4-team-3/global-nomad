@@ -2,8 +2,8 @@
 import redis from '@/lib/redis';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
+import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import os from 'os';
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,9 +13,8 @@ export async function POST(req: NextRequest) {
       body,
     );
 
-    const ipResponse = await axios.get('https://api.ipify.org?format=json');
-    const myIp = ipResponse.data.ip;
-
+    const myIp = headers().get('ip') || '';
+    console.log(myIp);
     const { accessToken, refreshToken, user } = response.data;
 
     const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });
