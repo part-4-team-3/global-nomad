@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import os from 'os';
 
 export const metadata: Metadata = {
   title: '예약 연황 | Global Nomad',
@@ -14,16 +15,15 @@ export const metadata: Metadata = {
 export default async function page() {
   const userId = cookies().get('userId');
   const userInfoByRedis = await redis.get(userId?.value || '');
-  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { ip: '' };
-  const userIp = userInfo.ip;
+  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { compunterName: '' };
+  const userCompunter = userInfo.computerName;
 
-  const ipResponse = await axios.get('https://api.ipify.org?format=json');
-  const myIp = ipResponse.data.ip;
+  const computerName = os.hostname();
 
   const headersList = headers();
   const currentUrl = headersList.get('x-pathname') || '';
 
-  if (userIp !== myIp && currentUrl === '/calendar') {
+  if (userCompunter !== computerName && currentUrl === '/calendar') {
     redirect('/signin');
   }
 

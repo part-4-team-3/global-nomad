@@ -10,6 +10,7 @@ import { cookies, headers } from 'next/headers';
 import axios from 'axios';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
+import os from 'os';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,16 +40,15 @@ export default async function RootLayout({
 }>) {
   const userId = cookies().get('userId');
   const userInfoByRedis = await redis.get(userId?.value || '');
-  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { ip: '' };
-  const userIp = userInfo.ip;
+  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { compunterName: '' };
+  const userCompunter = userInfo.computerName;
 
-  const ipResponse = await axios.get('https://api.ipify.org?format=json');
-  const myIp = ipResponse.data.ip;
+  const computerName = os.hostname();
 
   const headersList = headers();
   const currentUrl = headersList.get('x-pathname') || '';
 
-  if (userIp !== myIp && currentUrl === '/calendar') {
+  if (userCompunter !== computerName && currentUrl === '/calendar') {
     redirect('/signin');
   }
 
