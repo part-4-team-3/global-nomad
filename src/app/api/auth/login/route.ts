@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
     );
 
     const myIp = req.headers.get('x-forwarded-for');
-    console.log('login ', myIp);
     const { accessToken, refreshToken, user } = response.data;
 
     const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });

@@ -16,8 +16,8 @@ const InfinitySelect = forwardRef(
     const [isOpen, setIsOpen] = useState(false);
 
     const divRef = useRef<HTMLDivElement | null>(null);
-    const [observeRef, setObserveRef] = useState<HTMLDivElement | null>(null);
 
+    console.log(value);
     return (
       <div className={`relative h-full w-full`}>
         <Input

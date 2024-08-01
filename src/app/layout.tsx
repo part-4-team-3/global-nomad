@@ -7,9 +7,8 @@ import Script from 'next/script';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import redis from '@/lib/redis';
 import { cookies, headers } from 'next/headers';
-import axios from 'axios';
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
+import { ipCheck } from './action/ip-check';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,21 +22,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const userId = cookies().get('userId');
-  const userInfoByRedis = await redis.get(userId?.value || '');
-  const userInfo = userInfoByRedis ? JSON.parse(userInfoByRedis) : { ip: '' };
-  const userIp = userInfo.ip;
-
-  const headersList = headers();
-  const currentUrl = headersList.get('x-pathname') || '';
-  const myIp = headersList.get('ip') || '';
-
-  console.log('ip ', myIp);
-
-  if (userIp !== myIp && currentUrl === '/calendar') {
-    redirect('/signin');
-  }
-
   return (
     <html lang="ko">
       <body className={inter.className}>
