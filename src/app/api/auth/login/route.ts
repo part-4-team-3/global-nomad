@@ -3,6 +3,7 @@ import redis from '@/lib/redis';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
+import os from 'os';
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,12 +13,11 @@ export async function POST(req: NextRequest) {
       body,
     );
 
-    const ipResponse = await axios.get('https://api.ipify.org?format=json');
-    const myIp = ipResponse.data.ip;
+    const computerName = os.hostname();
 
     const { accessToken, refreshToken, user } = response.data;
 
-    const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });
+    const loginData = JSON.stringify({ computerName, accessToken, refreshToken });
     await redis.set(user.id.toString(), loginData);
     await redis.expire(user.id.toString(), 100000000000);
 
