@@ -3,11 +3,12 @@
 import ReservationCard from '@/components/molecules/reservation-card/ReservationCard';
 import { Reservation, ReservationStatus } from '@/types/reservation';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getMyReservations } from '@/queries/reservations/get-my-reservations';
 import LoadingSpinner from '@/components/atoms/loading-spinner/LoadingSpinner';
 import { reservationsKeys } from './../../../queries/reservations/query-keys';
+import Button from '@/components/atoms/button/Button';
 
 const PAGE_SIZE = 10;
 
@@ -16,7 +17,7 @@ interface Props {
 }
 
 export default function Main({ status }: Props) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError, refetch } =
     useInfiniteQuery({
       queryKey: reservationsKeys.getMyReservations(status),
       queryFn: ({ pageParam }: { pageParam: number | undefined }) => {
@@ -62,7 +63,13 @@ export default function Main({ status }: Props) {
       </div>
     );
 
-  if (isError) return <div>error</div>;
+  if (isError)
+    return (
+      <div className="flex flex-col items-center">
+        <p>알 수 없는 이유로 예약 내역을 불러오지 못하였습니다.</p>
+        <Button className="px-10pxr" text="재시도" color="black" onClick={() => refetch()} />
+      </div>
+    );
 
   const firstDataCount = data?.pages[0].totalCount ?? 0;
   const height =
