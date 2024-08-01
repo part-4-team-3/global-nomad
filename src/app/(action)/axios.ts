@@ -3,7 +3,6 @@
 import axios, { AxiosError } from 'axios';
 import { getCookie } from './(cookie)/cookie';
 import { NextResponse } from 'next/server';
-import { getCookieDB, setCookieDB } from '@/lib/cookieDB';
 import redis from '@/lib/redis';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,7 +24,7 @@ axiosByServer.interceptors.request.use(async (config) => {
     // accessToken을 헤더에 추가합니다.
     if (usersToken) {
       const accessToken = JSON.parse(usersToken!).accessToken;
-      config.headers.Authorization = `Bearer ${'asdasd'}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
   }
 
@@ -67,10 +66,6 @@ axiosByServer.interceptors.response.use(
         JSON.stringify({ accessToken: newAccessToken, refreshToken: newRefreshToken }),
       );
       await redis.expire(userId!.toString(), 100000000000);
-      // await setCookieDB(
-      //   userId!,
-      //   JSON.stringify({ accessToken: newAccessToken, refreshToken: newRefreshToken }),
-      // );
 
       // 새로운 accessToken을 헤더에 추가하여 요청을 재시도합니다.
       originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
