@@ -13,11 +13,12 @@ export async function POST(req: NextRequest) {
       body,
     );
 
-    const computerName = os.hostname();
+    const ipResponse = await axios.get('https://api.ipify.org?format=json');
+    const myIp = ipResponse.data.ip;
 
     const { accessToken, refreshToken, user } = response.data;
 
-    const loginData = JSON.stringify({ computerName, accessToken, refreshToken });
+    const loginData = JSON.stringify({ ip: myIp, accessToken, refreshToken });
     await redis.set(user.id.toString(), loginData);
     await redis.expire(user.id.toString(), 100000000000);
 
