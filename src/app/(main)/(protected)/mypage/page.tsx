@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function MyPage() {
   const isEqualIpUser = await ipCheck();
+  console.log(isEqualIpUser);
   if (isEqualIpUser) {
     redirect('/signin');
   }
