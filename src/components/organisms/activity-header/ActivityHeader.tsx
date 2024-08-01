@@ -2,6 +2,7 @@ import AddressLabel from '@/components/atoms/address-label/AddressLabel';
 import Image from 'next/image';
 import ActivityOptionDropdown from '@/components/molecules/activity-option-dropdown/ActivityOptionDropdown';
 import { getCookie } from '@/app/(action)/(cookie)/cookie';
+import Link from 'next/link';
 interface Props {
   category: string;
   title: string;
@@ -10,6 +11,7 @@ interface Props {
   reviewCount: number;
   activityId: number;
   creatorId: number;
+  userId?: string | null;
 }
 
 export default async function ActivityHeader({
@@ -20,13 +22,12 @@ export default async function ActivityHeader({
   reviewCount,
   activityId,
   creatorId,
+  userId,
 }: Props) {
-  const userId = await getCookie('userId');
-
-  let createdByMe = false;
+  let isMyActivity = false;
 
   if (userId) {
-    createdByMe = creatorId.toString() === userId;
+    isMyActivity = creatorId.toString() === userId;
   }
 
   return (
@@ -38,13 +39,29 @@ export default async function ActivityHeader({
           <div className="flex items-center gap-6pxr">
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />
             <div className="text-14pxr font-[400]">
-              <data value={rating}>{rating} </data>(<data value={reviewCount}>{reviewCount}</data>)
+              {reviewCount > 0 ? (
+                <Link href="#review" className="text-var-green-dark">
+                  <data value={rating}>{rating} </data>(
+                  <data
+                    className="border-b border-var-green-dark leading-[80%]"
+                    value={reviewCount}
+                  >
+                    {reviewCount}
+                  </data>
+                  )
+                </Link>
+              ) : (
+                <span>
+                  <data value={rating}>{rating} </data>(
+                  <data value={reviewCount}>{reviewCount}</data>)
+                </span>
+              )}
             </div>
           </div>
           <AddressLabel address={address} />
         </div>
       </div>
-      {createdByMe && <ActivityOptionDropdown activityId={activityId} />}
+      {isMyActivity && <ActivityOptionDropdown activityId={activityId} />}
     </div>
   );
 }
