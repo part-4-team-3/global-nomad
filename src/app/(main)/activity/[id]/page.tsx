@@ -19,6 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getActivityDetails(params.id);
   return {
     title: `${product.title} | Global Nomad`,
+    icons: {
+      icon: '/favicon/favicon.ico',
+    },
     openGraph: {
       title: `${product.title} | Global Nomad`,
       description: product.description,
