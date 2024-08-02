@@ -3,6 +3,7 @@ import Image from 'next/image';
 import TimeSlotList from './TimeSlotList';
 import { TimeSlotData } from '@/types/activity';
 import TimeSlotInput from '@/components/atoms/input/TimeSlotInput';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   selectedDay: string;
@@ -13,6 +14,7 @@ interface Props {
   handleFormatDayClick: (day: Date) => void;
   setStartTime: React.Dispatch<React.SetStateAction<string>>;
   setEndTime: React.Dispatch<React.SetStateAction<string>>;
+  setIsCalendarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleCalendarOpen: () => void;
   handleAddTimeSlot: () => void;
   handleDeleteTimeSlot: (date: string, startTime: string, endTime: string) => void;
@@ -26,6 +28,7 @@ export default function ReservationTimePicker({
   endTime,
   timeSlots,
   isCalendarOpen,
+  setIsCalendarOpen,
   handleFormatDayClick,
   handleCalendarOpen,
   handleAddTimeSlot,
@@ -33,6 +36,20 @@ export default function ReservationTimePicker({
   handleStartTimeChange,
   handleEndTimeChange,
 }: Props) {
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        setIsCalendarOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setIsCalendarOpen]);
+
   return (
     <div>
       <div className="relative flex place-items-end gap-[5px] border-b pb-[16px] md:h-[92px] lg:gap-[20px] lg:pb-[20px]">
@@ -49,7 +66,7 @@ export default function ReservationTimePicker({
             </button>
           </div>
           {isCalendarOpen && (
-            <div className="absolute top-[0px] top-full z-10 bg-white">
+            <div ref={calendarRef} className="absolute top-[0px] top-full z-10 bg-white">
               <Calendar onDayClick={(day) => handleFormatDayClick(day)} />
             </div>
           )}
