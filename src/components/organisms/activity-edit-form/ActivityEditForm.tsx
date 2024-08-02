@@ -27,7 +27,6 @@ export default function ActivityEditForm({ initActivity }: Props) {
       methods.reset(initActivity);
     }
   }, [initActivity, methods]);
-  console.log(initActivity);
 
   const mutation = useMutation({
     ...patchMutationOptions,

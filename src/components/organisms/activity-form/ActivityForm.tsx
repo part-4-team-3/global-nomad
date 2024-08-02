@@ -39,6 +39,7 @@ export default function ActivityForm({ initActivity }: Props) {
     deletedSchedule,
     setScheduleIds,
     isCalendarOpen,
+    setIsCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,
     handleAddSchedules,
@@ -182,6 +183,7 @@ export default function ActivityForm({ initActivity }: Props) {
           endTime={endTime}
           timeSlots={schedules}
           isCalendarOpen={isCalendarOpen}
+          setIsCalendarOpen={setIsCalendarOpen}
           handleFormatDayClick={handleFormatDayClick}
           setStartTime={setStartTime}
           setEndTime={setEndTime}
