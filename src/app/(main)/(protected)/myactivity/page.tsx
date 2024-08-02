@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function MyActivity() {
   const isEqualIpUser = await ipCheck();
   if (isEqualIpUser) {
-    redirect('/calendar');
+    redirect('/signin?redirect=anotherlogin');
   }
 
   return (

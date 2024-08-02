@@ -26,7 +26,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (isAnotherLogin) {
-      toast('다른 기기에서 로그인 되었습니다. 다시 로그인 해주세요.');
+      toast('다른 기기에서 로그인 되었습니다.');
     }
   }, [isAnotherLogin]);
 

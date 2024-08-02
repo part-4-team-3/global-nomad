@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const isEqualIpUser = await ipCheck();
   if (isEqualIpUser) {
-    redirect('/signin');
+    redirect('/signin?redirect=anotherlogin');
   }
 
   return <ActivityRegistrationForm />;
