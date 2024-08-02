@@ -58,7 +58,7 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
       {user && (
         <div className="flex justify-end p-[16px]">
           <button
-            className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3"
+            className="rounded-[12px] px-[16px] py-[8px] text-16pxr font-bold text-var-gray3"
             onClick={handleLogout}
           >
             로그아웃

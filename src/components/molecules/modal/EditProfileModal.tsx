@@ -17,7 +17,7 @@ export default function EditProfileModal() {
   return (
     <Modal modalKey="editProfileImage">
       <div className="relative flex flex-col items-center justify-center gap-[48px] px-[50px] py-[24px] pb-[72px]">
-        <label className="flex flex-col gap-[24px] font-bold text-[48pxr]">
+        <label className="flex flex-col gap-[24px] text-48pxr font-bold">
           프로필 이미지 변경하기
           <div className="relative size-160pxr overflow-hidden rounded-full">
             {profileImage ? (
