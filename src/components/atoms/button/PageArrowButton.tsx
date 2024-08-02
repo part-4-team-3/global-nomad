@@ -6,9 +6,16 @@ interface Props {
   currentPage: number;
   totalPage?: number;
   direction: 'prev' | 'next';
+  scroll?: boolean;
 }
 
-export default function PageArrowButton({ href, currentPage, totalPage, direction }: Props) {
+export default function PageArrowButton({
+  href,
+  currentPage,
+  totalPage,
+  direction,
+  scroll = false,
+}: Props) {
   const buttonStyle =
     'flex justify-center items-center size-40pxr md:size-55pxr rounded-[15px] border';
   const imageStyle = `size-21pxr no-drag ${direction === 'prev' ? 'scale-x-[-1]' : ''}`;
@@ -30,7 +37,7 @@ export default function PageArrowButton({ href, currentPage, totalPage, directio
     );
 
   return (
-    <Link href={href} scroll={false} className={`border-var-green-dark ${buttonStyle}`}>
+    <Link href={href} scroll={scroll} className={`border-var-green-dark ${buttonStyle}`}>
       <Image
         width={55}
         height={55}
