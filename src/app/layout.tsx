@@ -42,7 +42,7 @@ export default function RootLayout({
         <Script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" />
         <Providers>
           <ToastProvider>{children}</ToastProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </Providers>
       </body>
     </html>
