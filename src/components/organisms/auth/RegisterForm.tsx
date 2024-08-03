@@ -46,6 +46,7 @@ export default function RegisterForm() {
     onSuccess: (data) => {
       setEmailCode(data.code ?? '');
       setIsEmailVerified(false);
+      toast('인증번호가 전송되었습니다.');
     },
   });
 
