@@ -4,7 +4,7 @@ import './globals.css';
 import Providers from './react-query-providers';
 import ToastProvider from './ToastProvider';
 import Script from 'next/script';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ScrollTopButton from '@/components/atoms/button/ScrollTopButton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -44,6 +44,7 @@ export default function RootLayout({
           <ToastProvider>{children}</ToastProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </Providers>
+        <ScrollTopButton />
       </body>
     </html>
   );
