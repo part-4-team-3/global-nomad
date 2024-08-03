@@ -9,15 +9,21 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/atoms/button/Button';
 import { registerMutationOptions } from '@/mutations/users/register';
 import { toast } from 'react-toastify';
+import Input from '@/components/atoms/input/Input';
+import { useState } from 'react';
+import { sendEmailMutationOptions } from './../../../mutations/users/register';
 
 interface RegisterData {
   email: string;
   nickName: string;
   password: string;
   passwordCheck: string;
+  code: string;
 }
 
 export default function RegisterForm() {
+  const [emailCode, setEmailCode] = useState('');
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const router = useRouter();
   const {
     control,
@@ -31,10 +37,20 @@ export default function RegisterForm() {
       nickName: '',
       password: '',
       passwordCheck: '',
+      code: '',
     },
   });
 
-  const mutation = useMutation({
+  const sendEmail = useMutation({
+    ...sendEmailMutationOptions,
+    onSuccess: (data) => {
+      setEmailCode(data.code ?? '');
+      setIsEmailVerified(false);
+      toast('인증번호가 전송되었습니다.');
+    },
+  });
+
+  const register = useMutation({
     ...registerMutationOptions,
     onSuccess: () => {
       toast('회원가입 되었습니다.', {
@@ -48,8 +64,27 @@ export default function RegisterForm() {
     },
   });
 
+  const handleSendEmail = () => {
+    const email = watch('email');
+    if (email && errors.email === undefined) {
+      sendEmail.mutate({ email });
+    } else {
+      toast('이메일을 확인해 주세요.');
+    }
+  };
+
+  const checkCode = () => {
+    if (emailCode === watch('code')) {
+      setIsEmailVerified(true);
+      toast('이메일 인증이 완료되었습니다.');
+    } else {
+      setIsEmailVerified(false);
+      toast('인증번호가 일치하지 않습니다.');
+    }
+  };
+
   const submit = ({ email, nickName: nickname, password }: RegisterData) => {
-    mutation.mutate({ email, nickname, password });
+    register.mutate({ email, nickname, password });
   };
 
   return (
@@ -74,6 +109,29 @@ export default function RegisterForm() {
           />
           {errors.email && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.email.message}</div>}
         </div>
+        <Button
+          type="button"
+          text="인증번호 전송"
+          color="black"
+          onClick={handleSendEmail}
+          disabled={isEmailVerified}
+        />
+        <div>
+          <Controller
+            control={control}
+            name="code"
+            defaultValue=""
+            render={({ field }) => <Input readOnly={isEmailVerified} size="full" {...field} />}
+          />
+          {errors.code && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.code.message}</div>}
+        </div>
+        <Button
+          type="button"
+          text="인증번호 확인"
+          color="black"
+          onClick={checkCode}
+          disabled={isEmailVerified}
+        />
         <div>
           <Controller
             control={control}
@@ -143,7 +201,13 @@ export default function RegisterForm() {
             <div className={FORM_OPTIONS.errorMsgStyle}>{errors.passwordCheck.message}</div>
           )}
         </div>
-        <Button type="submit" text="회원가입 하기" size="l" color="black" disabled={!isValid} />
+        <Button
+          type="submit"
+          text="회원가입 하기"
+          size="l"
+          color="black"
+          disabled={!isValid || !isEmailVerified}
+        />
       </div>
     </form>
   );
