@@ -9,6 +9,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { updateUserMutationOptions } from './../../../mutations/users/update-user';
 import { toast } from 'react-toastify';
 import PasswordInput from '@/components/molecules/input/PasswordInput';
+import EditProfileImage from '@/components/atoms/edit-profile-image/EditProfileImage';
+import { useState } from 'react';
 
 interface Props {
   password: string;
@@ -18,6 +20,7 @@ interface Data {
   nickname: string;
   newPassword: string;
   newPasswordCheck: string;
+  profileImageUrl: string;
 }
 
 const containerStyle = 'flex flex-col gap-4pxr';
@@ -25,6 +28,7 @@ const labelStyle = 'text-24pxr font-bold mb-12pxr';
 
 export default function MyPageForm({ password }: Props) {
   const { user, setUser } = useUser();
+  const [profileImageUrl, setProfileImageUrl] = useState(user?.profileImageUrl || '');
 
   const {
     control,
@@ -37,6 +41,7 @@ export default function MyPageForm({ password }: Props) {
       nickname: user?.nickname,
       newPassword: password,
       newPasswordCheck: password,
+      profileImageUrl: user?.profileImageUrl || '',
     },
   });
 
@@ -45,11 +50,16 @@ export default function MyPageForm({ password }: Props) {
     onSuccess: (data) => {
       toast('내 정보가 수정되었습니다.');
       setUser(data);
+      console.log(data.profileImageUrl);
     },
   });
 
   const submit = (data: Data) => {
-    mutation.mutate({ nickname: data.nickname, newPassword: data.newPassword });
+    mutation.mutate({
+      nickname: data.nickname,
+      newPassword: data.newPassword,
+      profileImageUrl: profileImageUrl,
+    });
   };
 
   return (
@@ -58,6 +68,7 @@ export default function MyPageForm({ password }: Props) {
         <h1 className="text-32pxr font-bold">내 정보</h1>
         <Button className="h-48pxr w-120pxr" type="submit" text="저장하기" color="black" />
       </div>
+      <EditProfileImage onProfileImageChange={setProfileImageUrl} />
       <div className="flex flex-col gap-32pxr overflow-y-scroll scrollbar-hide">
         <Controller
           control={control}

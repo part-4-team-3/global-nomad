@@ -121,6 +121,7 @@ export default function AddressInput({ value, onChange }: Props) {
           placeholder="상세주소"
           value={detailAddress}
           onChange={handleDetailAddressChange}
+          readOnly={!postcode || !address}
         />
       </div>
     </div>
