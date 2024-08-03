@@ -4,7 +4,7 @@ import './globals.css';
 import Providers from './react-query-providers';
 import ToastProvider from './ToastProvider';
 import Script from 'next/script';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ScrollTopButton from '@/components/atoms/button/ScrollTopButton';
 import redis from '@/lib/redis';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -46,8 +46,9 @@ export default async function RootLayout({
         <Script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" />
         <Providers>
           <ToastProvider>{children}</ToastProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </Providers>
+        <ScrollTopButton />
       </body>
     </html>
   );

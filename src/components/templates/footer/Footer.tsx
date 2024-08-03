@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-[#121] pb-66pxr pt-32pxr">
       <InnerLayout>
         <div className="grid grid-cols-3 gap-y-24pxr md:grid-cols-4">
-          <div className="text-center text-[#676767]">©codeit - 2023</div>
+          <div className="text-center text-[#676767]">©codeit - 2024</div>
           <div className="text-right text-[#676767]">Privacy Policy</div>
           <div className="text-center text-[#676767]">FAQ</div>
           <div className="col-start-2 flex justify-center gap-x-12pxr md:col-start-4">

@@ -43,7 +43,7 @@ export default function Main() {
 
   if (isPending)
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex min-h-300pxr w-full justify-center">
         <LoadingSpinner />
       </div>
     );
