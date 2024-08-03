@@ -73,7 +73,7 @@ export default function Main() {
       ))}
       {hasNextPage && !isFetchingNextPage && <div ref={ref} className="h-1pxr"></div>}
       {isFetchingNextPage && (
-        <div className="flex min-h-300pxr w-full justify-center">
+        <div className="flex w-full justify-center">
           <LoadingSpinner />
         </div>
       )}
