@@ -1,23 +1,59 @@
-import { useModal } from '@/store/useModal';
 import Image from 'next/image';
-import EditProfileModal from '@/components/molecules/modal/EditProfileModal';
+import { useImageUploader } from '@/models/uploader/use-image-uploader';
+import useUser from '@/store/useUser';
+import { useEffect, useRef } from 'react';
 
-export default function EditProfileImage() {
-  const { setIsOpen } = useModal();
+interface Props {
+  onProfileImageChange: (imageUrl: string) => void;
+}
 
-  const openModal = (modalKey: string) => {
-    setIsOpen(modalKey);
+export default function EditProfileImage({ onProfileImageChange }: Props) {
+  const { profileImage, handleEditProfileImage } = useImageUploader();
+  const { user } = useUser();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
+  useEffect(() => {
+    onProfileImageChange(profileImage || user?.profileImageUrl || '');
+  }, [profileImage, user?.profileImageUrl, onProfileImageChange]);
+
   return (
-    <>
-      <button
-        className="absolute bottom-[0px] right-[0] size-30pxr md:right-[12px] md:size-44pxr"
-        onClick={() => openModal('editProfileImage')}
-      >
-        <Image fill src="/profile-image-setting-icon.svg" alt="프로필 사진 수정하기" />
-      </button>
-      <EditProfileModal />
-    </>
+    <div className="relative flex flex-col gap-4pxr">
+      <label className="text-24pxr font-bold">프로필 이미지 변경하기</label>
+      <div className="relative w-160pxr">
+        <div className="relative size-160pxr overflow-hidden rounded-full">
+          {profileImage ? (
+            <Image fill src={profileImage} alt="프로필 사진" />
+          ) : (
+            <div className="flex size-160pxr items-center justify-center rounded-[50%] bg-var-gray1 text-80pxr text-white">
+              {user && user.nickname.slice(0, 1)}
+            </div>
+          )}
+        </div>
+        <div className="pl-[36px]">
+          <button
+            className="absolute bottom-[0px] right-[0] size-30pxr md:right-[12px] md:size-44pxr"
+            type="button"
+            color="black"
+            onClick={handleButtonClick}
+          >
+            <Image fill src="/profile-image-setting-icon.svg" alt="프로필 사진 수정하기" />
+          </button>
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            className="hidden"
+            id="imageUpload"
+            ref={fileInputRef}
+            onChange={handleEditProfileImage}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

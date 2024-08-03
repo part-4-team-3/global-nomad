@@ -20,6 +20,7 @@ interface ProfileImageUrlApiResponse {
 
 /** 이미지 Url 받아오는 함수 */
 export const useImageUploader = () => {
+  const { user, setUser } = useUser.getState();
   const activityMutation = useMutation(submitActivityImageMutationOptions);
   const profileMutation = useMutation(submitProfileImageMutationOptions);
   const updateProfileMutation = useMutation(updateProfileImageMutationOptions);
@@ -28,9 +29,8 @@ export const useImageUploader = () => {
   const [deletedImages, setDeletedImages] = useState<number[]>([]);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [addImages, setAddImages] = useState<string[]>([]);
-  const [profileImage, setProfileImage] = useState<string>(''); //초기값 수정 예정
+  const [profileImage, setProfileImage] = useState<string>(user?.profileImageUrl || '');
   const { setIsClose } = useModal();
-  const { user, setUser } = useUser.getState();
 
   const closeModal = () => {
     setIsClose();

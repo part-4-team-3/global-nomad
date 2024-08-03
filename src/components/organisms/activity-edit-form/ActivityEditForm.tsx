@@ -22,6 +22,7 @@ export default function ActivityEditForm({ initActivity }: Props) {
   const router = useRouter();
   const activityId = Number(params.id);
   const methods = useForm<ActivityEditData>();
+
   useEffect(() => {
     if (initActivity) {
       methods.reset(initActivity);
