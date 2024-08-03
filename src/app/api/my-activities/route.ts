@@ -1,5 +1,7 @@
 import { handleRequest } from '@/app/(action)/axios';
+import { ipCheck } from '@/app/action/ip-check';
 import makeQueryString from '@/lib/query-string';
+import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {

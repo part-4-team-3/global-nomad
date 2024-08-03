@@ -5,6 +5,10 @@ import Providers from './react-query-providers';
 import ToastProvider from './ToastProvider';
 import Script from 'next/script';
 import ScrollTopButton from '@/components/atoms/button/ScrollTopButton';
+import redis from '@/lib/redis';
+import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { ipCheck } from './action/ip-check';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +31,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

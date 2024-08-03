@@ -1,7 +1,7 @@
 'use client';
 
 import { Controller, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import AuthInput from '@/components/molecules/input/AuthInput';
 import { useMutation } from '@tanstack/react-query';
 import PasswordInput from '@/components/molecules/input/PasswordInput';
@@ -10,6 +10,8 @@ import Button from '@/components/atoms/button/Button';
 import { loginMutationOptions } from '@/mutations/auth/login';
 import useUser from '@/store/useUser';
 import { revalidate } from '@/lib/revalidate';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 interface LoginData {
   email: string;
@@ -18,6 +20,16 @@ interface LoginData {
 
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectQueryString = searchParams.get('redirect');
+  const isAnotherLogin = redirectQueryString === 'anotherlogin';
+
+  useEffect(() => {
+    if (isAnotherLogin) {
+      toast('다른 기기에서 로그인 되었습니다.');
+    }
+  }, [isAnotherLogin]);
+
   const {
     control,
     handleSubmit,

@@ -7,7 +7,8 @@ import { menuItems } from '@/constant/my-page-menu';
 import useUser from '@/store/useUser';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
-import { deleteCookie } from '@/app/(action)/(cookie)/cookie';
+import { deleteCookie, getCookie } from '@/app/(action)/(cookie)/cookie';
+import { getInstance } from '@/lib/axios';
 
 interface Props {
   isActive: boolean;
@@ -25,6 +26,9 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
 
   /** 로그아웃 로직 */
   const handleLogout = async () => {
+    const apiInstance = getInstance();
+    const userId = await getCookie('userId');
+    await apiInstance.delete(`auth/logout?userId=${userId}`);
     deleteCookie('userId');
     clearUser();
     router.push('/signin');
@@ -58,7 +62,7 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
       {user && (
         <div className="flex justify-end p-[16px]">
           <button
-            className="rounded-[12px] px-[16px] py-[8px] font-bold text-[16pxr] text-var-gray3"
+            className="rounded-[12px] px-[16px] py-[8px] text-16pxr font-bold text-var-gray3"
             onClick={handleLogout}
           >
             로그아웃

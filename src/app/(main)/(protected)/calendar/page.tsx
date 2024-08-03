@@ -1,6 +1,12 @@
+import { ipCheck } from '@/app/action/ip-check';
 import MyReservation from '@/components/templates/mypage/MyReservation';
 import { getInstance } from '@/lib/axios';
+import redis from '@/lib/redis';
+import axios from 'axios';
 import { Metadata } from 'next';
+import { cookies, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+import os from 'os';
 
 export const metadata: Metadata = {
   title: '예약 연황 | Global Nomad',
@@ -8,6 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
+  const isEqualIpUser = await ipCheck();
+  if (isEqualIpUser) {
+    redirect('/signin?redirect=anotherlogin');
+  }
+
   const apiInstance = getInstance();
   const myActivtyListResponse = await apiInstance.get(`my-activities`);
   const myActivtyList = myActivtyListResponse.data;

@@ -115,6 +115,7 @@ const useTimeSlot = () => {
     scheduleIds,
     setScheduleIds,
     isCalendarOpen,
+    setIsCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,
     handleAddSchedules,

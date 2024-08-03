@@ -28,7 +28,7 @@ export default function SideNavigationMenu() {
                 onMouseEnter={() => setHoveredItem(item.text)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
-                <div className="relative size-[24px]">
+                <div className="relative size-24pxr">
                   <Image
                     fill
                     src={

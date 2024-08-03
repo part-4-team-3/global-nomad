@@ -1,7 +1,7 @@
 import { UseMutationOptions } from '@tanstack/react-query';
 import { User } from '@/types/user';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 interface LoginBody {
   email: string;
@@ -19,8 +19,17 @@ const login = async (data: LoginBody) =>
 
 export const loginMutationOptions: UseMutationOptions<LoginResponse, Error, LoginBody> = {
   mutationFn: async (data) => login(data),
-  onError: () => {
-    toast('이메일, 비밀번호가 일치하지 않습니다.');
+  onError: (err) => {
+    if (isAxiosError(err)) {
+      const status = err.response?.status;
+      switch (status) {
+        case 401:
+          toast('이미 로그인이 되어있는 계정입니다.');
+          break;
+        default:
+          toast('이메일, 비밀번호가 일치하지 않습니다.');
+      }
+    }
   },
 };
 
