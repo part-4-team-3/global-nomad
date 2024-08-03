@@ -30,3 +30,52 @@ export const registerMutationOptions: UseMutationOptions<User, Error, RegisterBo
     toast(defaultMsg);
   },
 };
+
+interface CheckDuplicateBody {
+  email: string;
+}
+
+interface CheckDuplicateResponse {
+  duplicate: boolean;
+}
+
+const checkDuplicateEmail = async (body: CheckDuplicateBody) => {
+  const instance = getInstance();
+  const res = await instance.post<CheckDuplicateResponse>('/check-duplicate', body);
+
+  return res.data;
+};
+
+export const checkDuplicateMutationOptions: UseMutationOptions<
+  CheckDuplicateResponse,
+  Error,
+  CheckDuplicateBody
+> = {
+  mutationFn: checkDuplicateEmail,
+  onError: () => {
+    toast('알 수 없는 오류로 이메일 중복 확인에 실패하였습니다.');
+  },
+};
+
+interface SendEmailBody {
+  email: string;
+}
+
+interface SendEmailResponse {
+  code: string;
+}
+
+const sendEmail = async (body: SendEmailBody) => {
+  const instance = getInstance();
+  const res = await instance.post<SendEmailResponse>('/send-email', body);
+
+  return res.data;
+};
+
+export const sendEmailMutationOptions: UseMutationOptions<SendEmailResponse, Error, SendEmailBody> =
+  {
+    mutationFn: sendEmail,
+    onError: () => {
+      toast('알 수 없는 오류로 이메일 전송에 실패하였습니다.');
+    },
+  };
