@@ -119,12 +119,18 @@ const config = {
         all: '0 4px 8px 0px rgba(17, 34, 17, 0.4)',
       },
       animation: {
-        'spin-slow': 'spin 2s linear infinite',
+        loading: 'loading 1s infinite',
       },
       transitionDuration: {
         '3000': '3000ms',
         '5000': '5000ms',
         '7000': '7000ms',
+      },
+    },
+    keyframes: {
+      loading: {
+        '0%, 100%': { opacity: '0', transform: 'scale(0.5)' },
+        '50%': { opacity: '0.5', transform: 'scale(1.2)' },
       },
     },
   },

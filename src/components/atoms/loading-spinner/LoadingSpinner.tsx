@@ -1,13 +1,10 @@
-import Image from 'next/image';
-
 export default function LoadingSpinner() {
+  const style = 'size-10pxr animate-loading rounded-full bg-var-black';
   return (
-    <Image
-      src="/spinner.png"
-      alt="Loading..."
-      className="animate-spin-slow"
-      width={100}
-      height={100}
-    />
+    <div className="space-x-2 flex items-center justify-center gap-[10px]">
+      <div className={style}></div>
+      <div className={`delay-100 ${style}`}></div>
+      <div className={`delay-200 ${style}`}></div>
+    </div>
   );
 }

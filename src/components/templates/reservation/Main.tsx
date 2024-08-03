@@ -58,7 +58,7 @@ export default function Main({ status }: Props) {
 
   if (isPending)
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex min-h-300pxr w-full items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -84,7 +84,7 @@ export default function Main({ status }: Props) {
       ))}
       {hasNextPage && !isFetchingNextPage && <div ref={ref} className="h-1pxr"></div>}
       {isFetchingNextPage && (
-        <div className="flex w-full justify-center">
+        <div className="flex min-h-300pxr w-full justify-center">
           <LoadingSpinner />
         </div>
       )}
