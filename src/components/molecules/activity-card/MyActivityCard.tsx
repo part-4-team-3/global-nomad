@@ -48,7 +48,9 @@ export default function MyActivityCard({
             <span className="text-16pxr leading-19pxr md:text-20pxr md:leading-24pxr lg:text-24pxr lg:leading-29pxr">{`₩${price.toLocaleString('ko-KR')}`}</span>
             <KebabButton className="w-32pxr md:w-40pxr">
               <Link href={`/myactivity/${id}/edit`}>
-                <button className="h-58pxr w-160pxr hover:bg-gray-100">수정하기</button>
+                <button className="h-58pxr w-160pxr border-b border-var-gray6 hover:bg-gray-100">
+                  수정하기
+                </button>
               </Link>
               <button
                 className="h-58pxr w-160pxr hover:bg-gray-100"

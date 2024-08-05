@@ -56,7 +56,7 @@ export default function ReservationTimePicker({
         <div className="relative flex flex-1 flex-col gap-[10px]">
           <label>날짜</label>
           <div className="relative min-w-132pxr">
-            <TimeSlotInput type="text" value={selectedDay} readOnly={true} placeholder="YY/MM/DD" />
+            <TimeSlotInput type="text" value={selectedDay} readOnly placeholder="YY/MM/DD" />
             <button
               className="absolute bottom-[8px] right-[12px] size-27pxr md:bottom-[16px] md:right-[16px]"
               onClick={handleCalendarOpen}

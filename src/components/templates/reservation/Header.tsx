@@ -17,7 +17,7 @@ export default function Header({ setStatus }: Props) {
       <div className="hidden h-53pxr w-160pxr text-18pxr md2:block">
         <DropdownMenu text={text ?? '상태'} className="rounded-[15px] bg-white">
           <button
-            className="w-full"
+            className="block w-full py-[9px] text-center md:py-[18px]"
             onClick={() => {
               setStatus(null);
               setText('전체');
@@ -29,7 +29,7 @@ export default function Header({ setStatus }: Props) {
             if (isReservationStatus(key)) {
               return (
                 <button
-                  className="w-full"
+                  className="block w-full py-[9px] text-center md:py-[18px]"
                   key={key}
                   onClick={() => {
                     setStatus(key);

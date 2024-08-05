@@ -82,7 +82,7 @@ export default function AddressInput({ value, onChange }: Props) {
     <div className="flex flex-col gap-[12px]">
       <div className="flex gap-[8px] md:gap-[12px]">
         <input
-          className="rounded-md border border-var-gray2 px-20pxr py-16pxr"
+          className="grow rounded-md border border-var-gray2 px-20pxr py-16pxr"
           type="text"
           id="sample6_postcode"
           placeholder="우편번호"

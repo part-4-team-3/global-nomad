@@ -23,8 +23,8 @@ interface Data {
   profileImageUrl: string;
 }
 
-const containerStyle = 'flex flex-col gap-4pxr';
-const labelStyle = 'text-24pxr font-bold mb-12pxr';
+const containerStyle = 'flex flex-col gap-[16px]';
+const labelStyle = 'text-24pxr font-bold';
 
 export default function MyPageForm({ password }: Props) {
   const { user, setUser } = useUser();
@@ -69,7 +69,7 @@ export default function MyPageForm({ password }: Props) {
         <Button className="h-48pxr w-120pxr" type="submit" text="저장하기" color="black" />
       </div>
       <EditProfileImage onProfileImageChange={setProfileImageUrl} />
-      <div className="flex flex-col gap-32pxr overflow-y-scroll scrollbar-hide">
+      <div className="mt-[32px] flex flex-col gap-[32px] overflow-y-scroll scrollbar-hide">
         <Controller
           control={control}
           name="nickname"

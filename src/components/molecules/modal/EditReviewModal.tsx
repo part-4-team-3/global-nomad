@@ -92,7 +92,7 @@ export default function EditReviewModal({ id, src, title, date, price, queryClie
               <textarea
                 {...field}
                 placeholder="후기를 작성해주세요"
-                className="h-346pxr w-full resize-none rounded border border-var-gray2 px-[16px] pb-[8px] pt-[16px] outline-none md:h-240pxr md:w-432pxr"
+                className="h-346pxr w-full resize-none rounded border border-var-gray2 px-[16px] pb-[8px] pt-[16px] outline-none focus:outline-var-green-dark md:h-240pxr md:w-432pxr"
               />
             )}
           />
