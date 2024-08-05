@@ -32,7 +32,7 @@ export default function KebabButton({ children, className }: Props) {
   return (
     <div className="relative" ref={difRef}>
       <button className={className} onClick={toggleMenu}>
-        <Image src="/kebab.png" width={40} height={40} alt="kebab" />
+        <Image src="/kebab.svg" width={40} height={40} alt="kebab" />
       </button>
       {isOpen && <KebabMenu>{children}</KebabMenu>}
     </div>
