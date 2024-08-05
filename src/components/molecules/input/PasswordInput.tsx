@@ -34,8 +34,8 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
             tabIndex={-1}
           >
             <Image
-              className="absolute right-8pxr top-1/2 -translate-y-1/2 transform"
-              src={type === 'password' ? '/visibility-on.png' : '/visibility-off.png'}
+              className="absolute right-[15px] top-1/2 -translate-y-1/2 transform"
+              src={type === 'password' ? '/visibility-on.svg' : '/visibility-off.svg'}
               width={24}
               height={24}
               alt="visible"

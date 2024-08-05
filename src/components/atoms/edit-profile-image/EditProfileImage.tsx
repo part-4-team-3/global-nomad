@@ -37,7 +37,7 @@ export default function EditProfileImage({ onProfileImageChange }: Props) {
         </div>
         <div className="pl-[36px]">
           <button
-            className="absolute bottom-[0px] right-[0] size-60pxr md:right-[0px] md:size-60pxr"
+            className="absolute bottom-[0px] right-[12px] size-44pxr"
             type="button"
             color="black"
             onClick={handleButtonClick}
