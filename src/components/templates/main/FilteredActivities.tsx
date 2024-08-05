@@ -59,7 +59,7 @@ export default async function FilteredActivities({ searchParams }: Props) {
           {sortList.map((sort) => (
             <Link
               key={sort.query}
-              className="w-full"
+              className="block w-full py-[9px] text-center md:py-[18px]"
               href={makeQueryString({ ...searchParams, ...{ sort: sort.query } })}
               scroll={false}
             >

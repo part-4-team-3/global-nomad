@@ -23,8 +23,8 @@ export default function EditProfileImage({ onProfileImageChange }: Props) {
   }, [profileImage, user?.profileImageUrl, onProfileImageChange]);
 
   return (
-    <div className="relative flex flex-col gap-4pxr">
-      <label className="text-24pxr font-bold">프로필 이미지 변경하기</label>
+    <div className="relative flex flex-col gap-[16px]">
+      <label className="text-24pxr font-bold">프로필 이미지</label>
       <div className="relative w-160pxr">
         <div className="relative size-160pxr overflow-hidden rounded-full">
           {profileImage ? (

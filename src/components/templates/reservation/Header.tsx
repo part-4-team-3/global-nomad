@@ -11,13 +11,20 @@ export default function Header({ setStatus }: Props) {
       <h1 className="h-38pxr text-32pxr font-bold">예약 내역</h1>
       <div className="hidden h-53pxr w-160pxr text-18pxr md2:block">
         <DropdownMenu text="상태" className="rounded-[15px] bg-white">
-          <button className="w-full" onClick={() => setStatus(null)}>
+          <button
+            className="block w-full py-[9px] text-center md:py-[18px]"
+            onClick={() => setStatus(null)}
+          >
             전체
           </button>
           {Object.entries(RESERVATION_LABELS).map(([key, label]) => {
             if (isReservationStatus(key)) {
               return (
-                <button className="w-full" key={key} onClick={() => setStatus(key)}>
+                <button
+                  className="block w-full py-[9px] text-center md:py-[18px]"
+                  key={key}
+                  onClick={() => setStatus(key)}
+                >
                   {label}
                 </button>
               );

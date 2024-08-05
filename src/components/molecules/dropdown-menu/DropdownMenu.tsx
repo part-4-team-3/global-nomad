@@ -46,7 +46,7 @@ export default function DropdownMenu({ text, children, className }: Props) {
             {Children.map(children, (child, index) => (
               <li
                 className={cn(
-                  'w-full py-[9px] text-center text-14pxr md:py-[18px] md:text-18pxr',
+                  'w-full text-14pxr duration-300 hover:bg-var-gray7 md:text-18pxr',
                   index < Children.count(children) - 1 && 'border-var-gray-6 border-b',
                 )}
                 key={index}
