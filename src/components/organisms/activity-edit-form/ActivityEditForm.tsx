@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { ActivityEditData, DetailActivityData } from '@/types/activity';
 import { toast } from 'react-toastify';
 import { editActivityForm } from '@/models/activity/form-utils';
+import { revalidate } from '@/lib/revalidate';
 
 interface Props {
   initActivity: DetailActivityData;
@@ -31,16 +32,14 @@ export default function ActivityEditForm({ initActivity }: Props) {
 
   const mutation = useMutation({
     ...patchMutationOptions,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast('체험수정이 완료되었습니다.');
       queryClient.invalidateQueries({
         queryKey: ['my-activities'],
         exact: true,
       });
-      router.refresh();
-      setTimeout(() => {
-        router.back();
-      }, 500);
+      await revalidate('/');
+      router.back();
     },
   });
 

@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { toast } from 'react-toastify';
 import { registerActivityForm } from '@/models/activity/form-utils';
+import { revalidate } from '@/lib/revalidate';
 
 export default function ActivityRegistrationForm() {
   const queryClient = useQueryClient();
@@ -28,16 +29,15 @@ export default function ActivityRegistrationForm() {
 
   const mutation = useMutation({
     ...submitMutationOptions,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast('체험등록이 완료되었습니다.');
       queryClient.invalidateQueries({
         queryKey: ['my-activities'],
         exact: true,
       });
-      router.refresh();
-      setTimeout(() => {
-        router.back();
-      }, 500);
+      await revalidate('/');
+      router.back();
+
     },
   });
 
