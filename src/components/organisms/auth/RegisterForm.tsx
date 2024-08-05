@@ -23,6 +23,7 @@ interface RegisterData {
 
 export default function RegisterForm() {
   const [emailCode, setEmailCode] = useState('');
+  const [isEmailSended, setIsEmailSended] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const router = useRouter();
   const {
@@ -45,6 +46,7 @@ export default function RegisterForm() {
     ...sendEmailMutationOptions,
     onSuccess: (data) => {
       setEmailCode(data.code ?? '');
+      setIsEmailSended(true);
       setIsEmailVerified(false);
       toast('인증번호가 전송되었습니다.');
     },
@@ -97,41 +99,50 @@ export default function RegisterForm() {
             rules={FORM_OPTIONS.email.rules}
             defaultValue=""
             render={({ field }) => (
-              <AuthInput
-                id={FORM_OPTIONS.email.name}
-                labelText="이메일"
-                hasError={errors.email !== undefined}
-                placeholder={FORM_OPTIONS.email.placeholder}
-                maxLength={30}
-                {...field}
-              />
+              <div className="flex w-full flex-col gap-8pxr">
+                <label htmlFor={FORM_OPTIONS.email.name}>이메일</label>
+                <div className="flex gap-6pxr">
+                  <Input
+                    id={FORM_OPTIONS.email.name}
+                    size="full"
+                    hasError={errors.email !== undefined}
+                    placeholder={FORM_OPTIONS.email.placeholder}
+                    maxLength={30}
+                    readOnly={isEmailVerified}
+                    {...field}
+                  />
+                  <Button
+                    className="w-50pxr"
+                    type="button"
+                    text="인증"
+                    color="black"
+                    onClick={handleSendEmail}
+                    disabled={isEmailVerified}
+                  />
+                </div>
+              </div>
             )}
           />
           {errors.email && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.email.message}</div>}
         </div>
-        <Button
-          type="button"
-          text="인증번호 전송"
-          color="black"
-          onClick={handleSendEmail}
-          disabled={isEmailVerified}
-        />
-        <div>
-          <Controller
-            control={control}
-            name="code"
-            defaultValue=""
-            render={({ field }) => <Input readOnly={isEmailVerified} size="full" {...field} />}
-          />
-          {errors.code && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.code.message}</div>}
-        </div>
-        <Button
-          type="button"
-          text="인증번호 확인"
-          color="black"
-          onClick={checkCode}
-          disabled={isEmailVerified}
-        />
+        {isEmailSended && (
+          <>
+            <Controller
+              control={control}
+              name="code"
+              defaultValue=""
+              render={({ field }) => <Input readOnly={isEmailVerified} size="full" {...field} />}
+            />
+            {errors.code && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.code.message}</div>}
+            <Button
+              type="button"
+              text="인증번호 확인"
+              color="black"
+              onClick={checkCode}
+              disabled={isEmailVerified}
+            />
+          </>
+        )}
         <div>
           <Controller
             control={control}
