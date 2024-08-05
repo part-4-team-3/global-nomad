@@ -62,7 +62,9 @@ export default async function ActivityHeader({
               )}
             </div>
           </div>
-          <AddressLabel address={address} />
+          <Link href={'#map'} className="hover:font-[600]">
+            <AddressLabel address={address} underline={true} />
+          </Link>
         </div>
       </div>
       {isMyActivity && <ActivityOptionDropdown activityId={activityId} />}
