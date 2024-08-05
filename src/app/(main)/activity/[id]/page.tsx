@@ -51,6 +51,8 @@ export default async function Page({ params, searchParams }: Props) {
 
   const userId = await getCookie('userId');
 
+  const isNotLoggedIn = userId ? false : true;
+
   return (
     <main>
       <div className="m-auto lg:max-w-1200pxr">
@@ -87,6 +89,8 @@ export default async function Page({ params, searchParams }: Props) {
             scheduledDates={scheduledDates}
             activityId={params.id}
             creatorId={data.userId}
+            isNotLoggedIn={isNotLoggedIn}
+            userId={isNotLoggedIn ? -1 : Number(userId)}
           />
         </div>
       </div>
