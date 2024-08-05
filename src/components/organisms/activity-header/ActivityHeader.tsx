@@ -33,14 +33,18 @@ export default async function ActivityHeader({
   return (
     <div className="flex w-full justify-between p-[16px] text-[#112211] md:p-[24px]">
       <div className="flex flex-col">
-        <h3 className="text-14pxr">{category}</h3>
-        <h2 className="text-24pxr font-[700] md:text-32pxr">{title}</h2>
+        <h3 className="text-14pxr" tabIndex={0} id="category">
+          {category}
+        </h3>
+        <h2 className="text-24pxr font-[700] md:text-32pxr" tabIndex={0}>
+          {title}
+        </h2>
         <div className="flex gap-12pxr">
           <div className="flex items-center gap-6pxr">
             <Image src="/star-icon.svg" width={16} height={16} alt="ratings" />
             <div className="text-14pxr font-[400]">
               {reviewCount > 0 ? (
-                <Link href="#review" className="text-var-green-dark">
+                <Link href="#review" className="text-var-green-dark" tabIndex={-1}>
                   <data value={rating}>{rating} </data>(
                   <data
                     className="border-b border-var-green-dark leading-[80%]"
@@ -58,7 +62,9 @@ export default async function ActivityHeader({
               )}
             </div>
           </div>
-          <AddressLabel address={address} />
+          <Link href={'#map'} className="hover:font-[600]">
+            <AddressLabel address={address} underline={true} />
+          </Link>
         </div>
       </div>
       {isMyActivity && <ActivityOptionDropdown activityId={activityId} />}
