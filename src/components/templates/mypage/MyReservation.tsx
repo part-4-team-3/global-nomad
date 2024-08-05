@@ -37,7 +37,7 @@ export default function MyReservation({ myActivityList }: Props) {
           />
         </div>
       </div>
-      <div className={cn('relative mt-30pxr w-full', isOpen && 'mt-[0px]')}>
+      <div className={cn('relative mt-60pxr w-full', isOpen && 'mt-50pxr')}>
         {selectedActivity && (
           <ReservationCalendar activityId={selectedActivity?.id} isOpen={isOpen} />
         )}
