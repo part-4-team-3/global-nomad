@@ -105,11 +105,17 @@ export const useImageUploader = () => {
     const formData = new FormData();
     formData.append('image', uploadFile);
 
+    // 이미지 미리보기 URL 생성
+    const localImageUrl = URL.createObjectURL(uploadFile);
+    const previousImageUrl = profileImage; // 기존 이미지 URL 저장
+    setProfileImage(localImageUrl);
+
     try {
       const imageUrl: ProfileImageUrlApiResponse = await profileMutation.mutateAsync(formData);
       setProfileImage(imageUrl.profileImageUrl);
     } catch (error) {
       alert(error);
+      setProfileImage(previousImageUrl);
     }
   };
 
@@ -128,23 +134,6 @@ export const useImageUploader = () => {
     }
   };
 
-  /** 프로필 이미지 서버에 전송하는 함수 */
-  const submitProfileImage = async () => {
-    const data = {
-      profileImageUrl: profileImage,
-    };
-    try {
-      const response = await updateProfileMutation.mutateAsync(data);
-      if (user && profileImage) {
-        setUser({ ...user, profileImageUrl: profileImage });
-      }
-      alert('프로필 변경에 성공했습니다!');
-      closeModal();
-    } catch (error) {
-      alert('이미지 업로드에 실패했습니다. 다시 시도해 주세요.');
-    }
-  };
-
   return {
     profileImage,
     bannerImage,
@@ -158,6 +147,5 @@ export const useImageUploader = () => {
     handleUploadImage,
     handleEditProfileImage,
     handleDeleteImage,
-    submitProfileImage,
   };
 };
