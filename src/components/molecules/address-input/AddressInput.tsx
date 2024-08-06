@@ -28,7 +28,7 @@ interface Props {
 
 export default function AddressInput({ value, onChange }: Props) {
   const [postcode, setPostcode] = useState('');
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(value);
   const [extraAddress, setExtraAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
 

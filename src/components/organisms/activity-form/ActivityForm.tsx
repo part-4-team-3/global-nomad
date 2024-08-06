@@ -182,7 +182,9 @@ export default function ActivityForm({ initActivity }: Props) {
           <Controller
             name="address"
             control={control}
-            render={({ field }) => <AddressInput onChange={(address) => field.onChange(address)} />}
+            render={({ field }) => (
+              <AddressInput value={field.value} onChange={(address) => field.onChange(address)} />
+            )}
           />
         )}
       </div>
