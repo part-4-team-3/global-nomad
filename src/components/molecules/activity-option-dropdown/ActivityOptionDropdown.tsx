@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { revalidate } from '@/lib/revalidate';
@@ -17,9 +17,12 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
   const [optionOpen, setOptionOpen] = useState(false);
   const { isOpen, setIsOpen, setIsClose } = useModal();
   const router = useRouter();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const handleToggleClick = () => {
     setOptionOpen((prev) => !prev);
   };
+
   const handleDelete = async () => {
     setIsClose();
     const message = await deleteActivity(activityId);
@@ -34,14 +37,33 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
 
   const handleDeleteClick = () => {
     setIsOpen('deleteActivity');
+    setOptionOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOptionOpen(false);
+      }
+    };
+
+    if (optionOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [optionOpen]);
 
   return (
     <div className="flex items-center justify-center">
       <button onClick={handleToggleClick}>
         <Image src="/meatball-icon.svg" width={40} height={40} alt="options" />
       </button>
-      <div className="h-1pxr w-1pxr">
+      <div ref={dropdownRef} className="h-1pxr w-1pxr">
         {optionOpen && (
           <div className="border-var-gray-6 font-500 relative right-[180px] top-[20px] z-20 w-160pxr rounded-[6px] border bg-white text-18pxr">
             <Link href={`/myactivity/${activityId}/edit`}>
@@ -62,14 +84,14 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
             <div className="flex w-full justify-between">
               <button
                 type="button"
-                className="rounded-[8px] bg-var-red-dark px-[12px] py-[8px] text-white"
+                className="rounded-[8px] bg-var-red-dark px-[12px] py-[8px] text-white hover:brightness-90"
                 onClick={handleDelete}
               >
                 삭제
               </button>
               <button
                 type="button"
-                className="rounded-[8px] bg-white px-[12px] py-[8px] text-var-green-dark"
+                className="rounded-[8px] bg-white px-[12px] py-[8px] text-var-green-dark hover:brightness-90"
                 onClick={() => setIsClose()}
               >
                 취소
