@@ -6,19 +6,23 @@ import { revalidate } from '@/lib/revalidate';
 import { toast } from 'react-toastify';
 import { deleteActivity } from '@/queries/activities/delete-activity';
 import { useRouter } from 'next/navigation';
+import { useModal } from '@/store/useModal';
+import DeleteActivityModal from '../modal/DeleteActivityModal';
+
 interface Props {
   activityId: number;
 }
 
 export default function ActivityOptionDropdown({ activityId }: Props) {
   const [optionOpen, setOptionOpen] = useState(false);
+  const { isOpen, setIsOpen, setIsClose } = useModal();
   const router = useRouter();
   const handleToggleClick = () => {
     setOptionOpen((prev) => !prev);
   };
   const handleDelete = async () => {
+    setIsClose();
     const message = await deleteActivity(activityId);
-
     if (message === '삭제가 완료되었습니다') {
       await revalidate('/');
       toast(message);
@@ -27,6 +31,11 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
       toast(message);
     }
   };
+
+  const handleDeleteClick = () => {
+    setIsOpen('deleteActivity');
+  };
+
   return (
     <div className="flex items-center justify-center">
       <button onClick={handleToggleClick}>
@@ -40,12 +49,35 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
                 수정하기
               </button>
             </Link>
-            <button onClick={handleDelete} className="w-full px-46pxr py-18pxr">
+            <button onClick={handleDeleteClick} className="w-full px-46pxr py-18pxr">
               삭제하기
             </button>
           </div>
         )}
       </div>
+      {isOpen && (
+        <DeleteActivityModal modalKey="deleteActivity">
+          <div className="flex flex-col gap-[20px] p-[20px]">
+            <span>정말로 삭제하시겠습니까?</span>
+            <div className="flex w-full justify-between">
+              <button
+                type="button"
+                className="rounded-[8px] bg-var-red-dark px-[12px] py-[8px] text-white"
+                onClick={handleDelete}
+              >
+                삭제
+              </button>
+              <button
+                type="button"
+                className="rounded-[8px] bg-white px-[12px] py-[8px] text-var-green-dark"
+                onClick={() => setIsClose()}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </DeleteActivityModal>
+      )}
     </div>
   );
 }
