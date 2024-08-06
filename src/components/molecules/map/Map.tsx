@@ -25,6 +25,12 @@ export default function Map({ address }: Props) {
 
       const map = new window.kakao.maps.Map(mapRef.current, options); //지도 생성 및 객체 리턴
 
+      const imageSrc = '/marker.svg'; // 마커이미지의 주소입니다
+      const imageSize = new window.kakao.maps.Size(64, 69); // 마커이미지의 크기입니다
+      const imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+      const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
       const geocoder = new window.kakao.maps.services.Geocoder();
 
       geocoder.addressSearch(address, function (result: any, status: any) {
@@ -37,14 +43,19 @@ export default function Map({ address }: Props) {
           const marker = new window.kakao.maps.Marker({
             map: map,
             position: coords,
+            image: markerImage,
           });
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
           if (result[0].road_address.building_name !== '') {
-            const infowindow = new window.kakao.maps.InfoWindow({
-              content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
+            // const infowindow = new window.kakao.maps.InfoWindow({
+            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
+            // });
+            const customOverlay = new window.kakao.maps.CustomOverlay({
+              position: coords,
+              content: `<div style="position:relative;top:-90px;width:150px;text-align:center;padding:6px 0; background-color: white; border: 2px solid #00825c; border-radius: 10px;">${result[0].road_address.building_name}</div>`,
             });
-            infowindow.open(map, marker);
+            customOverlay.setMap(map);
           }
 
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다

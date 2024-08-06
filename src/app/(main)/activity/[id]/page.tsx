@@ -69,7 +69,7 @@ export default async function Page({ params, searchParams }: Props) {
           />
           <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
         </section>
-        <div className="relative flex lg:gap-[24px]">
+        <div className="relative flex lg:mt-[60px] lg:gap-[24px]">
           <div className="flex flex-grow flex-col">
             <ActivityDescription description={data.description} />
 
