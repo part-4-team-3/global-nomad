@@ -16,7 +16,9 @@ export default function CardImage({ variant, src }: Props) {
 
   return (
     <div
-      className={`relative ${SIZE[variant]} overflow-hidden ${variant === 'card' ? 'rounded-l-[24px]' : 'rounded-[24px]'}`}
+      className={`${SIZE[variant]} relative aspect-square overflow-hidden ${
+        variant === 'card' ? 'rounded-l-[24px]' : 'rounded-[24px]'
+      }`}
     >
       <Image
         src={isError ? '/no-image.jpg' : src}
