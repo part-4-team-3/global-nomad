@@ -23,7 +23,7 @@ export default function Pagination({ currentPage, totalPage, searchParams = '' }
           href={makeQueryString({ ...searchParams, ...{ page: number } })}
           key={number}
           scroll={false}
-          className={`flex size-40pxr items-center justify-center rounded-[15px] border border-var-green-dark text-[18pxr] text-var-green-dark md:size-55pxr ${number === currentPage ? 'bg-var-green-dark text-white' : 'text-gray-600'}`}
+          className={`flex size-40pxr items-center justify-center rounded-[15px] border border-var-green-dark text-[18pxr] text-var-green-dark md:size-55pxr ${number === currentPage ? 'bg-var-green-dark text-white' : 'bg-white text-gray-600'}`}
         >
           {number}
         </Link>
