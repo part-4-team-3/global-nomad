@@ -10,8 +10,10 @@ import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { toast } from 'react-toastify';
 import { registerActivityForm } from '@/models/activity/form-utils';
 import { revalidate } from '@/lib/revalidate';
+import { useState } from 'react';
 
 export default function ActivityRegistrationForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
   const methods = useForm<ActivitySettingData>({
     defaultValues: {
@@ -37,14 +39,20 @@ export default function ActivityRegistrationForm() {
       });
       await revalidate('/');
       router.back();
-
+    },
+    onError: (error: any) => {
+      toast.error('체험수정에 실패하였습니다. 다시 시도해주세요.');
+      setIsSubmitting(false);
     },
   });
 
   const submit = () => {
+    setIsSubmitting(true);
     const body = registerActivityForm(methods);
     if (body) {
       mutation.mutate(body);
+    } else {
+      setIsSubmitting(false);
     }
   };
 
@@ -54,7 +62,7 @@ export default function ActivityRegistrationForm() {
         <div className="flex flex-col gap-24pxr">
           <div className="flex items-center justify-between">
             <h1 className="text-32pxr font-bold">내 체험 등록</h1>
-            <Button text="등록하기" color="black" size="s" type="submit" />
+            <Button text="등록하기" color="black" size="s" type="submit" disabled={isSubmitting} />
           </div>
           <ActivityForm />
         </div>

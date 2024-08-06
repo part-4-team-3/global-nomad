@@ -122,6 +122,7 @@ export default function AddressInput({ value, onChange }: Props) {
           value={detailAddress}
           onChange={handleDetailAddressChange}
           readOnly={!postcode || !address}
+          maxLength={10}
         />
       </div>
     </div>

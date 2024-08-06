@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchMutationOptions } from '@/mutations/activity/submit-activity';
 import ActivityForm from '@/components/organisms/activity-form/ActivityForm';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ActivityEditData, DetailActivityData } from '@/types/activity';
 import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ interface Props {
 }
 
 export default function ActivityEditForm({ initActivity }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
   const params = useParams();
   const router = useRouter();
@@ -41,12 +42,19 @@ export default function ActivityEditForm({ initActivity }: Props) {
       await revalidate('/');
       router.back();
     },
+    onError: (error: any) => {
+      toast.error('체험수정에 실패하였습니다. 다시 시도해주세요.');
+      setIsSubmitting(false);
+    },
   });
 
   const submit = () => {
+    setIsSubmitting(true);
     const body = editActivityForm(methods);
     if (body) {
       mutation.mutate({ activityId, body });
+    } else {
+      setIsSubmitting(false);
     }
   };
 
@@ -57,7 +65,13 @@ export default function ActivityEditForm({ initActivity }: Props) {
           <div className="flex flex-col gap-24pxr">
             <div className="flex items-center justify-between">
               <h1 className="text-32pxr font-bold">내 체험 수정</h1>
-              <Button text="수정하기" color="black" size="s" type="submit" />
+              <Button
+                text="수정하기"
+                color="black"
+                size="s"
+                type="submit"
+                disabled={isSubmitting}
+              />
             </div>
             <ActivityForm initActivity={initActivity} />
           </div>

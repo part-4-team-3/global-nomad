@@ -99,6 +99,7 @@ export default function ActivityForm({ initActivity }: Props) {
         size="full"
         placeholder="제목"
         {...register('title', {
+          required: '제목을 입력해주세요.',
           maxLength: {
             value: 20,
             message: '제목은 최대 20자까지 입력할 수 있습니다.',
@@ -109,6 +110,7 @@ export default function ActivityForm({ initActivity }: Props) {
       <Controller
         name="category"
         control={control}
+        rules={{ required: '카테고리를 선택해주세요.' }}
         render={({ field }) => (
           <Select
             options={options}
@@ -118,11 +120,13 @@ export default function ActivityForm({ initActivity }: Props) {
           />
         )}
       />
+      {getErrorMessage(errors.category)}
       <textarea
-        {...register('description')}
+        {...register('description', { required: '설명을 입력해주세요.' })}
         placeholder="설명"
         className="h-200pxr rounded-md border border-var-gray2 px-20pxr py-16pxr focus:outline-var-green-dark"
       />
+      {getErrorMessage(errors.description)}
       <div className={containerClass}>
         <label className={inputTitleClass}>가격</label>
         <Input
@@ -130,6 +134,7 @@ export default function ActivityForm({ initActivity }: Props) {
           type="number"
           placeholder="가격"
           {...register('price', {
+            required: '가격을 입력해주세요.',
             setValueAs: (value) => parseFloat(value),
             min: {
               value: 0,
@@ -149,6 +154,7 @@ export default function ActivityForm({ initActivity }: Props) {
           <Controller
             name="address"
             control={control}
+            rules={{ required: '주소를 입력해주세요.' }}
             render={({ field }) => (
               <>
                 <Input
@@ -167,6 +173,7 @@ export default function ActivityForm({ initActivity }: Props) {
             )}
           />
         </div>
+        {getErrorMessage(errors.address)}
         {addressOpen && (
           <Controller
             name="address"
