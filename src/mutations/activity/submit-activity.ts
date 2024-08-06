@@ -2,6 +2,7 @@ import { apiInstance, getInstance } from '@/lib/axios';
 import { MutationFunction, UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { ActivityEditData, ActivitySettingData } from '@/types/activity';
 import axios, { AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
 
 interface body {
   activityId: number;
@@ -55,14 +56,8 @@ const patch = async ({ activityId, body }: body) => {
 
 export const submitMutationOptions: UseMutationOptions<ActivityData, Error, ActivitySettingData> = {
   mutationFn: submit,
-  onError: (error: Error) => {
-    alert('체험 등록에 실패했습니다. 다시 시도해주세요.');
-  },
 };
 
 export const patchMutationOptions: UseMutationOptions<ActivityData, Error, body> = {
   mutationFn: patch,
-  onError: (error: Error) => {
-    alert('체험 수정에 실패했습니다. 다시 시도해주세요.');
-  },
 };
