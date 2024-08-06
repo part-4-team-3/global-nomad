@@ -112,9 +112,9 @@ export default function RegisterForm() {
                     {...field}
                   />
                   <Button
-                    className="w-50pxr"
+                    className="w-150pxr"
                     type="button"
-                    text="인증"
+                    text="인증하기"
                     color="black"
                     onClick={handleSendEmail}
                     disabled={isEmailVerified}
@@ -140,6 +140,7 @@ export default function RegisterForm() {
               color="black"
               onClick={checkCode}
               disabled={isEmailVerified}
+              className="py-14pxr"
             />
           </>
         )}
