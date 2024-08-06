@@ -55,7 +55,10 @@ export default async function FilteredActivities({ searchParams }: Props) {
           currentCategory={searchParams.category}
           searchParamsSort={searchParams.sort}
         />
-        <DropdownMenu text={getDropDownTitleByQuery(sortMethod)} className="!w-fit shrink-0">
+        <DropdownMenu
+          text={getDropDownTitleByQuery(sortMethod)}
+          className="!w-fit shrink-0 bg-white"
+        >
           {sortList.map((sort) => (
             <Link
               key={sort.query}

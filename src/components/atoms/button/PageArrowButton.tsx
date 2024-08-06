@@ -37,7 +37,7 @@ export default function PageArrowButton({
     );
 
   return (
-    <Link href={href} scroll={scroll} className={`border-var-green-dark ${buttonStyle}`}>
+    <Link href={href} scroll={scroll} className={`border-var-green-dark bg-white ${buttonStyle}`}>
       <Image
         width={55}
         height={55}

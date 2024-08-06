@@ -17,14 +17,14 @@ export default function ActivityCard({ activity, isBest }: Props) {
   return (
     <Link
       href={`/activity/${activity.id}`}
-      className={`flex flex-none snap-start duration-300 hover:-translate-y-5pxr ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'flex-col gap-[16px]'} `}
+      className={`group flex flex-none snap-start duration-300 hover:-translate-y-5pxr ${isBest ? 'relative size-186pxr overflow-hidden rounded-[20px] md:size-384pxr' : 'flex-col gap-[16px]'} `}
     >
       <Image
         src={isImageError ? defaultImage : activity.bannerImageUrl}
         width={isBest ? 384 : 283}
         height={isBest ? 384 : 283}
         alt=""
-        className={`bg-[#d9d9d9] object-cover ${isBest ? 'absolute size-full' : 'h-168pxr w-full rounded-[20px] md:h-221pxr lg:h-283pxr'}`}
+        className={`bg-[#d9d9d9] object-cover ${isBest ? 'absolute size-full' : 'h-168pxr w-full rounded-[20px] duration-300 group-hover:shadow-all md:h-221pxr lg:h-283pxr'}`}
         onError={() => setIsImageError(true)}
       />
       <div

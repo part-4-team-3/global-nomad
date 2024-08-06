@@ -20,7 +20,7 @@ export default async function Home({ searchParams }: Props) {
   });
 
   return (
-    <>
+    <div className="bg-var-gray8">
       <Header />
       <Banner activities={bestActivitiesData.activities.slice(0, 3)} />
       <SearchActivity />
@@ -33,6 +33,6 @@ export default async function Home({ searchParams }: Props) {
         </>
       )}
       <Footer />
-    </>
+    </div>
   );
 }
