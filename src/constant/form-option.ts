@@ -40,10 +40,13 @@ const FORM_OPTIONS = {
   },
   nickName: {
     name: 'nickName' as const,
-    placeholder: '닉네임을 입력하세요',
+    placeholder: '닉네임을 입력해 주세요',
     rules: {
       required: '닉네임을 입력해 주세요.',
     },
+  },
+  emailValidate: {
+    placeholder: '인증번호를 입력해 주세요',
   },
   errorMsgStyle: 'text-red-500 text-14pxr mt-8pxr',
 };
