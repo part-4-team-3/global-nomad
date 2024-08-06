@@ -11,23 +11,19 @@ export async function POST(req: NextRequest) {
     const mailOptions = {
       from: '"GlobalNomad" <globalnomad5.part4.3@gmail.com>',
       to: email,
-      subject: 'GlobalNomad Email Verification',
+      subject: 'GlobalNomad의 이메일 인증번호를 확인하세요',
       html: `
       <center>
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td align="center" bgcolor="#17191c" style="padding: 50px 0;">
-              <table width="500" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td align="center" style="font-size: 48px; line-height: 52px; font-family: Arial, sans-serif, 'Motiva Sans'; color: #3a9aed; font-weight: bold;">
-                    <p style="color: white; margin: 0;">인증번호</p>
-                    <p style="margin: 20px 0;">${code}</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
+        <div style="display: flex; flex-direction: column; gap: 20px; justify-content: center;  align-items: center; background-color: #fafafa;">
+          <h1>
+            <image src="/logo-big.svg" style="width: 340px; max-width: 80%;" />
+          </h1>
+          <div style="width: 500px; max-width: 90%; padding: 30px 0;">
+            <p>안녕하세요. 글로벌노마드에서 요청하신 인증번호를 보내드립니다.</p>
+            <data>${code}</data>
+            <p>위 인증번호를 인증번호 입력창에 입력해 주세요.</p>
+          </div>
+        </div>
       </center>`,
     };
 
