@@ -10,7 +10,7 @@ export default function ReservationClient() {
 
   return (
     <div className="flex flex-col gap-16pxr lg:gap-24pxr">
-      <Header setStatus={setStatus} />
+      <Header status={status} setStatus={setStatus} />
       <Main status={status} />
     </div>
   );

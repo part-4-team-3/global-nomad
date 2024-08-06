@@ -2,26 +2,23 @@
 
 import DropdownMenu from '@/components/molecules/dropdown-menu/DropdownMenu';
 import { RESERVATION_LABELS, ReservationStatus, isReservationStatus } from '@/types/reservation';
-import { useState } from 'react';
 
 interface Props {
+  status: ReservationStatus | null;
   setStatus: (status: ReservationStatus | null) => void;
 }
 
-export default function Header({ setStatus }: Props) {
-  const [text, setText] = useState<string | null>(null);
+export default function Header({ setStatus, status }: Props) {
+  const text = status === null ? '전체' : RESERVATION_LABELS[status];
 
   return (
     <div className="flex h-53pxr w-full items-center justify-between">
       <h1 className="h-38pxr text-32pxr font-bold">예약 내역</h1>
       <div className="hidden h-53pxr w-160pxr text-18pxr md2:block">
-        <DropdownMenu text={text ?? '상태'} className="rounded-[15px] bg-white">
+        <DropdownMenu text={text} className="rounded-[15px] bg-white">
           <button
             className="block w-full py-[9px] text-center md:py-[18px]"
-            onClick={() => {
-              setStatus(null);
-              setText('전체');
-            }}
+            onClick={() => setStatus(null)}
           >
             전체
           </button>
@@ -31,10 +28,7 @@ export default function Header({ setStatus }: Props) {
                 <button
                   className="block w-full py-[9px] text-center md:py-[18px]"
                   key={key}
-                  onClick={() => {
-                    setStatus(key);
-                    setText(label);
-                  }}
+                  onClick={() => setStatus(key)}
                 >
                   {label}
                 </button>
