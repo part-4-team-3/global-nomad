@@ -1,23 +1,26 @@
 'use client';
 
-import React, { useState, forwardRef, ForwardedRef, useRef, useEffect } from 'react';
+import React, { useState, forwardRef, ForwardedRef, useRef } from 'react';
 import Input from '../../atoms/input/Input';
 import Option from './Option';
 import Image from 'next/image';
-import { useObserverByScroll } from '@/models/useObserverByScroll';
+import { Activity } from '@/types/activity';
 
 interface Props extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'> {
-  options: string[];
-  onChange?: (value: string) => void;
+  options: Activity[];
+  selectedActivity: Activity | null;
+  onChange: (activity: Activity) => void;
 }
 
 const InfinitySelect = forwardRef(
-  ({ options, onChange, value, ...rest }: Props, ref: ForwardedRef<HTMLInputElement>) => {
+  (
+    { options, onChange, value, selectedActivity, ...rest }: Props,
+    ref: ForwardedRef<HTMLInputElement>,
+  ) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const divRef = useRef<HTMLDivElement | null>(null);
 
-    console.log(value);
     return (
       <div className={`relative h-full w-full`}>
         <Input
@@ -40,14 +43,14 @@ const InfinitySelect = forwardRef(
         />
         {isOpen && (
           <ul className="left-0 absolute top-[calc(100%+8px)] z-10 h-150pxr w-full overflow-scroll rounded-md bg-white p-8pxr shadow-lg ring-1 ring-black ring-opacity-5">
-            {options.map((option) => (
+            {options.map((option: Activity) => (
               <Option
-                key={option}
-                text={option}
-                isSelected={value === option}
+                key={option.id}
+                text={option.title}
+                isSelected={selectedActivity?.id === option.id}
                 onChange={() => {
                   setIsOpen(false);
-                  onChange?.(option);
+                  onChange(option);
                 }}
               />
             ))}

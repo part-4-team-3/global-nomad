@@ -14,8 +14,9 @@ interface Props {
 export default function MyReservation({ myActivityList }: Props) {
   const { isOpen } = useModal();
 
-  const { activityName, activityNameList, selectedActivity, setActivityName } =
-    useHandleIsSelectdActivity(myActivityList.activities);
+  const { selectedActivity, setSelectedActivity } = useHandleIsSelectdActivity(
+    myActivityList.activities,
+  );
 
   return (
     <div
@@ -31,9 +32,10 @@ export default function MyReservation({ myActivityList }: Props) {
             체험명
           </p>
           <InfinitySelect
-            options={activityNameList ? activityNameList : []}
-            value={activityName}
-            onChange={setActivityName}
+            options={myActivityList.activities ? myActivityList.activities : []}
+            value={selectedActivity?.title}
+            selectedActivity={selectedActivity}
+            onChange={setSelectedActivity}
           />
         </div>
       </div>
