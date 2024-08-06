@@ -131,7 +131,14 @@ export default function RegisterForm() {
               control={control}
               name="code"
               defaultValue=""
-              render={({ field }) => <Input readOnly={isEmailVerified} size="full" {...field} />}
+              render={({ field }) => (
+                <Input
+                  readOnly={isEmailVerified}
+                  placeholder={FORM_OPTIONS.emailValidate.placeholder}
+                  size="full"
+                  {...field}
+                />
+              )}
             />
             {errors.code && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.code.message}</div>}
             <Button
