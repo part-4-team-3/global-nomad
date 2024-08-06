@@ -25,11 +25,12 @@ const Select = forwardRef(
           }}
           style={{ cursor: 'pointer' }}
           ref={ref}
+          className="readOnlyButStyle"
           {...rest}
         />
         <Image
           className={`absolute right-12pxr top-1/2 -translate-y-1/2 transform transition-transform ${isOpen && 'rotate-180'}`}
-          src="/select-down.png"
+          src="/select-down.svg"
           width={24}
           height={24}
           alt=""

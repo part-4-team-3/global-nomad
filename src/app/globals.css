@@ -146,4 +146,10 @@
   body {
     @apply bg-background text-foreground text-var-black;
   }
+  input:read-only {
+    @apply bg-var-gray7 text-var-gray1 focus:outline-none;
+  }
+  input.readOnlyButStyle {
+    @apply bg-white text-var-black;
+  }
 }

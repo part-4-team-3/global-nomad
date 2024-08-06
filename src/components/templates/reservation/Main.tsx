@@ -3,7 +3,7 @@
 import ReservationCard from '@/components/molecules/reservation-card/ReservationCard';
 import { Reservation, ReservationStatus } from '@/types/reservation';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getMyReservations } from '@/queries/reservations/get-my-reservations';
 import LoadingSpinner from '@/components/atoms/loading-spinner/LoadingSpinner';
@@ -42,8 +42,8 @@ export default function Main({ status }: Props) {
       initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.cursorId,
 
-      staleTime: 60000,
-      refetchInterval: 300000,
+      staleTime: 3600000,
+      refetchInterval: 3600000,
     });
 
   const { ref, inView } = useInView({
@@ -58,7 +58,7 @@ export default function Main({ status }: Props) {
 
   if (isPending)
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex min-h-300pxr w-full items-center justify-center">
         <LoadingSpinner />
       </div>
     );
@@ -71,12 +71,8 @@ export default function Main({ status }: Props) {
       </div>
     );
 
-  const firstDataCount = data?.pages[0].totalCount ?? 0;
-  const height =
-    firstDataCount > 3 ? 'h-1200pxr' : firstDataCount > 1 ? 'h-800pxr' : 'h-[calc(100vh-410px)]';
-
   return (
-    <div className={`${height} overflow-y-scroll scrollbar-hide`}>
+    <>
       {data?.pages.map((page, pageIndex) => (
         <div key={pageIndex}>
           {page.reservations.map((reservation: Reservation) => (
@@ -92,6 +88,6 @@ export default function Main({ status }: Props) {
           <LoadingSpinner />
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -5,10 +5,11 @@ import { ReservationProvider } from '@/models/activity-reservation/use-reservati
 import ActivityReservationForm from '@/components/organisms/activity-reservation-form/ActivityReservationForm';
 import ActivityReservationFormPC from '@/components/organisms/activity-reservation-form/ActivityReservationFormPC';
 import { ReservationFormProps } from '@/types/reservation-form-props';
-import useUser from '@/store/useUser';
 import LogInCover from '@/components/molecules/log-in-cover/LogInCover';
 interface Props extends ReservationFormProps {
   creatorId: number;
+  isNotLoggedIn: boolean;
+  userId: number;
 }
 
 export default function ActivityReservationContainer({
@@ -17,10 +18,10 @@ export default function ActivityReservationContainer({
   scheduleHash,
   activityId,
   creatorId,
+  isNotLoggedIn,
+  userId,
 }: Props) {
-  const { user } = useUser();
-  const isNotLoggedIn = !user;
-  const isNotMyActivity = creatorId !== user?.id;
+  const isNotMyActivity = creatorId !== userId;
 
   return (
     <>

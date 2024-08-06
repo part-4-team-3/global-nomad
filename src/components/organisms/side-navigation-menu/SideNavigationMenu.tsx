@@ -16,7 +16,7 @@ export default function SideNavigationMenu() {
   const activeMenuStyle = 'text-var-green-dark bg-var-green2 rounded-[12px]';
 
   return (
-    <div className="hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl bg-white p-[24px] shadow-md md:flex">
+    <div className="hidden h-432pxr w-432pxr flex-col gap-[24px] rounded-xl bg-white p-[24px] shadow-md md2:flex">
       <MyPageProfile />
       <nav className="mt-4">
         <ul>
@@ -28,7 +28,7 @@ export default function SideNavigationMenu() {
                 onMouseEnter={() => setHoveredItem(item.text)}
                 onMouseLeave={() => setHoveredItem(null)}
               >
-                <div className="relative size-[24px]">
+                <div className="relative size-24pxr">
                   <Image
                     fill
                     src={

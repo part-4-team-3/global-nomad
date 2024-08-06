@@ -28,7 +28,8 @@ export default function Main() {
       getNextPageParam: (lastPage) => {
         return lastPage?.data.cursorId ? lastPage?.data.cursorId : null;
       },
-      staleTime: 60 * 1000,
+      staleTime: 3600000,
+      refetchInterval: 3600000,
     });
 
   const { ref, inView } = useInView({
@@ -43,7 +44,7 @@ export default function Main() {
 
   if (isPending)
     return (
-      <div className="flex w-full justify-center">
+      <div className="flex min-h-300pxr w-full justify-center">
         <LoadingSpinner />
       </div>
     );

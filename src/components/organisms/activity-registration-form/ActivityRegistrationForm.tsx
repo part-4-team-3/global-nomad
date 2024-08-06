@@ -35,6 +35,9 @@ export default function ActivityRegistrationForm() {
         exact: true,
       });
       router.refresh();
+      setTimeout(() => {
+        router.back();
+      }, 500);
     },
   });
 
@@ -42,7 +45,6 @@ export default function ActivityRegistrationForm() {
     const body = registerActivityForm(methods);
     if (body) {
       mutation.mutate(body);
-      router.back();
     }
   };
 

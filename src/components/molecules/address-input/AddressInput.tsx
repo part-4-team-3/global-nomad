@@ -33,14 +33,6 @@ export default function AddressInput({ value, onChange }: Props) {
   const [detailAddress, setDetailAddress] = useState('');
 
   useEffect(() => {
-    if (value) {
-      const parts = value.split(' ');
-      if (parts.length > 0) setAddress(parts[0]);
-      if (parts.length > 1) setExtraAddress(parts.slice(1).join(' '));
-    }
-  }, [value]);
-
-  useEffect(() => {
     const fullAddress = ` ${address} ${extraAddress} ${detailAddress}`.trim();
     onChange(fullAddress);
   }, [address, extraAddress, detailAddress, onChange]);
@@ -90,7 +82,7 @@ export default function AddressInput({ value, onChange }: Props) {
     <div className="flex flex-col gap-[12px]">
       <div className="flex gap-[8px] md:gap-[12px]">
         <input
-          className="rounded-md border border-var-gray2 px-20pxr py-16pxr"
+          className="grow rounded-md border border-var-gray2 px-20pxr py-16pxr"
           type="text"
           id="sample6_postcode"
           placeholder="우편번호"
@@ -129,6 +121,7 @@ export default function AddressInput({ value, onChange }: Props) {
           placeholder="상세주소"
           value={detailAddress}
           onChange={handleDetailAddressChange}
+          readOnly={!postcode || !address}
         />
       </div>
     </div>

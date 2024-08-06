@@ -9,15 +9,22 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/atoms/button/Button';
 import { registerMutationOptions } from '@/mutations/users/register';
 import { toast } from 'react-toastify';
+import Input from '@/components/atoms/input/Input';
+import { useState } from 'react';
+import { sendEmailMutationOptions } from './../../../mutations/users/register';
 
 interface RegisterData {
   email: string;
   nickName: string;
   password: string;
   passwordCheck: string;
+  code: string;
 }
 
 export default function RegisterForm() {
+  const [emailCode, setEmailCode] = useState('');
+  const [isEmailSended, setIsEmailSended] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const router = useRouter();
   const {
     control,
@@ -31,10 +38,21 @@ export default function RegisterForm() {
       nickName: '',
       password: '',
       passwordCheck: '',
+      code: '',
     },
   });
 
-  const mutation = useMutation({
+  const sendEmail = useMutation({
+    ...sendEmailMutationOptions,
+    onSuccess: (data) => {
+      setEmailCode(data.code ?? '');
+      setIsEmailSended(true);
+      setIsEmailVerified(false);
+      toast('인증번호가 전송되었습니다.');
+    },
+  });
+
+  const register = useMutation({
     ...registerMutationOptions,
     onSuccess: () => {
       toast('회원가입 되었습니다.', {
@@ -48,8 +66,27 @@ export default function RegisterForm() {
     },
   });
 
+  const handleSendEmail = () => {
+    const email = watch('email');
+    if (email && errors.email === undefined) {
+      sendEmail.mutate({ email });
+    } else {
+      toast('이메일을 확인해 주세요.');
+    }
+  };
+
+  const checkCode = () => {
+    if (emailCode === watch('code')) {
+      setIsEmailVerified(true);
+      toast('이메일 인증이 완료되었습니다.');
+    } else {
+      setIsEmailVerified(false);
+      toast('인증번호가 일치하지 않습니다.');
+    }
+  };
+
   const submit = ({ email, nickName: nickname, password }: RegisterData) => {
-    mutation.mutate({ email, nickname, password });
+    register.mutate({ email, nickname, password });
   };
 
   return (
@@ -62,18 +99,58 @@ export default function RegisterForm() {
             rules={FORM_OPTIONS.email.rules}
             defaultValue=""
             render={({ field }) => (
-              <AuthInput
-                id={FORM_OPTIONS.email.name}
-                labelText="이메일"
-                hasError={errors.email !== undefined}
-                placeholder={FORM_OPTIONS.email.placeholder}
-                maxLength={30}
-                {...field}
-              />
+              <div className="flex w-full flex-col gap-8pxr">
+                <label htmlFor={FORM_OPTIONS.email.name}>이메일</label>
+                <div className="flex gap-6pxr">
+                  <Input
+                    id={FORM_OPTIONS.email.name}
+                    size="full"
+                    hasError={errors.email !== undefined}
+                    placeholder={FORM_OPTIONS.email.placeholder}
+                    maxLength={30}
+                    readOnly={isEmailVerified}
+                    {...field}
+                  />
+                  <Button
+                    className="w-150pxr"
+                    type="button"
+                    text="인증하기"
+                    color="black"
+                    onClick={handleSendEmail}
+                    disabled={isEmailVerified}
+                  />
+                </div>
+              </div>
             )}
           />
           {errors.email && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.email.message}</div>}
         </div>
+        {isEmailSended && (
+          <>
+            <Controller
+              control={control}
+              name="code"
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  readOnly={isEmailVerified}
+                  placeholder={FORM_OPTIONS.emailValidate.placeholder}
+                  size="full"
+                  {...field}
+                />
+              )}
+            />
+            {errors.code && <div className={FORM_OPTIONS.errorMsgStyle}>{errors.code.message}</div>}
+            <Button
+              type="button"
+              text="인증번호 확인"
+              color="black"
+              onClick={checkCode}
+              disabled={isEmailVerified}
+              className="py-14pxr"
+            />
+          </>
+        )}
         <div>
           <Controller
             control={control}
@@ -143,7 +220,13 @@ export default function RegisterForm() {
             <div className={FORM_OPTIONS.errorMsgStyle}>{errors.passwordCheck.message}</div>
           )}
         </div>
-        <Button type="submit" text="회원가입 하기" size="l" color="black" disabled={!isValid} />
+        <Button
+          type="submit"
+          text="회원가입 하기"
+          size="l"
+          color="black"
+          disabled={!isValid || !isEmailVerified}
+        />
       </div>
     </form>
   );

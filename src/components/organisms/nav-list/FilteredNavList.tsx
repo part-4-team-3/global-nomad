@@ -3,7 +3,7 @@
 import Button from '@/components/atoms/button/Button';
 import makeQueryString from '@/lib/query-string';
 import { ActivityCategory } from '@/types/activity';
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 const categoryList = ['모든 체험', '문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 
@@ -19,6 +19,9 @@ export default function FilteredNavList({
   const [hideLeftGradient, setHideLeftGradient] = useState(true);
   const [hideRightGradient, setHideRightGradient] = useState(true);
   const navRef = useRef<HTMLUListElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const checkScroll = () => {
     if (navRef.current) {
@@ -30,6 +33,29 @@ export default function FilteredNavList({
       const isStartReached = navRef.current.scrollLeft === 0;
       setHideLeftGradient(isStartReached || !isScrollable);
     }
+  };
+
+  const handleMouseDown = (event: MouseEvent) => {
+    setIsDragging(true);
+    setStartX(event.pageX - navRef.current!.offsetLeft);
+    setScrollLeft(navRef.current!.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isDragging) return;
+    event.preventDefault();
+    const x = event.pageX - navRef.current!.offsetLeft;
+    const walk = (x - startX) * 2;
+    navRef.current!.scrollLeft = scrollLeft - walk;
+    checkScroll();
   };
 
   useEffect(() => {
@@ -63,14 +89,18 @@ export default function FilteredNavList({
       )}
       <ul
         ref={navRef}
-        className="flex w-full gap-[8px] overflow-x-auto py-[10px] scrollbar-hide md:gap-[16px] lg:gap-[24px]"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        className={`flex w-full gap-[8px] overflow-x-auto py-[10px] scrollbar-hide md:gap-[16px] lg:gap-[24px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       >
         {categoryList.map((category) => (
           <li key={category}>
             <Button
               text={category}
               color="white"
-              className={`hover:shadow-hover w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] duration-100 md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
+              className={`w-80pxr !rounded-[15px] !border-var-green-dark py-[8px] !font-[500] duration-100 hover:shadow-hover md:w-120pxr md:py-[14px] lg:w-127pxr ${currentCategory === category ? '!bg-var-green-dark !text-white' : '!text-var-green-dark'}`}
               link={
                 category === '모든 체험'
                   ? makeQueryString({ category: '모든 체험', sort: searchParamsSort })

@@ -39,6 +39,7 @@ export default function ActivityForm({ initActivity }: Props) {
     deletedSchedule,
     setScheduleIds,
     isCalendarOpen,
+    setIsCalendarOpen,
     handleCalendarOpen,
     handleFormatDayClick,
     handleAddSchedules,
@@ -120,7 +121,7 @@ export default function ActivityForm({ initActivity }: Props) {
       <textarea
         {...register('description')}
         placeholder="설명"
-        className="h-200pxr rounded-md border border-var-gray2 px-20pxr py-16pxr"
+        className="h-200pxr rounded-md border border-var-gray2 px-20pxr py-16pxr focus:outline-var-green-dark"
       />
       <div className={containerClass}>
         <label className={inputTitleClass}>가격</label>
@@ -182,6 +183,7 @@ export default function ActivityForm({ initActivity }: Props) {
           endTime={endTime}
           timeSlots={schedules}
           isCalendarOpen={isCalendarOpen}
+          setIsCalendarOpen={setIsCalendarOpen}
           handleFormatDayClick={handleFormatDayClick}
           setStartTime={setStartTime}
           setEndTime={setEndTime}

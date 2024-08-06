@@ -24,9 +24,9 @@ export default function KebabMenu({ children }: Props) {
   return (
     <div
       ref={menuRef}
-      className={`absolute right-[30px] rounded-lg bg-white shadow-lg ${isStyleApplied ? 'bottom-[30px]' : ''}`}
+      className={`absolute right-[0px] z-[20] flex flex-col overflow-hidden rounded-lg border border-var-gray6 bg-white shadow-lg ${isStyleApplied ? 'bottom-[30px]' : ''}`}
     >
-      <div className="flex flex-col">{children}</div>
+      {children}
     </div>
   );
 }

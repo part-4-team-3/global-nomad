@@ -9,11 +9,11 @@ export default function Layout({
 }>) {
   return (
     <div className="flex h-svh w-full items-start justify-center">
-      <div className="mx-12pxr mt-44pxr flex w-350pxr flex-col items-center justify-start gap-24pxr md:mt-72pxr md:w-640pxr md:gap-32pxr lg:mt-104pxr">
+      <div className="mx-[12px] my-[44px] flex w-350pxr flex-col items-center justify-start gap-[24px] md:mt-[72px] md:w-640pxr md:gap-[32px] lg:my-[104px]">
         <Link href="/">
           <Image
-            className="mb-0 h-154pxr w-270pxr md:mb-8pxr md:h-192pxr md:w-340pxr"
-            src="/logo.png"
+            className="mb-0 h-154pxr w-270pxr md:mb-[8px] md:h-192pxr md:w-340pxr"
+            src="/logo-big.svg"
             width={340}
             height={192}
             alt="logo"

@@ -19,6 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getActivityDetails(params.id);
   return {
     title: `${product.title} | Global Nomad`,
+    icons: {
+      icon: '/favicon/favicon.ico',
+    },
     openGraph: {
       title: `${product.title} | Global Nomad`,
       description: product.description,
@@ -47,6 +50,8 @@ export default async function Page({ params, searchParams }: Props) {
   const reviewData = await getActivityReviews(params.id, currentPage);
 
   const userId = await getCookie('userId');
+
+  const isNotLoggedIn = userId ? false : true;
 
   return (
     <main>
@@ -84,6 +89,8 @@ export default async function Page({ params, searchParams }: Props) {
             scheduledDates={scheduledDates}
             activityId={params.id}
             creatorId={data.userId}
+            isNotLoggedIn={isNotLoggedIn}
+            userId={isNotLoggedIn ? -1 : Number(userId)}
           />
         </div>
       </div>

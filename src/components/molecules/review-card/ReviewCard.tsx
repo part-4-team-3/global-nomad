@@ -24,13 +24,17 @@ export default function ReviewCard({ review }: Props) {
 
       <div>
         <div className="flex items-center gap-[4px]">
-          <span className="font-[700]">{review.user.nickname}</span>
+          <span className="font-[700]" tabIndex={0}>
+            {review.user.nickname}
+          </span>
           <span className="text-14pxr"> |</span>
           <span className="text-var-gray3">
-            <time dateTime={formattedDate}>{formattedDate}</time>
+            <time dateTime={formattedDate} tabIndex={0}>
+              {formattedDate}
+            </time>
           </span>
         </div>
-        <p>{review.content}</p>
+        <p tabIndex={0}>{review.content}</p>
       </div>
     </div>
   );

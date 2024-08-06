@@ -38,7 +38,13 @@ export default function DropdownMenu({ text, children, className }: Props) {
         className="flex w-full justify-between gap-[10px] rounded-[15px] border border-var-green-dark px-[20px] py-[10px] text-14pxr leading-[22px] text-var-green-dark md:py-[15px] md:text-18pxr"
       >
         {text}
-        <Image src="/arrow-down.svg" width={22} height={22} alt="dropdown" />
+        <Image
+          src="/arrow-down.svg"
+          width={22}
+          height={22}
+          alt="dropdown"
+          className={`duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
       <div className="relative w-full">
         {isOpen && (
@@ -46,7 +52,7 @@ export default function DropdownMenu({ text, children, className }: Props) {
             {Children.map(children, (child, index) => (
               <li
                 className={cn(
-                  'w-full py-[9px] text-center text-14pxr md:py-[18px] md:text-18pxr',
+                  'w-full text-14pxr duration-300 hover:bg-var-gray7 md:text-18pxr',
                   index < Children.count(children) - 1 && 'border-var-gray-6 border-b',
                 )}
                 key={index}

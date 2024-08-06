@@ -46,7 +46,7 @@ export default function HamburgerMenu() {
         ))}
       </button>
       <div
-        className={`absolute left-[0px] top-[43px] flex h-[calc(100vh-43px)] w-[100vw] list-none flex-col bg-white ${isActive ? 'block' : 'hidden'}`}
+        className={`absolute left-[0px] top-[43px] flex h-[calc(100vh-43px)] w-[100vw] list-none flex-col bg-white md:top-[66px] md:h-[calc(100vh-66px)] ${isActive ? 'block' : 'hidden'}`}
       >
         {user ? (
           <div className="flex items-center gap-[20px] bg-var-gray6 px-[24px] py-[20px]">
