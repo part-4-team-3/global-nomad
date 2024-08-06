@@ -23,7 +23,6 @@ export const useImageUploader = () => {
   const { user, setUser } = useUser.getState();
   const activityMutation = useMutation(submitActivityImageMutationOptions);
   const profileMutation = useMutation(submitProfileImageMutationOptions);
-  const updateProfileMutation = useMutation(updateProfileImageMutationOptions);
   const [bannerImage, setBannerImage] = useState<string>('');
   const [subImages, setSubImages] = useState<{ url: string; id: number }[]>([]);
   const [deletedImages, setDeletedImages] = useState<number[]>([]);
