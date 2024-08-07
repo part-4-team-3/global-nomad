@@ -17,7 +17,7 @@ export default function ProfileImage({ nickname, imageUrl, className = '' }: Pro
     );
   return (
     <Image
-      className={`size-32pxr overflow-hidden rounded-[50%] object-cover ${className}`}
+      className={`size-32pxr overflow-hidden rounded-[50%] object-cover shadow-lg ${className}`}
       src={imageUrl}
       width={45}
       height={45}
