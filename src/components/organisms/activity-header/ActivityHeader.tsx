@@ -31,7 +31,7 @@ export default async function ActivityHeader({
   }
 
   return (
-    <div className="flex w-full justify-between p-[16px] text-[#112211] md:p-[24px]">
+    <div className="flex w-full justify-between px-[24px] py-[16px] text-[#112211] md:py-[24px]">
       <div className="flex flex-col">
         <h3 className="text-14pxr" tabIndex={0} id="category">
           {category}

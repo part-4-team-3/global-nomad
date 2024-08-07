@@ -55,7 +55,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <main>
-      <div className="m-auto lg:max-w-1200pxr">
+      <div className="m-auto lg:max-w-1248pxr">
         <section id="overview">
           <ActivityHeader
             category={data.category}
@@ -69,8 +69,8 @@ export default async function Page({ params, searchParams }: Props) {
           />
           <ImageCarousel bannerImg={data.bannerImageUrl} subImg={data.subImages} />
         </section>
-        <div className="relative flex lg:mt-[60px] lg:gap-[24px]">
-          <div className="flex flex-grow flex-col">
+        <div className="relative flex">
+          <div className="flex flex-grow flex-col px-[24px]">
             <ActivityDescription description={data.description} />
 
             <Map address={data.address} />

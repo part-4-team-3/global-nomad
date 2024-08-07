@@ -76,7 +76,7 @@ export default function ImageCarousel({ bannerImg, subImg = [] }: Props) {
   }, [isOpen]);
 
   return (
-    <div className="px-[24px] pb-[32px]">
+    <div className="px-[24px] pb-[32px] lg:pl-[24px] lg:pr-[0px]">
       <Carousel
         className="w-full rounded-[8px] border border-var-gray6"
         tabIndex={0}
