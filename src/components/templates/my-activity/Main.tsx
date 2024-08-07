@@ -28,8 +28,8 @@ export default function Main() {
       getNextPageParam: (lastPage) => {
         return lastPage?.data.cursorId ? lastPage?.data.cursorId : null;
       },
-      staleTime: 3600000,
-      refetchInterval: 3600000,
+      staleTime: 1000 * 60 * 5,
+      refetchInterval: 1000 * 60 * 15,
     });
 
   const { ref, inView } = useInView({
