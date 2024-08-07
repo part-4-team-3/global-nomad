@@ -2,7 +2,6 @@
 import redis from '@/lib/redis';
 import { LoginResponse } from '@/mutations/auth/login';
 import axios, { AxiosError } from 'axios';
-import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -21,20 +20,11 @@ export async function POST(req: NextRequest) {
     await redis.expire(user.id.toString(), 100000000000);
 
     const res = NextResponse.json(response.data, { status: response.status });
-    res.cookies.set('accessToken', accessToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      path: '/',
-    });
-    res.cookies.set('refreshToken', refreshToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      path: '/',
-    });
     res.cookies.set('userId', user.id.toString(), {
       httpOnly: true,
       sameSite: 'strict',
       path: '/',
+      maxAge: 60 * 60 * 24,
     });
 
     return res;
