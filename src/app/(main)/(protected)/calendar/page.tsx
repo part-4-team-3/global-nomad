@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation';
 import os from 'os';
 
 export const metadata: Metadata = {
-  title: '예약 연황 | Global Nomad',
+  title: '예약 현황 | Global Nomad',
   description: 'global nomad 내 체험 현황 페이지입니다.',
 };
 

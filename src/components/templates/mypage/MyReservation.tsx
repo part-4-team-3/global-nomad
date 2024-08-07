@@ -28,7 +28,7 @@ export default function MyReservation({ myActivityList }: Props) {
       <div className={cn('flex w-full flex-col', isOpen && 'hidden w-full md:block')}>
         <h1 className="text-32pxr font-[700] text-[#000]">예약 현황</h1>
         <div className="relative mt-34pxr w-full">
-          <p className="absolute left-[20px] top-[-10px] z-10 bg-white text-14pxr font-[400]">
+          <p className="before:left:-[0px] absolute left-[20px] top-[-10px] z-10 text-14pxr font-[400] before:absolute before:top-[0px] before:-z-10 before:block before:h-13pxr before:w-full before:bg-var-gray8">
             체험명
           </p>
           <InfinitySelect
