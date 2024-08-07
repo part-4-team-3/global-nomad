@@ -1,6 +1,7 @@
 import { useModal } from '@/store/useModal';
 import Image from 'next/image';
 import ActivityDeleteModal from '../modal/ActivityDeleteModal';
+import { SyntheticEvent } from 'react';
 
 interface Props {
   activityId: number;
@@ -12,7 +13,8 @@ export default function DeleteButton({ activityId }: Props) {
   return (
     <>
       <button
-        onClick={() => {
+        onClick={(e: SyntheticEvent) => {
+          e.stopPropagation();
           setIsOpen(`activityDeleteModal-${activityId}`);
         }}
       >

@@ -14,6 +14,14 @@ interface StorageItem<T> {
 }
 
 const createExpiringStorage = <T>(expireInMinutes: number): PersistStorage<T> => {
+  if (typeof window === 'undefined') {
+    return {
+      getItem: (): StorageValue<T> | null => null,
+      setItem: (): void => {},
+      removeItem: (): void => {},
+    };
+  }
+
   const storage = localStorage;
 
   return {

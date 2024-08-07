@@ -9,6 +9,9 @@ import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 import { deleteCookie, getCookie } from '@/app/(action)/(cookie)/cookie';
 import { getInstance } from '@/lib/axios';
+import { useQueryClient } from '@tanstack/react-query';
+import { ReservationStatus } from '@/types/reservation';
+import { reservationsKeys } from '@/queries/reservations/query-keys';
 
 interface Props {
   isActive: boolean;
@@ -24,6 +27,8 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
     'flex w-full gap-[14px] py-[24px] px-[16px] text-[16pxr] font-bold text-var-gray3';
   const activeMenuStyle = 'text-var-green-dark  bg-var-green2 rounded-[12px]';
 
+  const queryClient = useQueryClient();
+
   /** 로그아웃 로직 */
   const handleLogout = async () => {
     const apiInstance = getInstance();
@@ -31,6 +36,25 @@ export default function HamburgerMenuItem({ isActive, setIsActive }: Props) {
     await apiInstance.delete(`auth/logout?userId=${userId}`);
     deleteCookie('userId');
     clearUser();
+    queryClient.invalidateQueries({
+      queryKey: ['my-activities'],
+      exact: true,
+    });
+    const statuses: (ReservationStatus | null)[] = [
+      null,
+      'pending',
+      'confirmed',
+      'declined',
+      'canceled',
+      'completed',
+    ];
+
+    statuses.forEach((status) => {
+      queryClient.invalidateQueries({
+        queryKey: reservationsKeys.getMyReservations(status),
+        exact: true,
+      });
+    });
     router.push('/signin');
   };
 
