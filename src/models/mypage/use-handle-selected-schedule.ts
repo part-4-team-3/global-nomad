@@ -19,6 +19,7 @@ export const useHandleSelectedSchedule = (
   myScheduleByDate: ReservedSchedule[] | null,
   selectedScheduleTime: string,
 ) => {
+  console.log(selectedScheduleTime);
   const [selectedSchedule, setSelectedSchedule] = useState<ReservedSchedule | null>(null);
 
   useEffect(() => {

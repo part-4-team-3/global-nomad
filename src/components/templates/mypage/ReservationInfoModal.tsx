@@ -29,6 +29,7 @@ export default function ReservationInfoModal({
     activityId,
     date,
   );
+
   const { scheduleTimeList } = useScheduleTimeMapping(myScheduleByDate?.data);
   const [selectedScheduleTime, setSelectedScheduleTime] = useState('');
   const { selectedSchedule } = useHandleSelectedSchedule(
@@ -37,8 +38,12 @@ export default function ReservationInfoModal({
   );
 
   useEffect(() => {
-    setSelectedScheduleTime('');
-  }, [date]);
+    if (myScheduleByDate?.data) {
+      setSelectedScheduleTime(
+        `${myScheduleByDate?.data[0].startTime}~${myScheduleByDate?.data[0].endTime}`,
+      );
+    }
+  }, [myScheduleByDate?.data]);
 
   const { data: myReservationByTime, refetch } = useGetReservationByDate(
     activityId,
