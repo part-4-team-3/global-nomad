@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { registerActivityForm } from '@/models/activity/form-utils';
 import { revalidate } from '@/lib/revalidate';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function ActivityRegistrationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,7 +42,10 @@ export default function ActivityRegistrationForm() {
       router.back();
     },
     onError: (error: any) => {
-      toast.error('체험수정에 실패하였습니다. 다시 시도해주세요.');
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.data.message;
+        toast(errorMessage);
+      }
       setIsSubmitting(false);
     },
   });

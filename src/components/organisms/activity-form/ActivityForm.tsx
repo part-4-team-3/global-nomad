@@ -10,6 +10,8 @@ import { DetailActivityData } from '@/types/activity';
 import { ReactNode } from 'react';
 import AddressInput from '@/components/molecules/address-input/AddressInput';
 import Button from '@/components/atoms/button/Button';
+import { toast } from 'react-toastify';
+import { validateFormValues } from '@/models/activity/form-utils';
 
 interface Props {
   initActivity?: DetailActivityData;
@@ -90,8 +92,14 @@ export default function ActivityForm({ initActivity }: Props) {
   }, [initActivity, setSchedules, setScheduleIds, setBannerImage, setUploadedImages, setSubImages]);
 
   const getErrorMessage = (error: any): ReactNode => {
-    return error ? <span className="text-red-500">{error.message}</span> : null;
+    return error ? toast(error.message) : '';
   };
+
+  useEffect(() => {
+    Object.values(errors).forEach((error) => {
+      getErrorMessage(error);
+    });
+  }, [errors]);
 
   return (
     <>
@@ -106,7 +114,6 @@ export default function ActivityForm({ initActivity }: Props) {
           },
         })}
       />
-      {getErrorMessage(errors.title)}
       <Controller
         name="category"
         control={control}
@@ -120,13 +127,11 @@ export default function ActivityForm({ initActivity }: Props) {
           />
         )}
       />
-      {getErrorMessage(errors.category)}
       <textarea
         {...register('description', { required: '설명을 입력해주세요.' })}
         placeholder="설명"
         className="h-200pxr rounded-md border border-var-gray2 px-20pxr py-16pxr focus:outline-var-green-dark"
       />
-      {getErrorMessage(errors.description)}
       <div className={containerClass}>
         <label className={inputTitleClass}>가격</label>
         <Input
@@ -146,7 +151,6 @@ export default function ActivityForm({ initActivity }: Props) {
             },
           })}
         />
-        {getErrorMessage(errors.price)}
       </div>
       <div className={containerClass}>
         <label className={inputTitleClass}>주소</label>
@@ -173,12 +177,14 @@ export default function ActivityForm({ initActivity }: Props) {
             )}
           />
         </div>
-        {getErrorMessage(errors.address)}
+
         {addressOpen && (
           <Controller
             name="address"
             control={control}
-            render={({ field }) => <AddressInput onChange={(address) => field.onChange(address)} />}
+            render={({ field }) => (
+              <AddressInput value={field.value} onChange={(address) => field.onChange(address)} />
+            )}
           />
         )}
       </div>

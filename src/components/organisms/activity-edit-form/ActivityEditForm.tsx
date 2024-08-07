@@ -12,6 +12,7 @@ import { ActivityEditData, DetailActivityData } from '@/types/activity';
 import { toast } from 'react-toastify';
 import { editActivityForm } from '@/models/activity/form-utils';
 import { revalidate } from '@/lib/revalidate';
+import axios from 'axios';
 
 interface Props {
   initActivity: DetailActivityData;
@@ -43,7 +44,10 @@ export default function ActivityEditForm({ initActivity }: Props) {
       router.back();
     },
     onError: (error: any) => {
-      toast.error('체험수정에 실패하였습니다. 다시 시도해주세요.');
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.data.message;
+        toast(errorMessage);
+      }
       setIsSubmitting(false);
     },
   });
