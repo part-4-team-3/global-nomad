@@ -43,7 +43,7 @@ const InfinitySelect = forwardRef(
           alt=""
         />
         {isOpen && (
-          <ul className="left-0 absolute top-[calc(100%+8px)] z-10 h-150pxr w-full overflow-y-scroll rounded-md bg-white p-8pxr shadow-lg ring-1 ring-black ring-opacity-5">
+          <ul className="left-0 absolute top-[calc(100%+8px)] z-10 h-150pxr w-full overflow-y-auto rounded-md bg-white p-8pxr shadow-lg ring-1 ring-black ring-opacity-5">
             {options.map((option: Activity) => (
               <Option
                 key={option.id}
