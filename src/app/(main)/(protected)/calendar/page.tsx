@@ -14,11 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default async function page() {
-  const isEqualIpUser = await ipCheck();
-  if (isEqualIpUser) {
-    redirect('/signin?redirect=anotherlogin');
-  }
-
   const apiInstance = getInstance();
   const myActivtyListResponse = await apiInstance.get(`my-activities`);
   const myActivtyList = myActivtyListResponse.data;
