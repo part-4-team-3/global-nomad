@@ -28,7 +28,7 @@ export default function Main() {
       getNextPageParam: (lastPage) => {
         return lastPage?.data.cursorId ? lastPage?.data.cursorId : null;
       },
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 2,
       refetchInterval: 1000 * 60 * 15,
     });
 

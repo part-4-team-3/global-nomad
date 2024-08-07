@@ -42,7 +42,7 @@ export default function Main({ status }: Props) {
       initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.cursorId,
 
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 2,
       refetchInterval: 1000 * 60 * 15,
     });
 
