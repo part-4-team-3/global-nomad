@@ -42,8 +42,8 @@ export default function Main({ status }: Props) {
       initialPageParam: undefined,
       getNextPageParam: (lastPage) => lastPage.cursorId,
 
-      staleTime: 3600000,
-      refetchInterval: 3600000,
+      staleTime: 1000 * 60 * 2,
+      refetchInterval: 1000 * 60 * 15,
     });
 
   const { ref, inView } = useInView({
