@@ -1,12 +1,9 @@
 'use client';
-import { useModal } from '@/store/useModal';
+
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { submitActivityImageMutationOptions } from '@/mutations/activity/activity-image-uploader';
-import {
-  submitProfileImageMutationOptions,
-  updateProfileImageMutationOptions,
-} from '@/mutations/users/profile-image-uploader';
+import { submitProfileImageMutationOptions } from '@/mutations/users/profile-image-uploader';
 import useUser from '@/store/useUser';
 import { toast } from 'react-toastify';
 
@@ -29,11 +26,6 @@ export const useImageUploader = () => {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [addImages, setAddImages] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>(user?.profileImageUrl || '');
-  const { setIsClose } = useModal();
-
-  const closeModal = () => {
-    setIsClose();
-  };
 
   /** 등록한 이미지를 url로 바꾸는 비동기 함수 */
   const handleUploadImage = async (
@@ -104,17 +96,11 @@ export const useImageUploader = () => {
     const formData = new FormData();
     formData.append('image', uploadFile);
 
-    // 이미지 미리보기 URL 생성
-    const localImageUrl = URL.createObjectURL(uploadFile);
-    const previousImageUrl = profileImage; // 기존 이미지 URL 저장
-    setProfileImage(localImageUrl);
-
     try {
       const imageUrl: ProfileImageUrlApiResponse = await profileMutation.mutateAsync(formData);
       setProfileImage(imageUrl.profileImageUrl);
     } catch (error) {
       alert(error);
-      setProfileImage(previousImageUrl);
     }
   };
 
