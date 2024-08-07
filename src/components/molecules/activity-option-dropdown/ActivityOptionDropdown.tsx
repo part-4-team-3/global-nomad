@@ -8,6 +8,7 @@ import { deleteActivity } from '@/queries/activities/delete-activity';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/store/useModal';
 import DeleteActivityModal from '../modal/DeleteActivityModal';
+import Button from '@/components/atoms/button/Button';
 
 interface Props {
   activityId: number;
@@ -79,23 +80,11 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
       </div>
       {isOpen && (
         <DeleteActivityModal modalKey="deleteActivity">
-          <div className="flex flex-col gap-[20px] p-[20px]">
-            <span>정말로 삭제하시겠습니까?</span>
-            <div className="flex w-full justify-between">
-              <button
-                type="button"
-                className="rounded-[8px] bg-var-red-dark px-[12px] py-[8px] text-white hover:brightness-90"
-                onClick={handleDelete}
-              >
-                삭제
-              </button>
-              <button
-                type="button"
-                className="rounded-[8px] bg-white px-[12px] py-[8px] text-var-green-dark hover:brightness-90"
-                onClick={() => setIsClose()}
-              >
-                취소
-              </button>
+          <div className="flex h-120pxr w-300pxr flex-col items-center justify-center gap-20pxr">
+            <p className="text-20pxr">삭제하시겠습니까?</p>
+            <div className="flex gap-6pxr">
+              <Button className="w-80pxr" text="예" color="black" onClick={handleDelete} />
+              <Button className="w-80pxr" text="아니요" color="black" onClick={setIsClose} />
             </div>
           </div>
         </DeleteActivityModal>

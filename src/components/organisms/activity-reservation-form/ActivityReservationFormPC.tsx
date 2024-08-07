@@ -36,14 +36,18 @@ export default function ActivityReservationFormPC({
     },
   });
 
+  const selectedDateText = selectedSchedule
+    ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
+    : '선택된 스케줄 없음';
+
   const handleReservation = async (data: {
     selectedSchedule: Schedule | undefined;
     participants: number;
   }) => {
     const { selectedSchedule, participants } = data;
-    const res = await postReservation(activityId, selectedSchedule?.id, participants);
-    if (res < 0) {
-      toast('예약에 실패했습니다');
+    const res: any = await postReservation(activityId, selectedSchedule?.id, participants);
+    if (res.status !== 201) {
+      toast(res.response.data.data.message);
       return;
     }
     toast('예약에 성공했습니다');
@@ -124,6 +128,9 @@ export default function ActivityReservationFormPC({
             />
             {errors.participants && <p className="text-red-500">{errors.participants.message}</p>}
           </div>
+
+          <span className="text-20pxr font-[700]">선택된 스케줄</span>
+          <span className="flex w-full justify-center">{selectedDateText}</span>
 
           <Button
             text="예약하기"
