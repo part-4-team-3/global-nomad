@@ -26,9 +26,9 @@ export default function EditProfileImage({ onProfileImageChange }: Props) {
     <div className="relative flex flex-col gap-[16px]">
       <label className="text-24pxr font-bold">프로필 이미지</label>
       <div className="relative w-160pxr">
-        <div className="relative size-160pxr overflow-hidden rounded-full">
+        <div className="relative size-160pxr overflow-hidden rounded-full shadow-lg">
           {profileImage ? (
-            <Image fill src={profileImage} alt="프로필 사진" />
+            <Image fill src={profileImage} alt="프로필 사진" className="object-cover" />
           ) : (
             <div className="flex size-160pxr items-center justify-center rounded-[50%] bg-var-gray1 text-80pxr text-white">
               {user && user.nickname.slice(0, 1)}

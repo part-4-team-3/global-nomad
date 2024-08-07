@@ -85,7 +85,7 @@ export default function FilteredNavList({
   return (
     <div className="relative w-full grow md2:w-[calc(100%-300px)]">
       {!hideLeftGradient && (
-        <div className="absolute left-[0] top-[0] h-full w-70pxr bg-gradient-to-l from-transparent to-white" />
+        <div className="absolute left-[0] top-[0] h-full w-70pxr bg-gradient-to-l from-transparent to-[#FAFBFC]" />
       )}
       <ul
         ref={navRef}
@@ -111,7 +111,7 @@ export default function FilteredNavList({
         ))}
       </ul>
       {!hideRightGradient && (
-        <div className="absolute right-[0] top-[0] h-full w-70pxr bg-gradient-to-r from-transparent to-white" />
+        <div className="absolute right-[0] top-[0] h-full w-70pxr bg-gradient-to-r from-transparent to-[#FAFBFC]" />
       )}
     </div>
   );
