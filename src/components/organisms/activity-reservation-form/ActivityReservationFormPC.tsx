@@ -36,6 +36,10 @@ export default function ActivityReservationFormPC({
     },
   });
 
+  const selectedDateText = selectedSchedule
+    ? `${format(selectedSchedule.date, 'yy/MM/dd')} ${selectedSchedule.startTime} ~ ${selectedSchedule.endTime}`
+    : '선택된 스케줄 없음';
+
   const handleReservation = async (data: {
     selectedSchedule: Schedule | undefined;
     participants: number;
@@ -124,6 +128,9 @@ export default function ActivityReservationFormPC({
             />
             {errors.participants && <p className="text-red-500">{errors.participants.message}</p>}
           </div>
+
+          <span className="text-20pxr font-[700]">선택된 스케줄</span>
+          <span className="flex w-full justify-center">{selectedDateText}</span>
 
           <Button
             text="예약하기"
