@@ -32,9 +32,9 @@ export default function MyActivityCard({
 
   return (
     <div onClick={handleCardClick} className="cursor-pointer">
-      <div className="flex rounded-[24px] bg-white">
+      <div className="flex rounded-[24px] bg-white shadow-custom duration-200 hover:shadow-lg">
         <CardImage variant="card" src={bannerImageUrl} />
-        <div className="flex w-full flex-col justify-center gap-6pxr py-[12px] pl-[8px] pr-[14px] shadow-custom md:pl-[12px] md:pr-[18px] lg:px-[24px] lg:py-[21px]">
+        <div className="flex w-full flex-col justify-center gap-6pxr py-[12px] pl-[8px] pr-[14px] md:pl-[12px] md:pr-[18px] lg:px-[24px] lg:py-[21px]">
           <ReviewRating
             reviewCount={reviewCount}
             rating={rating}
@@ -55,7 +55,7 @@ export default function MyActivityCard({
                 }}
               >
                 <Link href={`/myactivity/${id}/edit`}>
-                  <Image src="/edit.svg" width={40} height={40} alt="activity edit button" />
+                  <Image src="/pen.svg" width={28} height={28} alt="activity edit button" />
                 </Link>
                 <DeleteButton activityId={id} />
               </div>

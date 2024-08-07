@@ -18,7 +18,7 @@ export default function DeleteButton({ activityId }: Props) {
           setIsOpen(`activityDeleteModal-${activityId}`);
         }}
       >
-        <Image src="/trashcan.svg" width={40} height={40} alt="activity delete button" />
+        <Image src="/delete.svg" width={25} height={25} alt="activity delete button" />
       </button>
       <ActivityDeleteModal activityId={activityId} />
     </>
