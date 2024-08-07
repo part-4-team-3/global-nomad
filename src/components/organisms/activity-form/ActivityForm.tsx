@@ -11,7 +11,6 @@ import { ReactNode } from 'react';
 import AddressInput from '@/components/molecules/address-input/AddressInput';
 import Button from '@/components/atoms/button/Button';
 import { toast } from 'react-toastify';
-import { validateFormValues } from '@/models/activity/form-utils';
 
 interface Props {
   initActivity?: DetailActivityData;
@@ -168,7 +167,7 @@ export default function ActivityForm({ initActivity }: Props) {
                 />
                 <Button
                   className="h-56pxr w-200pxr px-16pxr py-16pxr text-14pxr"
-                  text={addressOpen ? '닫기' : '주소 변경하기'}
+                  text={addressOpen ? '닫기' : '주소 입력하기'}
                   color="black"
                   type="button"
                   onClick={() => setAddressOpen((prev) => !prev)}

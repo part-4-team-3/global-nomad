@@ -1,8 +1,6 @@
-import { apiInstance, getInstance } from '@/lib/axios';
-import { MutationFunction, UseMutationOptions, useMutation } from '@tanstack/react-query';
+import { getInstance } from '@/lib/axios';
+import { UseMutationOptions } from '@tanstack/react-query';
 import { ActivityEditData, ActivitySettingData } from '@/types/activity';
-import axios, { AxiosResponse } from 'axios';
-import { toast } from 'react-toastify';
 
 interface body {
   activityId: number;
