@@ -12,9 +12,14 @@ import { useEffect, useMemo, useState } from 'react';
 interface Props {
   activityId: number;
   date: string;
+  myActivitiesByMonthRefetch: any;
 }
 
-export default function ReservationInfoModal({ activityId, date }: Props) {
+export default function ReservationInfoModal({
+  activityId,
+  date,
+  myActivitiesByMonthRefetch,
+}: Props) {
   const { setIsClose, key } = useModal();
   const isSelected = key === 'reservation-info';
 
@@ -119,6 +124,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
                   status={status}
                   refetch={refetch}
                   scheduleByDateRefetch={scheduleByDateRefetch}
+                  myActivitiesByMonthRefetch={myActivitiesByMonthRefetch}
                 />
               )}
             </div>
