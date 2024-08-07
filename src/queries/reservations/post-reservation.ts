@@ -14,10 +14,10 @@ const postReservation = async (
 
   try {
     const response = await instance.post(`activities/${activityId}/reservations`, requestBody);
-    console.log(response.data);
-    return response.status;
+    console.log(response);
+    return response;
   } catch (error) {
-    return -1;
+    return error;
   }
 };
 

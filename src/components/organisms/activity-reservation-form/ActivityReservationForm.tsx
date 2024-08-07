@@ -41,9 +41,9 @@ export default function ActivityReservationForm({
     participants: number;
   }) => {
     const { selectedSchedule, participants } = data;
-    const res = await postReservation(activityId, selectedSchedule?.id, participants);
-    if (res < 0) {
-      toast('예약에 실패했습니다');
+    const res: any = await postReservation(activityId, selectedSchedule?.id, participants);
+    if (res.status !== 201) {
+      toast(res.response.data.data.message);
       return;
     }
     toast('예약에 성공했습니다');
