@@ -14,11 +14,6 @@ interface Props {
 }
 
 export default async function ActivityEditPage({ params }: Props) {
-  const isEqualIpUser = await ipCheck();
-  if (isEqualIpUser) {
-    redirect('/signin?redirect=anotherlogin');
-  }
-
   const initActivity = await getActivityDetails(params.id);
   return <ActivityEditForm initActivity={initActivity} />;
 }

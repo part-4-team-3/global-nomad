@@ -10,11 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default async function MyActivity() {
-  const isEqualIpUser = await ipCheck();
-  if (isEqualIpUser) {
-    redirect('/signin?redirect=anotherlogin');
-  }
-
   return (
     <div className="flex flex-col gap-16pxr lg:gap-24pxr">
       <Header />
