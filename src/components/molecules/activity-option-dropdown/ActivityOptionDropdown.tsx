@@ -80,11 +80,21 @@ export default function ActivityOptionDropdown({ activityId }: Props) {
       </div>
       {isOpen && (
         <DeleteActivityModal modalKey="deleteActivity">
-          <div className="flex h-120pxr w-300pxr flex-col items-center justify-center gap-20pxr">
+          <div className="flex h-200pxr w-400pxr max-w-[90vw] flex-col items-center justify-center gap-[30px]">
             <p className="text-20pxr">삭제하시겠습니까?</p>
-            <div className="flex gap-6pxr">
-              <Button className="w-80pxr" text="예" color="black" onClick={handleDelete} />
-              <Button className="w-80pxr" text="아니요" color="black" onClick={setIsClose} />
+            <div className="flex gap-[20px]">
+              <Button
+                className="w-150pxr py-[10px]"
+                text="예"
+                color="black"
+                onClick={handleDelete}
+              />
+              <Button
+                className="w-150pxr py-[10px]"
+                text="아니요"
+                color="white"
+                onClick={setIsClose}
+              />
             </div>
           </div>
         </DeleteActivityModal>

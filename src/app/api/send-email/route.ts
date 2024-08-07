@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       <center style="font-family:pretendard">
         <div style="display: flex; flex-direction: column; padding: 50px 0; gap: 30px; justify-content: center;  align-items: center; background-color: #fafafa;">
           <a href="https://glabal-nomad.vercel.app">
-            <img src="https://glabal-nomad.vercel.app/logo-big.svg" style="width: 340px; max-width: 80%;" />
+            <img src="https://globalnomad-ko.vercel.app/logo-big.svg" style="width: 340px; max-width: 80%;" />
           </a>
           <div style="width: 500px; border-radius: 20px; font-size: 20px; background-color: white; max-width: 90%; padding: 45px 30px;">
             <p style="font-size: 18px;">안녕하세요.</p>
