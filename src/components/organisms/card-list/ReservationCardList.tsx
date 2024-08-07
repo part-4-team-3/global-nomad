@@ -6,6 +6,7 @@ interface Props {
   status: 'pending' | 'confirmed' | 'declined';
   refetch: () => void;
   scheduleByDateRefetch: () => void;
+  myActivitiesByMonthRefetch: () => void;
 }
 
 export default function ReservationCardList({
@@ -13,6 +14,7 @@ export default function ReservationCardList({
   reservationList,
   status,
   refetch,
+  myActivitiesByMonthRefetch,
 }: Props) {
   return (
     <div className="flex flex-col gap-14pxr">
@@ -27,6 +29,7 @@ export default function ReservationCardList({
             status={status}
             refetch={refetch}
             scheduleByDateRefetch={scheduleByDateRefetch}
+            myActivitiesByMonthRefetch={myActivitiesByMonthRefetch}
           />
         );
       })}

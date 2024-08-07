@@ -12,9 +12,14 @@ import { useEffect, useMemo, useState } from 'react';
 interface Props {
   activityId: number;
   date: string;
+  myActivitiesByMonthRefetch: any;
 }
 
-export default function ReservationInfoModal({ activityId, date }: Props) {
+export default function ReservationInfoModal({
+  activityId,
+  date,
+  myActivitiesByMonthRefetch,
+}: Props) {
   const { setIsClose, key } = useModal();
   const isSelected = key === 'reservation-info';
 
@@ -24,6 +29,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
     activityId,
     date,
   );
+
   const { scheduleTimeList } = useScheduleTimeMapping(myScheduleByDate?.data);
   const [selectedScheduleTime, setSelectedScheduleTime] = useState('');
   const { selectedSchedule } = useHandleSelectedSchedule(
@@ -32,8 +38,12 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
   );
 
   useEffect(() => {
-    setSelectedScheduleTime('');
-  }, [date]);
+    if (myScheduleByDate?.data) {
+      setSelectedScheduleTime(
+        `${myScheduleByDate?.data[0].startTime}~${myScheduleByDate?.data[0].endTime}`,
+      );
+    }
+  }, [myScheduleByDate?.data]);
 
   const { data: myReservationByTime, refetch } = useGetReservationByDate(
     activityId,
@@ -119,6 +129,7 @@ export default function ReservationInfoModal({ activityId, date }: Props) {
                   status={status}
                   refetch={refetch}
                   scheduleByDateRefetch={scheduleByDateRefetch}
+                  myActivitiesByMonthRefetch={myActivitiesByMonthRefetch}
                 />
               )}
             </div>

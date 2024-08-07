@@ -16,11 +16,12 @@ interface Props {
 export default function ReservationCalendar({ activityId, isOpen }: Props) {
   const { date, setDate, handlePrevMonth, handleNextMonth } = useHandleCalendarDate();
 
-  const { data: myActivitiesByMonth } = useGetMyActivitiesByMonth(
-    activityId,
-    date?.getFullYear().toString()!,
-    (date?.getMonth()! + 1).toString()!,
-  );
+  const { data: myActivitiesByMonth, refetch: myActivitiesByMonthRefetch } =
+    useGetMyActivitiesByMonth(
+      activityId,
+      date?.getFullYear().toString()!,
+      (date?.getMonth()! + 1).toString()!,
+    );
 
   return (
     <div className="relative">
@@ -35,7 +36,11 @@ export default function ReservationCalendar({ activityId, isOpen }: Props) {
 
       {isOpen && (
         <div className="h-full w-full px-[-16px] md:mt-100pxr lg:absolute lg:right-[0] lg:top-[22px] lg:h-670pxr lg:w-429pxr">
-          <ReservationInfoModal activityId={activityId} date={formatDateYYYYMMDD(date!)} />
+          <ReservationInfoModal
+            activityId={activityId}
+            date={formatDateYYYYMMDD(date!)}
+            myActivitiesByMonthRefetch={myActivitiesByMonthRefetch}
+          />
         </div>
       )}
     </div>
