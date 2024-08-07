@@ -55,11 +55,17 @@ export default function MyPageForm({ password }: Props) {
   });
 
   const submit = (data: Data) => {
-    mutation.mutate({
+    /* 초기 데이터 설정 */
+    const payload: { nickname: string; newPassword: string; profileImageUrl?: string } = {
       nickname: data.nickname,
       newPassword: data.newPassword,
-      profileImageUrl: profileImageUrl,
-    });
+    };
+    /* 프로필 이미지 있을 시 추가 */
+    if (profileImageUrl) {
+      payload.profileImageUrl = profileImageUrl;
+    }
+
+    mutation.mutate(payload);
   };
 
   return (
