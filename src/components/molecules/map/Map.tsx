@@ -34,7 +34,6 @@ export default function Map({ address }: Props) {
       const geocoder = new window.kakao.maps.services.Geocoder();
 
       geocoder.addressSearch(address, function (result: any, status: any) {
-        console.log(result[0]);
         // 정상적으로 검색이 완료됐으면
         if (status === window.kakao.maps.services.Status.OK) {
           const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
@@ -48,12 +47,9 @@ export default function Map({ address }: Props) {
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
           if (result[0].road_address.building_name !== '') {
-            // const infowindow = new window.kakao.maps.InfoWindow({
-            //   content: `<div style="width:150px;text-align:center;padding:6px 0;">${result[0].road_address.building_name}</div>`,
-            // });
             const customOverlay = new window.kakao.maps.CustomOverlay({
               position: coords,
-              content: `<div style="position:relative;top:-90px;width:150px;text-align:center;padding:6px 0; background-color: white; border: 2px solid #00825c; border-radius: 10px;">${result[0].road_address.building_name}</div>`,
+              content: `<div style="position:relative;top:-90px;left:3px;text-align:center;padding:6px 15px; background-color: white; border: 2px solid #00825c; border-radius: 10px;">${result[0].road_address.building_name}</div>`,
             });
             customOverlay.setMap(map);
           }

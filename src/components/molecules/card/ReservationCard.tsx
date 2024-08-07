@@ -1,6 +1,5 @@
 import { cn } from '@/lib/tailwind-utils';
 import { useUpdateReservationStatus } from '@/mutations/activity/update-reservation-status';
-import { Reservation } from '@/types/reservation';
 
 interface Props {
   nickname: string;
