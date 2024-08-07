@@ -9,9 +9,9 @@ interface Props {
 export default function GeneratedImage({ key, url, onClose }: Props) {
   return (
     <>
-      <div className="relative size-[167px] rounded-[24px] md:size-[206px] lg:size-[180px]">
+      <div className="relative aspect-square max-w-167pxr rounded-[24px] md:max-w-206pxr lg:max-w-180pxr">
         <CloseButton id={key} onClose={() => onClose(url)} />
-        <div className="relative size-[167px] overflow-hidden rounded-[24px] md:size-[206px] lg:size-[180px]">
+        <div className="relative aspect-square max-w-167pxr overflow-hidden rounded-[24px] md:max-w-206pxr lg:max-w-180pxr">
           {url && <Image fill src={url} alt="이미지 생성" className="object-cover" />}
         </div>
       </div>
