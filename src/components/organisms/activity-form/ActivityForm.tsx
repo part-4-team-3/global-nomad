@@ -18,7 +18,7 @@ interface Props {
 
 const options = ['문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
 const containerClass = 'flex flex-col gap-[.75rem] md:gap-[1rem] lg:gap-[1.5rem]';
-const inputTitleClass = 'text-var-black text-1.25remr font-bold leading-[1.625rem] md:text-1.5remr';
+const inputTitleClass = 'text-var-black text-20pxr font-bold leading-[1.625rem] md:text-24pxr';
 
 export default function ActivityForm({ initActivity }: Props) {
   const [addressOpen, setAddressOpen] = useState<boolean>(false);

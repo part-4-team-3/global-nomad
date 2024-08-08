@@ -12,7 +12,7 @@ export interface DateInputProps {
 const DateInput = forwardRef<HTMLDivElement, DateInputProps>(({ onChange, selected }, ref) => {
   const datePickerRef = useRef<DatePicker>(null);
   return (
-    <div ref={ref} className="w-130pxr relative h-56pxr sm:w-full sm:max-w-[379px]">
+    <div ref={ref} className="relative h-56pxr w-130pxr sm:w-full sm:max-w-[379px]">
       <DatePicker
         ref={datePickerRef}
         selected={selected}
@@ -24,7 +24,7 @@ const DateInput = forwardRef<HTMLDivElement, DateInputProps>(({ onChange, select
       />
       <Image
         className="absolute right-8pxr top-1/2 -translate-y-1/2 transform cursor-pointer"
-        src="/calendar.png"
+        src="/calendar.svg"
         alt="Calendar Icon"
         width={32}
         height={32}
