@@ -52,17 +52,17 @@ export default function ReservationTimePicker({
 
   return (
     <div>
-      <div className="relative flex place-items-end gap-[5px] border-b pb-[16px] md:h-[92px] lg:gap-[20px] lg:pb-[20px]">
+      <div className="relative mt-[15px] flex place-items-end gap-[5px] border-b pb-[16px] md:h-[92px] lg:gap-[20px] lg:pb-[20px]">
         <div className="relative flex flex-1 flex-col gap-[10px]">
           <label>날짜</label>
           <div className="relative min-w-132pxr">
             <TimeSlotInput type="text" value={selectedDay} readOnly placeholder="YY/MM/DD" />
             <button
-              className="absolute bottom-[8px] right-[12px] size-27pxr md:bottom-[16px] md:right-[16px]"
+              className="absolute bottom-[8px] right-[12px] size-18pxr md:bottom-[19px] md:right-[20px]"
               onClick={handleCalendarOpen}
               type="button"
             >
-              <Image fill src="/calendar.png" alt="날짜 설정" />
+              <Image fill src="/calendar.svg" alt="날짜 설정" />
             </button>
           </div>
           {isCalendarOpen && (
